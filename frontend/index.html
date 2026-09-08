@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="CardioIA + ECO — acolhimento conversacional cardiológico e psicossomático (protótipo acadêmico)"
+    />
+    <title>CardioIA + ECO</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#composer-input">Ir para a mensagem</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">♥</span>
+          <div>
+            <h1>CardioIA + ECO</h1>
+            <p>Acolhimento vicário · triagem de red flags · protótipo FIAP</p>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <p class="status-pill" id="health-pill" role="status">Verificando API…</p>
+          <button type="button" id="theme-toggle" class="ghost-btn" aria-pressed="true">
+            Modo claro
+          </button>
+        </div>
+      </header>
+
+      <aside class="session-banner" role="status">
+        Sessão segura e anônima — o texto não é prontuário e não identifica você.
+      </aside>
+
+      <aside class="disclaimer" role="note">
+        <strong>Aviso legal e clínico.</strong>
+        Este assistente <em>não</em> é dispositivo médico, não diagnostica e não substitui
+        atendimento presencial. Na dúvida, a avaliação ao vivo sempre prevalece.
+        Emergência cardíaca:
+        <a href="tel:192">192 (SAMU)</a>.
+        Crise emocional com ideação:
+        <a href="tel:188">188 (CVV)</a>.
+      </aside>
+
+      <div class="quick-dials" aria-label="Discagem rápida">
+        <a class="dial dial-192" href="tel:192">Ligar 192 · SAMU</a>
+        <a class="dial dial-188" href="tel:188">Ligar 188 · CVV</a>
+      </div>
+
+      <main class="chat-card" aria-label="Atendimento conversacional">
+        <div id="transcript" class="transcript" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+        <section id="breathing-panel" class="breathing hidden" aria-label="Respiração 4-7-8">
+          <div class="breath-circle" id="breath-circle" aria-hidden="true"></div>
+          <p class="breath-phase" id="breath-phase">Inspire · 4</p>
+          <p class="breath-count" id="breath-count">4</p>
+          <div class="breath-actions">
+            <button type="button" id="breath-start">Iniciar 4-7-8</button>
+            <button type="button" id="breath-stop" class="ghost-btn">Parar</button>
+          </div>
+          <p class="support-net">
+            Prática física, não tratamento.
+            Rede de apoio:
+            <a href="tel:188">CVV 188</a> ·
+            <a href="https://www.abrata.org.br" rel="noopener" target="_blank">ABRATA</a> ·
+            <a href="https://www.gov.br/saude/pt-br/composicao/saes/desmad/raps/caps" rel="noopener" target="_blank">CAPS</a>
+          </p>
+        </section>
+
+        <section id="eco-social" class="eco-social hidden" aria-label="Pulso anônimo e narrativas compostas">
+          <p class="eco-k-note">
+            Pulso local sintético · k-anonimato ≥ 10 · sem GPS, sem nomes, sem pinos.
+          </p>
+          <p class="eco-pulse" id="eco-pulse" role="status"></p>
+          <div class="eco-heatmap" id="eco-heatmap" role="img" aria-label="Mapa de calor agregado sintético de queixas"></div>
+          <p class="eco-narrative" id="eco-narrative"></p>
+        </section>
+
+        <div class="chips" aria-label="Respostas rápidas">
+          <button type="button" data-chip="Oi">Saudação</button>
+          <button type="button" data-chip="Estou com aperto no peito">Aperto no peito</button>
+          <button type="button" data-chip="Estou com palpitação">Palpitação</button>
+          <button type="button" data-chip="Estou com ansiedade e tensão muscular">Ansiedade</button>
+          <button type="button" data-chip="Quero fazer a respiração 4-7-8">Respiração 4-7-8</button>
+          <button type="button" data-chip="Dor no peito irradiando para o braço com suor frio">Emergência</button>
+        </div>
+
+        <form id="composer" class="composer">
+          <label class="sr-only" for="composer-input">Mensagem</label>
+          <textarea
+            id="composer-input"
+            name="message"
+            rows="2"
+            maxlength="2000"
+            required
+            placeholder="Conte o que está sentindo, com calma…"
+          ></textarea>
+          <button type="submit" id="send-btn">Enviar</button>
+        </form>
+      </main>
+
+      <p class="disclaimer footer-disclaimer" role="note">
+        CardioIA + ECO · sem diagnóstico · 192 (SAMU) · 188 (CVV) ·
+        <a href="https://www.abrata.org.br" rel="noopener" target="_blank">ABRATA</a> ·
+        <a href="https://www.gov.br/saude/pt-br/composicao/saes/desmad/raps/caps" rel="noopener" target="_blank">CAPS</a>
+      </p>
+    </div>
+
+    <div id="crisis-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="crisis-title">
+      <div class="modal-card">
+        <h2 id="crisis-title">Apoio imediato</h2>
+        <p id="crisis-text">
+          Você não está sozinho. Ligue agora para os números abaixo. Este aviso não pode
+          ser fechado sem o reconhecimento.
+        </p>
+        <div class="quick-dials">
+          <a class="dial dial-188" href="tel:188">Ligar 188 · CVV</a>
+          <a class="dial dial-192" href="tel:192">Ligar 192 · SAMU</a>
+        </div>
+        <label class="ack">
+          <input type="checkbox" id="crisis-ack" />
+          Li os números 188 e 192 e entendi que preciso de apoio humano agora.
+        </label>
+        <button type="button" id="crisis-close" disabled>Continuar na conversa</button>
+      </div>
+    </div>
+
+    <script src="script.js?v=eco2"></script>
+  </body>
+</html>

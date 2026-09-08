@@ -1,0 +1,4007 @@
+{
+  "name": "CardioIA Assistente Cardiológico + ECO",
+  "intents": [
+    {
+      "intent": "saudacao",
+      "examples": [
+        {
+          "text": "Oi"
+        },
+        {
+          "text": "Olá"
+        },
+        {
+          "text": "Bom dia"
+        },
+        {
+          "text": "Boa tarde"
+        },
+        {
+          "text": "Boa noite"
+        },
+        {
+          "text": "E aí"
+        },
+        {
+          "text": "Opa"
+        }
+      ],
+      "description": "Cumprimento curto isolado. Sem dor, peito, mal, problema ou pedido de ajuda."
+    },
+    {
+      "intent": "relatar_sintoma",
+      "examples": [
+        {
+          "text": "Tô com um repuxo meio esquisito no peito, mas começou bem depois que eu tava roçando o mato."
+        },
+        {
+          "text": "Deu um mau jeito nas minhas costas ontem puxando peso e agora tá doendo a frente do peito."
+        },
+        {
+          "text": "Fui varrer a calçada e me deu uma fisgada na costela."
+        },
+        {
+          "text": "Tava carpindo o quintal e depois senti o peito puxando."
+        },
+        {
+          "text": "Fui capinar o lote e deu uma fisgada na costela."
+        },
+        {
+          "text": "Passei a tarde cortando lenha e agora o peito tá com um repuxo."
+        },
+        {
+          "text": "Carreguei saco de cimento e tomei um jeito, doeu a frente do peito."
+        },
+        {
+          "text": "Virei o tronco rápido pegando uma caixa e fisgou a costela."
+        },
+        {
+          "text": "Tomei um jeito nas costas no serviço e agora dói o peito na frente."
+        },
+        {
+          "text": "Fisgou a costela quando eu tava varrendo a calçada."
+        },
+        {
+          "text": "Peito puxando depois do esforço de roçar o mato no quintal."
+        },
+        {
+          "text": "Tava roçando o mato no fundo do quintal e veio um repuxo no peito."
+        },
+        {
+          "text": "Fui carpir a horta e senti uma pontada de músculo no peito."
+        },
+        {
+          "text": "Puxando peso no galpão, deu um mau jeito e a dor veio pra frente do peito."
+        },
+        {
+          "text": "Depois de capinar senti um repuxo esquisito, sem suor e sem aperto."
+        },
+        {
+          "text": "Roçando, carpindo, aquele trabalho braçal, e veio uma fisgada na costela."
+        },
+        {
+          "text": "Me deu um repuxo no peito logo depois que eu tava roçando."
+        },
+        {
+          "text": "Não foi aperto: foi um mau jeito puxando peso, agora dói na frente."
+        },
+        {
+          "text": "Calçada, vassoura, fisgada na costela — parece músculo."
+        },
+        {
+          "text": "Esforço no quintal, virou o tronco, peito puxando."
+        }
+      ],
+      "description": "Narrativa cotidiana de sintoma ou esforço (roçar, carpir, repuxo). Início de triagem."
+    },
+    {
+      "intent": "queixa_abdominal",
+      "examples": [
+        {
+          "text": "estou com fortes dores na barriga"
+        },
+        {
+          "text": "estou com dor na barriga"
+        },
+        {
+          "text": "dor na barriga"
+        },
+        {
+          "text": "fortes dores na barriga"
+        },
+        {
+          "text": "dor na barriga alta"
+        },
+        {
+          "text": "dor na boca do estômago"
+        },
+        {
+          "text": "dor no estômago"
+        },
+        {
+          "text": "epigástrio doendo"
+        },
+        {
+          "text": "queimação na barriga"
+        },
+        {
+          "text": "Tô sentindo uma queimação forte na barriga e um pouco de enjoo."
+        },
+        {
+          "text": "queimação forte na barriga e enjoo"
+        },
+        {
+          "text": "dor abdominal"
+        },
+        {
+          "text": "barriga doendo"
+        },
+        {
+          "text": "desconforto no estômago"
+        },
+        {
+          "text": "azia na boca do estômago"
+        },
+        {
+          "text": "dor na parte de cima da barriga"
+        },
+        {
+          "text": "mal-estar e dor na barriga"
+        },
+        {
+          "text": "náusea e queimação no estômago"
+        },
+        {
+          "text": "dor embaixo do peito na boca do estômago"
+        },
+        {
+          "text": "estou com dor na parte alta da barriga"
+        }
+      ],
+      "description": "Queixa abdominal/epigástrica — equivalente isquêmico, não GI isolado."
+    },
+    {
+      "intent": "triagem_dor_peito",
+      "examples": [
+        {
+          "text": "estou com dor no peito"
+        },
+        {
+          "text": "sinto aperto no peito"
+        },
+        {
+          "text": "dor torácica há uma hora"
+        },
+        {
+          "text": "queimação no peito"
+        },
+        {
+          "text": "dor precordial"
+        },
+        {
+          "text": "meu peito está doendo"
+        },
+        {
+          "text": "sinto uma pressão forte no peito"
+        },
+        {
+          "text": "dor no peito quando caminho"
+        },
+        {
+          "text": "desconforto retroesternal"
+        },
+        {
+          "text": "pontada no peito depois do almoço"
+        },
+        {
+          "text": "desconforto no peito sem irradiação"
+        },
+        {
+          "text": "dor no tórax em repouso"
+        },
+        {
+          "text": "aperto no peito leve"
+        },
+        {
+          "text": "estou com dor no peito em aperto"
+        },
+        {
+          "text": "sinto o peito pesado"
+        },
+        {
+          "text": "dor no peito"
+        },
+        {
+          "text": "Tô com um aperto esquisito no meio do peito desde cedo."
+        },
+        {
+          "text": "aperto esquisito no meio do peito"
+        },
+        {
+          "text": "piora quando aperto"
+        },
+        {
+          "text": "piora quando aperto com o dedo"
+        },
+        {
+          "text": "pontada na respiração"
+        },
+        {
+          "text": "é muscular"
+        },
+        {
+          "text": "não irradia"
+        },
+        {
+          "text": "não irradia e não tenho suor frio"
+        },
+        {
+          "text": "não tenho suor frio"
+        },
+        {
+          "text": "não sinto dor no braço"
+        },
+        {
+          "text": "é uma pontada que piora quando aperto com o dedo e quando respiro fundo"
+        },
+        {
+          "text": "pontada que piora quando respiro fundo"
+        }
+      ],
+      "description": "Triagem de dor torácica, incluindo negações e padrão musculoesquelético/pleurítico."
+    },
+    {
+      "intent": "pressao_arterial",
+      "examples": [
+        {
+          "text": "minha pressão está alta"
+        },
+        {
+          "text": "aferi 180/110"
+        },
+        {
+          "text": "pressão arterial 140/90"
+        },
+        {
+          "text": "estou hipertenso"
+        },
+        {
+          "text": "como medir a pressão em casa"
+        },
+        {
+          "text": "PAS 160 e PAD 100"
+        },
+        {
+          "text": "minha pressão deu 128/78"
+        },
+        {
+          "text": "crise hipertensiva"
+        },
+        {
+          "text": "a pressão não abaixa"
+        },
+        {
+          "text": "valores de pressão arterial"
+        },
+        {
+          "text": "mmHg no aparelho de casa"
+        }
+      ],
+      "description": "Dúvidas e relatos sobre pressão arterial (PAS/PAD)."
+    },
+    {
+      "intent": "lembrete_medicamento",
+      "examples": [
+        {
+          "text": "preciso lembrar de tomar o remédio"
+        },
+        {
+          "text": "esqueci o atenolol"
+        },
+        {
+          "text": "horário do AAS"
+        },
+        {
+          "text": "lembrete de losartana"
+        },
+        {
+          "text": "tomar enalapril de manhã"
+        },
+        {
+          "text": "organização dos comprimidos"
+        },
+        {
+          "text": "posologia da estatina"
+        },
+        {
+          "text": "não sei se já tomei o medicamento"
+        },
+        {
+          "text": "caixa de remédios da semana"
+        },
+        {
+          "text": "alarme para carvedilol"
+        }
+      ],
+      "description": "Lembretes de medicação de uso contínuo (não é prescrição)."
+    },
+    {
+      "intent": "agendamento_consulta",
+      "examples": [
+        {
+          "text": "quero marcar uma consulta"
+        },
+        {
+          "text": "agendar cardiologista"
+        },
+        {
+          "text": "tem horário amanhã?"
+        },
+        {
+          "text": "preciso de um retorno"
+        },
+        {
+          "text": "marcar avaliação cardiológica"
+        },
+        {
+          "text": "disponibilidade da agenda"
+        },
+        {
+          "text": "consulta com especialista do coração"
+        },
+        {
+          "text": "remarcar o retorno"
+        }
+      ],
+      "description": "Intenção de agendar consulta (protótipo sem agenda real)."
+    },
+    {
+      "intent": "emergencia_cardio",
+      "examples": [
+        {
+          "text": "acho que estou tendo um infarto"
+        },
+        {
+          "text": "é emergência"
+        },
+        {
+          "text": "ligar no SAMU"
+        },
+        {
+          "text": "ligar 192"
+        },
+        {
+          "text": "não consigo respirar"
+        },
+        {
+          "text": "desmaiei com dor no peito"
+        },
+        {
+          "text": "socorro dor muito forte"
+        },
+        {
+          "text": "parada cardíaca"
+        },
+        {
+          "text": "estou sufocando"
+        },
+        {
+          "text": "suor frio, falta de ar e dor irradiando"
+        },
+        {
+          "text": "preciso de ambulância agora"
+        },
+        {
+          "text": "meu braço está dormente e estou sozinho em casa"
+        },
+        {
+          "text": "braço dormente"
+        },
+        {
+          "text": "meu braço está dormente"
+        },
+        {
+          "text": "estou com o braço dormente"
+        },
+        {
+          "text": "formigamento no braço"
+        },
+        {
+          "text": "o braço está formigando"
+        },
+        {
+          "text": "formigamento no braço esquerdo"
+        },
+        {
+          "text": "adormecimento no braço"
+        },
+        {
+          "text": "braço adormecido"
+        },
+        {
+          "text": "não sinto o braço"
+        },
+        {
+          "text": "parestesia no braço"
+        },
+        {
+          "text": "estou sozinho e o braço formigou"
+        },
+        {
+          "text": "estou sozinha em casa com o braço dormente"
+        },
+        {
+          "text": "sozinho em casa com formigamento no braço"
+        },
+        {
+          "text": "irradiação para o braço sem dor no peito"
+        },
+        {
+          "text": "dor irradiando para o braço"
+        },
+        {
+          "text": "suor frio e braço dormente"
+        },
+        {
+          "text": "estou com dor forte no peito irradiando e suando"
+        },
+        {
+          "text": "dor forte no peito irradiando e suando"
+        },
+        {
+          "text": "desmaiei"
+        },
+        {
+          "text": "quase desmaiei e estou sem ar"
+        },
+        {
+          "text": "falta de ar intensa agora"
+        },
+        {
+          "text": "dispneia súbita grave"
+        },
+        {
+          "text": "estou sozinho e não estou bem"
+        },
+        {
+          "text": "fala embolada e braço sem força"
+        },
+        {
+          "text": "boca torta e formigamento no braço"
+        },
+        {
+          "text": "de repente não sinto o braço e estou sozinho"
+        },
+        {
+          "text": "mas eu estou sozinho e não consigo ir até o telefone"
+        },
+        {
+          "text": "não alcanço o celular"
+        },
+        {
+          "text": "o telefone está longe"
+        },
+        {
+          "text": "não tenho como ligar"
+        },
+        {
+          "text": "estou sozinho e não alcanço o telefone"
+        },
+        {
+          "text": "não consigo chegar até o celular"
+        },
+        {
+          "text": "o celular está longe e estou sozinho"
+        },
+        {
+          "text": "não alcanço o telefone"
+        },
+        {
+          "text": "não consigo me mover até o telefone"
+        },
+        {
+          "text": "Tô suando muito frio e o peito tá pesado, não consigo nem levantar."
+        },
+        {
+          "text": "não consigo nem levantar"
+        },
+        {
+          "text": "peito pesado e suando frio"
+        },
+        {
+          "text": "tô suando frio e subindo pro peito"
+        }
+      ],
+      "description": "Red flags, imobilidade com sintomas, isolamento sem telefone e emergência."
+    },
+    {
+      "intent": "afirmacao",
+      "examples": [
+        {
+          "text": "sim"
+        },
+        {
+          "text": "isso"
+        },
+        {
+          "text": "uhum"
+        },
+        {
+          "text": "aham"
+        },
+        {
+          "text": "positivo"
+        },
+        {
+          "text": "isso mesmo"
+        },
+        {
+          "text": "exato"
+        },
+        {
+          "text": "isso aí"
+        },
+        {
+          "text": "afirmativo"
+        },
+        {
+          "text": "ss"
+        },
+        {
+          "text": "sim, vai"
+        },
+        {
+          "text": "sim, irradia"
+        }
+      ],
+      "description": "Resposta afirmativa curta (sim/uhum) durante a anamnese."
+    },
+    {
+      "intent": "negacao",
+      "examples": [
+        {
+          "text": "não"
+        },
+        {
+          "text": "nao"
+        },
+        {
+          "text": "não."
+        },
+        {
+          "text": "negativo"
+        },
+        {
+          "text": "nada"
+        },
+        {
+          "text": "nada disso"
+        },
+        {
+          "text": "não irradia"
+        },
+        {
+          "text": "nao irradia"
+        },
+        {
+          "text": "não vai"
+        },
+        {
+          "text": "não vai pro braço"
+        },
+        {
+          "text": "não, só no peito"
+        }
+      ],
+      "description": "Resposta negativa curta (não) durante a anamnese — não é anything_else."
+    },
+    {
+      "intent": "pedido_medicacao",
+      "examples": [
+        {
+          "text": "toma dipirona?"
+        },
+        {
+          "text": "posso tomar AAS?"
+        },
+        {
+          "text": "qual remédio pra dor no peito?"
+        },
+        {
+          "text": "me indica um analgésico"
+        },
+        {
+          "text": "posso tomar dipirona?"
+        },
+        {
+          "text": "posso tomar aspirina?"
+        },
+        {
+          "text": "que remédio eu tomo"
+        },
+        {
+          "text": "me passa um analgésico"
+        },
+        {
+          "text": "toma buscopan?"
+        },
+        {
+          "text": "posso tomar um anti-inflamatório"
+        },
+        {
+          "text": "qual remédio para a dor"
+        },
+        {
+          "text": "me indica dipirona"
+        }
+      ],
+      "description": "Pedido de indicação de remédio — recusa categórica, sem prescrever."
+    },
+    {
+      "intent": "despedida",
+      "examples": [
+        {
+          "text": "tchau"
+        },
+        {
+          "text": "obrigado"
+        },
+        {
+          "text": "era só isso"
+        },
+        {
+          "text": "valeu"
+        },
+        {
+          "text": "tchau, obrigado"
+        },
+        {
+          "text": "obrigada"
+        },
+        {
+          "text": "até logo"
+        },
+        {
+          "text": "valeu, era só isso"
+        },
+        {
+          "text": "era so isso"
+        },
+        {
+          "text": "tmj"
+        },
+        {
+          "text": "obrigado, tchau"
+        }
+      ],
+      "description": "Encerramento da conversa."
+    },
+    {
+      "intent": "sintoma_peito",
+      "description": "Alias ECO de #triagem_dor_peito — aperto/dor torácica (não salta para ansiedade).",
+      "examples": [
+        {
+          "text": "Estou com aperto no peito"
+        },
+        {
+          "text": "Dor no peito agora"
+        },
+        {
+          "text": "Meu peito está apertado"
+        },
+        {
+          "text": "Desconforto no meio do peito"
+        },
+        {
+          "text": "Sinto um peso no peito"
+        },
+        {
+          "text": "Aperto no peito sem suor"
+        },
+        {
+          "text": "Peito apertado desde de manhã"
+        },
+        {
+          "text": "Relato de dor no peito para triagem"
+        }
+      ]
+    },
+    {
+      "intent": "sintoma_taquicardia",
+      "description": "Palpitação / coração disparado. Sempre rastreia red flags antes de 4-7-8.",
+      "examples": [
+        {
+          "text": "Estou com taquicardia"
+        },
+        {
+          "text": "Meu coração está disparado"
+        },
+        {
+          "text": "Palpitação forte"
+        },
+        {
+          "text": "Coração acelerado em repouso"
+        },
+        {
+          "text": "Sinto o coração batendo muito forte"
+        },
+        {
+          "text": "Taquicardia e tensão"
+        },
+        {
+          "text": "Palpitações à noite"
+        }
+      ]
+    },
+    {
+      "intent": "sintoma_ansiedade",
+      "description": "Queixa psicossomática sem alarme cardíaco confirmado.",
+      "examples": [
+        {
+          "text": "Estou com ansiedade"
+        },
+        {
+          "text": "Acho que é crise de ansiedade"
+        },
+        {
+          "text": "Não consigo dormir de tão tenso"
+        },
+        {
+          "text": "Nó na garganta e tensão muscular"
+        },
+        {
+          "text": "Ataque de pânico"
+        },
+        {
+          "text": "Estou muito ansioso"
+        },
+        {
+          "text": "Insônia e músculo travado"
+        }
+      ]
+    },
+    {
+      "intent": "duvida_infarto",
+      "description": "Medo/dúvida de IAM. Nunca tranquilizar como ansiedade; rastrear red flags.",
+      "examples": [
+        {
+          "text": "Será que é infarto?"
+        },
+        {
+          "text": "Acho que estou infartando"
+        },
+        {
+          "text": "Pode ser infarto?"
+        },
+        {
+          "text": "Tenho medo de ser o coração"
+        },
+        {
+          "text": "Isso é um infarto?"
+        },
+        {
+          "text": "Será que é o coração?"
+        },
+        {
+          "text": "Dúvida se é infarto"
+        }
+      ]
+    },
+    {
+      "intent": "alerta_emergencia",
+      "description": "Alias ECO de #emergencia_cardio — jump SAMU 192.",
+      "examples": [
+        {
+          "text": "É emergência, suor frio e falta de ar"
+        },
+        {
+          "text": "Chama o SAMU"
+        },
+        {
+          "text": "Dor no peito irradiando com suor frio"
+        },
+        {
+          "text": "Desmaiei com dor no peito"
+        },
+        {
+          "text": "Não consigo respirar e o peito aperta"
+        },
+        {
+          "text": "Peito apertando, irradia para a mandíbula, suando frio"
+        }
+      ]
+    },
+    {
+      "intent": "solicitar_respiracao",
+      "description": "Pedido de 4-7-8. Bloqueado se houver red flag cardíaco.",
+      "examples": [
+        {
+          "text": "Quero fazer a respiração 4-7-8"
+        },
+        {
+          "text": "Me ajuda a respirar"
+        },
+        {
+          "text": "Exercício de respiração"
+        },
+        {
+          "text": "Técnica 4-7-8"
+        },
+        {
+          "text": "Pode me guiar na respiração"
+        },
+        {
+          "text": "Quero o 4-7-8"
+        }
+      ]
+    },
+    {
+      "intent": "ideacao_crise",
+      "description": "Ideação suicida / automutilação. CVV 188. Backend intercepta antes do Watson.",
+      "examples": [
+        {
+          "text": "Quero me matar"
+        },
+        {
+          "text": "Não quero mais viver"
+        },
+        {
+          "text": "Pensamentos suicidas"
+        },
+        {
+          "text": "Vou me cortar"
+        },
+        {
+          "text": "Ideação suicida"
+        },
+        {
+          "text": "Quero morrer"
+        }
+      ]
+    },
+    {
+      "intent": "sintoma_cardiaco",
+      "description": "Alias de #sintoma_peito / #triagem_dor_peito.",
+      "examples": [
+        {
+          "text": "Sintoma cardíaco, aperto no peito"
+        },
+        {
+          "text": "Acho que é o coração, dor no peito"
+        },
+        {
+          "text": "Queixa cardíaca agora"
+        },
+        {
+          "text": "Desconforto cardíaco no peito"
+        },
+        {
+          "text": "Relato de desconforto no peito agora"
+        },
+        {
+          "text": "Sintoma no peito que parece do coração"
+        },
+        {
+          "text": "Queixa de peso no peito, sem diagnóstico"
+        }
+      ]
+    },
+    {
+      "intent": "red_flags",
+      "description": "Alias de #alerta_emergencia — jump SAMU 192.",
+      "examples": [
+        {
+          "text": "Red flag, suor frio e irradiação"
+        },
+        {
+          "text": "Alarme cardíaco com desmaio"
+        },
+        {
+          "text": "Sinais de alerta, peito e suor frio"
+        },
+        {
+          "text": "Irradiação para o braço com suor frio agora"
+        },
+        {
+          "text": "Desmaio e aperto no peito ao mesmo tempo"
+        },
+        {
+          "text": "Mandíbula doendo com suor frio e peito apertado"
+        }
+      ]
+    },
+    {
+      "intent": "estresse_ansiedade",
+      "description": "Alias de #sintoma_ansiedade — rastreio antes de psicoeducação.",
+      "examples": [
+        {
+          "text": "Estresse e ansiedade"
+        },
+        {
+          "text": "Sobrecarga, palpitação de nervoso"
+        },
+        {
+          "text": "Ansiedade por excesso de trabalho"
+        },
+        {
+          "text": "Tensão de estresse sem suor frio"
+        },
+        {
+          "text": "Palpitação depois do pico de estresse no trabalho"
+        },
+        {
+          "text": "Coração acelerado após briga, sem suor frio"
+        },
+        {
+          "text": "Ansiedade e tensão depois de uma reunião pesada"
+        }
+      ]
+    },
+    {
+      "intent": "ideacao_risco",
+      "description": "Alias de #ideacao_crise. Backend intercepta 188+192.",
+      "examples": [
+        {
+          "text": "Estou em risco, quero morrer"
+        },
+        {
+          "text": "Ideação de risco"
+        },
+        {
+          "text": "Risco de me machucar"
+        },
+        {
+          "text": "Estou em risco emocional e não quero seguir"
+        },
+        {
+          "text": "Preciso de ajuda humana, pensamentos de me machucar"
+        },
+        {
+          "text": "Risco agora, quero apoio do CVV"
+        }
+      ]
+    },
+    {
+      "intent": "relatar_dor_peito",
+      "description": "Alias de #triagem_dor_peito / #sintoma_peito — relato explícito de dor torácica.",
+      "examples": [
+        {
+          "text": "Quero relatar dor no peito"
+        },
+        {
+          "text": "Vim relatar um aperto torácico"
+        },
+        {
+          "text": "Preciso contar que estou com dor no peito"
+        },
+        {
+          "text": "Relato de dor no meio do peito agora"
+        },
+        {
+          "text": "Estou relatando desconforto torácico"
+        },
+        {
+          "text": "Quero registrar essa dor no peito"
+        },
+        {
+          "text": "Cheguei para relatar aperto no peito"
+        }
+      ]
+    },
+    {
+      "intent": "pedir_ajuda_humana",
+      "description": "Pedido de atendimento humano (não é saudação). Encaminha 192/188/UBS — sem tranquilizar.",
+      "examples": [
+        {
+          "text": "Quero falar com um humano"
+        },
+        {
+          "text": "Preciso de um médico de verdade"
+        },
+        {
+          "text": "Pode me passar para um atendente"
+        },
+        {
+          "text": "Quero atendimento humano agora"
+        },
+        {
+          "text": "Me transfere para alguém da equipe"
+        },
+        {
+          "text": "Preciso falar com um profissional de saúde"
+        },
+        {
+          "text": "Não quero só o robô, quero uma pessoa"
+        }
+      ]
+    },
+    {
+      "intent": "queixa_cefaleia",
+      "description": "Dor de cabeça / cefaleia isolada — triagem calma UBS; SAMU só com red flags neurológicos.",
+      "examples": [
+        {
+          "text": "tenho forte dor de cabeça quando vou dormir"
+        },
+        {
+          "text": "dor de cabeça"
+        },
+        {
+          "text": "estou com cefaleia"
+        },
+        {
+          "text": "minha cabeça dói"
+        },
+        {
+          "text": "cefaleia forte"
+        },
+        {
+          "text": "dor na cabeça há horas"
+        },
+        {
+          "text": "estou com enxaqueca"
+        },
+        {
+          "text": "cabeça doendo sem dor no peito"
+        }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sintoma",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "dor_peito",
+          "synonyms": [
+            "dor no peito",
+            "dor torácica",
+            "aperto no peito",
+            "opressão no peito",
+            "desconforto no peito",
+            "desconforto torácico",
+            "precordial",
+            "peito doendo",
+            "peito pesado"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dispneia",
+          "synonyms": [
+            "falta de ar",
+            "dispneia",
+            "ofegante",
+            "não consigo respirar"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "sudorese",
+          "synonyms": [
+            "suor frio",
+            "sudorese",
+            "diaforese",
+            "suando",
+            "suando frio",
+            "suadeira"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "irradiacao",
+          "synonyms": [
+            "irradia",
+            "irradia para o braço",
+            "irradiação para o braço",
+            "braço esquerdo",
+            "mandíbula",
+            "pescoço",
+            "ombro",
+            "subindo pro peito",
+            "subindo para o peito"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "formigamento",
+          "synonyms": [
+            "formigamento",
+            "formigando",
+            "formiga no braço",
+            "parestesia"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dormencia",
+          "synonyms": [
+            "dormência",
+            "dormente",
+            "braço dormente",
+            "não sinto o braço"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "adormecimento",
+          "synonyms": [
+            "adormecimento",
+            "adormecido",
+            "braço adormecido"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "palpitacao",
+          "synonyms": [
+            "palpitação",
+            "coração disparado",
+            "taquicardia"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "tontura",
+          "synonyms": [
+            "tontura",
+            "desmaio",
+            "síncope"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "nausea",
+          "synonyms": [
+            "náusea",
+            "enjoo",
+            "vômito"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "mal_estar",
+          "synonyms": [
+            "mal-estar",
+            "mal estar",
+            "passando mal"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "local_dor",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "epigastrio",
+          "synonyms": [
+            "boca do estômago",
+            "epigástrio",
+            "parte de cima",
+            "parte alta",
+            "barriga alta",
+            "em cima da barriga",
+            "estômago"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "baixo_ventre",
+          "synonyms": [
+            "baixo ventre",
+            "mais para baixo",
+            "mais pra baixo",
+            "embaixo",
+            "parte de baixo",
+            "parte baixa"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "peito",
+          "synonyms": [
+            "peito",
+            "tórax",
+            "meio do peito",
+            "no peito"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "costas",
+          "synonyms": [
+            "costas",
+            "pras costas",
+            "para as costas"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "braco",
+          "synonyms": [
+            "braço",
+            "braço esquerdo",
+            "pro braço"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "mandibula",
+          "synonyms": [
+            "mandíbula",
+            "queixo",
+            "pescoço"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "so_peito",
+          "synonyms": [
+            "só no peito",
+            "so no peito",
+            "fica no peito",
+            "fica só no peito",
+            "fica so no peito",
+            "não irradia",
+            "nao irradia",
+            "só no meio",
+            "so no meio",
+            "somente no peito",
+            "não vai pro braço",
+            "não vai para o braço"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "qualidade_dor",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "aperto",
+          "synonyms": [
+            "aperto",
+            "apertando",
+            "opressão",
+            "pesado",
+            "pressão no peito"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "queimacao",
+          "synonyms": [
+            "queimação",
+            "queimando",
+            "azia"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "colica",
+          "synonyms": [
+            "cólica",
+            "cólicas"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "pontada",
+          "synonyms": [
+            "pontada",
+            "fisgada",
+            "agulhada"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "repuxo",
+          "synonyms": [
+            "repuxo",
+            "peito puxando",
+            "puxando no peito"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "caracteristica_msk",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "palpavel",
+          "synonyms": [
+            "piora quando aperto",
+            "aperto com o dedo",
+            "aperto com os dedos",
+            "quando aperto",
+            "aperto o local",
+            "pressiono o local"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "pleuritica",
+          "synonyms": [
+            "respiro fundo",
+            "respirar fundo",
+            "pontada na respiração",
+            "piora quando respiro",
+            "ao respirar fundo"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "muscular",
+          "synonyms": [
+            "é muscular",
+            "dor muscular",
+            "parece muscular"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "esforco_localizado",
+          "synonyms": [
+            "roçando",
+            "roçar o mato",
+            "carpir",
+            "capinar",
+            "varrer",
+            "cortar lenha",
+            "puxando peso",
+            "mau jeito",
+            "repuxo",
+            "fisgada",
+            "virou o tronco",
+            "tomou um jeito",
+            "fisgou a costela"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "contexto",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "isolamento",
+          "synonyms": [
+            "sozinho",
+            "sozinha",
+            "sozinho em casa",
+            "sozinha em casa",
+            "estou sozinho",
+            "estou sozinha",
+            "sem ninguém em casa"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "barreira_socorro",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "nao_alcanca_telefone",
+          "synonyms": [
+            "não consigo ir até o telefone",
+            "não alcanço o celular",
+            "não alcanço o telefone",
+            "o telefone está longe",
+            "o celular está longe",
+            "não tenho como ligar",
+            "não consigo chegar até o celular",
+            "não consigo chegar no telefone",
+            "o aparelho está longe",
+            "não alcanço o aparelho"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "imobilizado",
+          "synonyms": [
+            "não consigo me mexer",
+            "não consigo me mover",
+            "não consigo me levantar",
+            "não consigo nem levantar",
+            "não consigo andar até o telefone",
+            "não consigo me deslocar"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "intensidade",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "leve",
+          "synonyms": [
+            "leve",
+            "fraca",
+            "pouca"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "moderada",
+          "synonyms": [
+            "moderada",
+            "média"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "intensa",
+          "synonyms": [
+            "intensa",
+            "forte",
+            "insuportável",
+            "10/10",
+            "muito forte"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "medicamento",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "aas",
+          "synonyms": [
+            "AAS",
+            "aspirina",
+            "ácido acetilsalicílico"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "atenolol",
+          "synonyms": [
+            "atenolol"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "enalapril",
+          "synonyms": [
+            "enalapril"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "losartana",
+          "synonyms": [
+            "losartana",
+            "losartan"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "amlodipino",
+          "synonyms": [
+            "amlodipino",
+            "anlodipino"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "estatina",
+          "synonyms": [
+            "sinvastatina",
+            "atorvastatina",
+            "rosuvastatina"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "furosemida",
+          "synonyms": [
+            "furosemida"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "carvedilol",
+          "synonyms": [
+            "carvedilol"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dipirona",
+          "synonyms": [
+            "dipirona",
+            "novalgina",
+            "metamizol"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "analgesico",
+          "synonyms": [
+            "analgésico",
+            "analgesico",
+            "dorflex",
+            "paracetamol"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "pressao_arterial",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "leitura_pa",
+          "patterns": [
+            "\\d{2,3}\\s*/\\s*\\d{2,3}"
+          ]
+        }
+      ],
+      "fuzzy_match": false
+    },
+    {
+      "entity": "sinal_alerta",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "irradiacao",
+          "synonyms": [
+            "irradia",
+            "irradiando",
+            "irradiação",
+            "para o braço",
+            "braço esquerdo",
+            "mandíbula",
+            "pescoço"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "suor_frio",
+          "synonyms": [
+            "suor frio",
+            "suando frio",
+            "diaforese",
+            "suadeira fria"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "desmaio",
+          "synonyms": [
+            "desmaio",
+            "desmaiei",
+            "síncope",
+            "perdi os sentidos"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "sintoma_somatico",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "aperto",
+          "synonyms": [
+            "aperto",
+            "apertando",
+            "opressão",
+            "peso no peito"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "no_garganta",
+          "synonyms": [
+            "nó na garganta",
+            "bolo na garganta",
+            "garganta fechada"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "tensao",
+          "synonyms": [
+            "tensão",
+            "tensão muscular",
+            "músculo travado",
+            "corpo tenso"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "palpitacao",
+          "synonyms": [
+            "palpitação",
+            "palpitações",
+            "coração disparado",
+            "taquicardia"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "sinais_alerta",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "irradiacao",
+          "synonyms": [
+            "irradia",
+            "irradiando",
+            "braço esquerdo",
+            "mandíbula"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "suor_frio",
+          "synonyms": [
+            "suor frio",
+            "suando frio",
+            "diaforese"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "desmaio",
+          "synonyms": [
+            "desmaio",
+            "desmaiei",
+            "síncope"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "sintomas_somaticos",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "aperto",
+          "synonyms": [
+            "aperto",
+            "opressão"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "no_garganta",
+          "synonyms": [
+            "nó na garganta"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "tensao",
+          "synonyms": [
+            "tensão muscular"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "palpitacao",
+          "synonyms": [
+            "palpitação",
+            "taquicardia"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "duracao",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "minutos",
+          "synonyms": [
+            "há minutos",
+            "agora há pouco",
+            "de repente",
+            "súbito",
+            "começou agora"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "horas",
+          "synonyms": [
+            "há uma hora",
+            "desde cedo",
+            "há horas",
+            "de manhã"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dias",
+          "synonyms": [
+            "há dias",
+            "essa semana",
+            "já faz dias",
+            "cronico",
+            "crônico"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "sintoma_associado",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "nausea",
+          "synonyms": [
+            "náusea",
+            "enjoo",
+            "enjôo",
+            "vontade de vomitar"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "tontura",
+          "synonyms": [
+            "tontura",
+            "tonto",
+            "cabeça rodando"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "dispneia",
+          "synonyms": [
+            "falta de ar",
+            "ofegante",
+            "dispneia"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "palpitacao",
+          "synonyms": [
+            "palpitação",
+            "coração disparado"
+          ]
+        }
+      ]
+    },
+    {
+      "entity": "gatilho_emocional",
+      "fuzzy_match": true,
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "estresse",
+          "synonyms": [
+            "estresse",
+            "estressado",
+            "sobrecarga",
+            "pressão no trabalho"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "conflito",
+          "synonyms": [
+            "briga",
+            "discussão",
+            "conflito",
+            "reunião tensa"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "luto",
+          "synonyms": [
+            "luto",
+            "perda",
+            "falecimento"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "insonia_contexto",
+          "synonyms": [
+            "não dormi",
+            "noite em claro",
+            "insônia por preocupação"
+          ]
+        }
+      ]
+    }
+  ],
+  "language": "pt-br",
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2021-11-27"
+    },
+    "from-sample": false
+  },
+  "description": "Skill CardioIA + ECO — triagem A/B/C, fork psicossomático, jump 192, CVV 188, 4-7-8.",
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Boas-vindas",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Oi. Eu sou a CardioIA — triagem inicial, sem diagnosticar e sem receitar. Pode me contar o que está sentindo.\n\nEste assistente não substitui atendimento médico. Em emergências, ligue 192 (SAMU)."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "disclaimer_enviado": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Aplica negações ao contexto",
+      "output": {
+        "generic": []
+      },
+      "context": {
+        "negou_irradiacao": "<? (input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não sinto dor no braço') || input.text.contains('nao sinto dor no braco') || input.text.contains('sem irradiação') || @local_dor:so_peito) ? true : $negou_irradiacao ?>",
+        "negou_suor": "<? (input.text.contains('não tenho suor') || input.text.contains('nao tenho suor') || input.text.contains('sem suor')) ? true : $negou_suor ?>",
+        "negou_dispneia": "<? (input.text.contains('não tenho falta de ar') || input.text.contains('nao tenho falta de ar') || input.text.contains('sem falta de ar')) ? true : $negou_dispneia ?>",
+        "dor_palpavel": "<? (input.text.contains('quando aperto') || input.text.contains('aperto com o dedo') || $dor_palpavel) ? true : $dor_palpavel ?>",
+        "dor_pleuritica": "<? (input.text.contains('respiro fundo') || input.text.contains('respirar fundo') || $dor_pleuritica) ? true : $dor_pleuritica ?>"
+      },
+      "conditions": "input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não sinto dor no braço') || input.text.contains('nao sinto dor no braco') || input.text.contains('sem irradiação') || input.text.contains('sem irradiacao') || input.text.contains('não tenho suor') || input.text.contains('nao tenho suor') || input.text.contains('sem suor') || input.text.contains('não tenho falta de ar') || input.text.contains('nao tenho falta de ar') || input.text.contains('sem falta de ar') || @caracteristica_msk || @local_dor:so_peito || input.text.contains('só no peito') || input.text.contains('so no peito')",
+      "dialog_node": "node_aplica_negacoes",
+      "previous_sibling": "Welcome",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_isolamento_sem_telefone",
+        "selector": "condition"
+      },
+      "digress_in": "not_available"
+    },
+    {
+      "type": "standard",
+      "title": "ECO — ideação / CVV 188",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sua vida importa. Você não está sozinho. Ligue agora o CVV 188 (https://cvv.org.br) e o SAMU 192. Rede de apoio: ABRATA e o CAPS do município."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(#ideacao_crise || input.text.contains('quero me matar') || input.text.contains('não quero mais viver') || input.text.contains('quero morrer')) || (#ideacao_risco)",
+      "dialog_node": "node_ideacao_crise",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_aplica_negacoes",
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "digress_out": "allow_all_never_return"
+    },
+    {
+      "type": "standard",
+      "title": "Isolamento — não alcança o telefone",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olha só, fica calmo que eu tô aqui contigo, visse? Não tenta levantar de vez se estiver tonto. Tenta o comando de voz: diga em voz alta \"Ok Google, ligar para 192\" ou \"Eí Siri, ligar para o SAMU\". Se o aparelho estiver longe, chama um vizinho e não faz esforço."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@barreira_socorro:nao_alcanca_telefone || input.text.contains('não consigo ir até o telefone') || input.text.contains('nao consigo ir ate o telefone') || input.text.contains('não alcanço o celular') || input.text.contains('nao alcanco o celular') || input.text.contains('telefone está longe') || input.text.contains('não tenho como ligar') || input.text.contains('nao tenho como ligar')",
+      "dialog_node": "node_isolamento_sem_telefone",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A",
+        "triagem_etapa": "done"
+      },
+      "previous_sibling": "node_ideacao_crise",
+      "digress_out": "allow_all_never_return"
+    },
+    {
+      "type": "standard",
+      "title": "Emergência — imobilidade com sintomas",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olha só, fica parado e não tenta fazer esforço, visse? Isso exige avaliação médica imediata. Usa o comando de voz do celular agora pra chamar o **192 (SAMU)** ou grita por socorro pra quem estiver perto. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo me levantar') || @barreira_socorro:imobilizado) && (@sintoma:sudorese || @sintoma:dor_peito || input.text.contains('peito') || input.text.contains('suando')) && !$negou_suor",
+      "dialog_node": "node_emergencia_imovel",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_isolamento_sem_telefone"
+    },
+    {
+      "type": "standard",
+      "title": "Pedido de medicação em emergência",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Não posso indicar medicação por aqui. Para sua segurança, não tome nada por conta própria agora; procure o postinho ou a emergência para avaliação. Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$emergencia_ativa && #pedido_medicacao",
+      "dialog_node": "node_pedido_medicacao_emergencia",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A"
+      },
+      "previous_sibling": "node_emergencia_imovel"
+    },
+    {
+      "type": "standard",
+      "title": "Lock emergência — não retorna à anamnese",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Mantenha repouso absoluto. Se ainda não ligou, ligue agora para o SAMU (192). Não faz esforço e não dirige."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$emergencia_ativa",
+      "dialog_node": "node_emergencia_lock",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_pedido_medicacao_emergencia",
+      "digress_out": "allow_all_never_return"
+    },
+    {
+      "type": "standard",
+      "title": "Hold emergência (jump-to)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Mantenha repouso absoluto. Se ainda não ligou, ligue agora para o SAMU (192). Não faz esforço e não dirige."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "false",
+      "dialog_node": "node_emergencia_hold",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_emergencia_lock",
+      "digress_out": "allow_all_never_return"
+    },
+    {
+      "type": "standard",
+      "title": "Hold — isolamento",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olha só, fica calmo que eu tô aqui contigo, visse? Não tenta levantar de vez se estiver tonto. Tenta o comando de voz: diga em voz alta \"Ok Google, ligar para 192\" ou \"Eí Siri, ligar para o SAMU\". Se o aparelho estiver longe, chama um vizinho e não faz esforço."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@barreira_socorro || input.text.contains('telefone') || input.text.contains('celular') || input.text.contains('não alcanço') || input.text.contains('nao alcanco')",
+      "dialog_node": "node_hold_isolamento",
+      "parent": "node_emergencia_hold",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Hold — recusa medicação + SAMU",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Não posso indicar medicação por aqui. Para sua segurança, não tome nada por conta própria agora; procure o postinho ou a emergência para avaliação. Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#pedido_medicacao",
+      "dialog_node": "node_hold_meds",
+      "parent": "node_emergencia_hold",
+      "previous_sibling": "node_hold_isolamento",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Hold — permanece no 192",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Mantenha repouso absoluto. Se ainda não ligou, ligue agora para o SAMU (192). Não faz esforço e não dirige."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_hold_stay",
+      "parent": "node_emergencia_hold",
+      "previous_sibling": "node_hold_meds",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A",
+        "triagem_etapa": "done"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Pedido de medicação",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Não posso indicar medicação por aqui. Para sua segurança, não tome nada por conta própria agora; procure o postinho ou a emergência para avaliação."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#pedido_medicacao && !$emergencia_ativa",
+      "dialog_node": "node_pedido_medicacao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_emergencia_hold"
+    },
+    {
+      "type": "standard",
+      "title": "Despedida regional",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tudo certo então. Fica em repouso e, se a dor voltar ou piorar, procura a UBS, combinado? Te cuida!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#despedida && !$emergencia_ativa",
+      "dialog_node": "node_despedida",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_pedido_medicacao"
+    },
+    {
+      "type": "standard",
+      "title": "ECO — dúvida de infarto (nunca «só ansiedade»)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dúvida é importante — e eu não vou tratar como «só ansiedade». Me diga com clareza: a dor irradia para o braço, pescoço ou mandíbula? Tem suor frio ou desmaio agora? Se qualquer um desses sinais estiver presente, ou se você não tiver certeza, ligue 192 (SAMU) agora."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#duvida_infarto && !$emergencia_ativa",
+      "dialog_node": "node_duvida_infarto",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_emergencia_cardio",
+      "context": {
+        "eco_etapa": "screen_redflags",
+        "eco_path": true,
+        "risco": "C",
+        "triagem_etapa": "eco_screen"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Dúvida infarto — sim/incerto → SAMU",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Na dúvida, o atendimento presencial vem primeiro. Ligue agora para o SAMU (192). Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$eco_etapa == 'screen_redflags' && (#afirmacao || @sinal_alerta || @sinais_alerta || input.text.contains('talvez') || input.text.contains('não sei'))",
+      "dialog_node": "node_duvida_infarto_sim",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A",
+        "triagem_etapa": "done",
+        "eco_etapa": "done"
+      },
+      "digress_out": "allow_all_never_return",
+      "parent": "node_duvida_infarto"
+    },
+    {
+      "type": "standard",
+      "title": "Dúvida infarto — red flags negados → 4-7-8 com ressalva",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Por agora não vi sinal que peça o SAMU. A respiração 4-7-8 é prática física. Rede: CVV 188, ABRATA e CAPS. Se surgir irradiação, suor frio ou desmaio, 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$eco_etapa == 'screen_redflags' && #negacao && !@sinal_alerta && !@sinais_alerta",
+      "dialog_node": "node_duvida_infarto_nao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "eco_etapa": "done",
+        "risco": "B",
+        "triagem_etapa": "done"
+      },
+      "parent": "node_duvida_infarto",
+      "previous_sibling": "node_duvida_infarto_sim"
+    },
+    {
+      "type": "standard",
+      "title": "Dor mecânica / esforço localizado — cenário B",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Pois então, compreendi certinho. Como esse repuxo começou logo depois do esforço roçando o quintal e dói mais quando você vira o corpo, isso tem toda a característica de dor muscular, e não de um evento no coração. Fica tranquilo, visse? Mantém repouso e, se não melhorar nos próximos dias, procura o postinho do seu bairro."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "!$emergencia_ativa && !$triagem_etapa && !(input.text.contains('suor frio') || input.text.contains('suando') || input.text.contains('falta de ar') || input.text.contains('aperto') || input.text.contains('peso no peito') || input.text.contains('irradi')) && (#relatar_sintoma || #triagem_dor_peito || input.text.contains('repuxo') || input.text.contains('fisgada') || input.text.contains('mau jeito') || input.text.contains('fisgou') || input.text.contains('costela') || input.text.contains('roç') || input.text.contains('rocando') || input.text.contains('carpir') || input.text.contains('varrer')) && (input.text.contains('repuxo') || input.text.contains('fisgada') || input.text.contains('mau jeito') || input.text.contains('fisgou') || input.text.contains('costela') || input.text.contains('jeito')) && (input.text.contains('movimento') || input.text.contains('viro') || input.text.contains('esforço') || input.text.contains('esforco') || input.text.contains('roç') || input.text.contains('rocando') || input.text.contains('rocar') || input.text.contains('carp') || input.text.contains('capin') || input.text.contains('puxando peso') || input.text.contains('varrer') || input.text.contains('fisgada') || input.text.contains('repuxo') || input.text.contains('mau jeito') || input.text.contains('mato') || input.text.contains('quintal') || input.text.contains('costela') || input.text.contains('lenha') || input.text.contains('peso'))",
+      "dialog_node": "node_dor_mecanica",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_despedida",
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B",
+        "emergencia_ativa": false,
+        "dor_mecanica": true,
+        "esforco_local": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Esforço sem qualidade — uma pergunta MSK",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando tu vira o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "!$emergencia_ativa && !$triagem_etapa && !(input.text.contains('suor frio') || input.text.contains('suando') || input.text.contains('falta de ar') || input.text.contains('aperto') || input.text.contains('peso no peito')) && (#relatar_sintoma || input.text.contains('roç') || input.text.contains('rocando') || input.text.contains('carpir') || input.text.contains('capin') || input.text.contains('varrer') || input.text.contains('mato') || input.text.contains('quintal') || input.text.contains('puxando peso') || input.text.contains('lenha') || input.text.contains('esforço') || input.text.contains('esforco') || input.text.contains('movimento') || input.text.contains('viro'))",
+      "dialog_node": "node_dor_mecanica_q",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_dor_mecanica",
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C",
+        "esforco_local": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK esforço — sim → mecânica B",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Pois então, compreendi certinho. Como esse repuxo começou logo depois do esforço roçando o quintal e dói mais quando você vira o corpo, isso tem toda a característica de dor muscular, e não de um evento no coração. Fica tranquilo, visse? Mantém repouso e, se não melhorar nos próximos dias, procura o postinho do seu bairro."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || input.text.contains('piora') || input.text.contains('vira') || input.text.contains('respira') || input.text.contains('sim')",
+      "dialog_node": "node_dor_mecanica_q_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "parent": "node_dor_mecanica_q",
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B",
+        "dor_mecanica": true,
+        "emergencia_ativa": false
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK esforço — não → segue peito",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor é aperto, queimação ou pontada?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || input.text.contains('não') || input.text.contains('nao')",
+      "dialog_node": "node_dor_mecanica_q_nao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "parent": "node_dor_mecanica_q",
+      "previous_sibling": "node_dor_mecanica_q_sim",
+      "context": {
+        "triagem_etapa": "peito_q1",
+        "risco": "C",
+        "local_dor": "peito"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK esforço — reperguntar",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando tu vira o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_dor_mecanica_q_reask",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "parent": "node_dor_mecanica_q",
+      "previous_sibling": "node_dor_mecanica_q_nao",
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Cenário B — dor palpável/pleurítica sem alarme",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendido. Dor que piora na palpação, no movimento ou na respiração funda deixa menos provável um evento cardíaco agudo agora — sem ser diagnóstico. Se persistir, procure a UBS. Não precisa de ambulância neste momento."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(@caracteristica_msk || input.text.contains('aperto com o dedo') || input.text.contains('quando aperto') || input.text.contains('respiro fundo') || input.text.contains('é muscular') || input.text.contains('e muscular')) && !((@sintoma:sudorese || input.text.contains('suando')) && !$negou_suor) && !((@sintoma:irradiacao || input.text.contains('irradiando')) && !$negou_irradiacao) && !$emergencia_ativa && !(input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar'))",
+      "dialog_node": "node_cenario_b_msk",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B",
+        "emergencia_ativa": false
+      },
+      "previous_sibling": "node_dor_mecanica_q"
+    },
+    {
+      "type": "standard",
+      "title": "SAMU — equivalente isquêmico com alarme",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "($triagem_etapa == 'abd_q1' || $triagem_etapa == 'abd_q2' || $triagem_etapa == 'abd_assoc' || $local_dor == 'epigastrio') && !$negou_suor && (@sintoma:sudorese || input.text.contains('suor') || input.text.contains('suando')) && (input.text.contains('peito') || input.text.contains('costas') || input.text.contains('subindo') || @local_dor:peito || @sintoma:irradiacao) && !$negou_irradiacao",
+      "dialog_node": "node_samu_epigastrio",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_cenario_b_msk"
+    },
+    {
+      "type": "standard",
+      "title": "Cenário A — emergência cardiológica",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "((!$negou_irradiacao && !$negou_suor && !@local_dor:so_peito && !(input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não sinto dor no braço') || input.text.contains('nao sinto dor no braco')) && !(input.text.contains('não tenho suor') || input.text.contains('nao tenho suor') || input.text.contains('sem suor')) && ((#emergencia_cardio && $triagem_etapa != 'abd_q1' && $triagem_etapa != 'abd_q2' && $triagem_etapa != 'abd_assoc' && $triagem_etapa != 'peito_q2' && $triagem_etapa != 'peito_msk' && $triagem_etapa != 'peito_assoc') || @sintoma:dormencia || @sintoma:formigamento || @sintoma:adormecimento || (@contexto:isolamento && (@sintoma:irradiacao || @sintoma:dispneia || @sintoma:sudorese)))) || #alerta_emergencia) || (#red_flags)",
+      "dialog_node": "node_emergencia_cardio",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A",
+        "triagem_etapa": "done"
+      },
+      "previous_sibling": "node_samu_epigastrio"
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q2 — só no peito / não (não cai no fallback)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_q2' && (#negacao || @local_dor:so_peito || input.text.contains('só no peito') || input.text.contains('so no peito') || input.text.contains('fica no peito') || input.text.contains('fica só no peito') || input.text.contains('fica so no peito') || input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não vai') || input.text.contains('nao vai'))",
+      "dialog_node": "node_peito_q2_so_peito_root",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C",
+        "irradiacao": "nenhuma",
+        "negou_irradiacao": true
+      },
+      "previous_sibling": "node_duvida_infarto"
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q2 — sim irradia (uma pergunta autonômica)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tá com suor frio ou falta de ar agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_q2' && (#afirmacao || @sintoma:irradiacao || @local_dor:braco || @local_dor:costas || input.text.contains('braço') || input.text.contains('braco') || input.text.contains('irradia') || input.text.contains('pras costas')) && !(@sintoma:sudorese || @sintoma:dispneia || @barreira_socorro || input.text.contains('suando') || input.text.contains('suor frio') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('falta de ar') || input.text.contains('peito pesado'))",
+      "dialog_node": "node_peito_q2_sim_root",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_assoc",
+        "risco": "C"
+      },
+      "previous_sibling": "node_peito_q2_so_peito_root"
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q2 — alarme no turno → jump SAMU",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_q2' && (@sintoma:sudorese || @sintoma:dispneia || @barreira_socorro || input.text.contains('suando') || input.text.contains('suor frio') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('falta de ar') || input.text.contains('peito pesado')) && !$negou_suor",
+      "dialog_node": "node_peito_q2_alarme_root",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_peito_q2_sim_root"
+    },
+    {
+      "type": "standard",
+      "title": "Peito MSK — sim → cenário B",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendido. Dor que piora na palpação, no movimento ou na respiração funda deixa menos provável um evento cardíaco agudo agora — sem ser diagnóstico. Se persistir, procure a UBS. Não precisa de ambulância neste momento."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_msk' && (#afirmacao || @caracteristica_msk || input.text.contains('piora') || input.text.contains('aperto') || input.text.contains('respiro') || input.text.contains('sim'))",
+      "dialog_node": "node_peito_msk_sim_root",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      },
+      "previous_sibling": "node_peito_q2_alarme_root"
+    },
+    {
+      "type": "standard",
+      "title": "Peito MSK — não",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Por agora não vi sinal que peça o SAMU na hora. Se a dor continuar, vale avaliação na UBS. Se ir pro braço, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_msk' && (#negacao || input.text.contains('não') || input.text.contains('nao')) && !#afirmacao",
+      "dialog_node": "node_peito_msk_nao_root",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      },
+      "previous_sibling": "node_peito_msk_sim_root"
+    },
+    {
+      "type": "standard",
+      "title": "Peito assoc — sim → jump SAMU",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_assoc' && (#afirmacao || @sintoma:sudorese || @sintoma:dispneia || input.text.contains('suando') || input.text.contains('falta de ar') || input.text.contains('sim'))",
+      "dialog_node": "node_peito_assoc_sim_root",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_peito_msk_nao_root"
+    },
+    {
+      "type": "standard",
+      "title": "Peito assoc — não → discriminador MSK",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_assoc' && (#negacao || input.text.contains('não') || input.text.contains('nao'))",
+      "dialog_node": "node_peito_assoc_nao_root",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C"
+      },
+      "previous_sibling": "node_peito_assoc_sim_root"
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese abdominal — Q1 resposta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Esse desconforto sobe para o peito ou para as costas?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'abd_q1'",
+      "dialog_node": "node_abd_q1",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_q2",
+        "qualidade": "aperto",
+        "risco": "C"
+      },
+      "previous_sibling": "node_peito_assoc_nao_root"
+    },
+    {
+      "type": "standard",
+      "title": "Abdominal Q1 — filho sim/epigástrio",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Esse desconforto sobe para o peito ou para as costas?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @local_dor:epigastrio || input.text.contains('cima') || input.text.contains('estômago') || input.text.contains('estomago')",
+      "dialog_node": "node_abd_q1_sim",
+      "parent": "node_abd_q1",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_q2",
+        "local_dor": "epigastrio",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Abdominal Q1 — filho não/baixo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi. Por agora não vi sinais que peçam o SAMU na hora. Se a dor subir pro peito, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || @local_dor:baixo_ventre || input.text.contains('baixo') || input.text.contains('embaixo')",
+      "dialog_node": "node_abd_q1_nao",
+      "parent": "node_abd_q1",
+      "previous_sibling": "node_abd_q1_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "local_dor": "baixo_ventre",
+        "risco": "B"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese abdominal — Q2",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tá com suor frio ou falta de ar agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'abd_q2' && (#afirmacao || @sintoma:irradiacao || input.text.contains('peito') || input.text.contains('costas') || input.text.contains('sobe'))",
+      "dialog_node": "node_abd_q2",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_assoc",
+        "risco": "C"
+      },
+      "previous_sibling": "node_abd_q1"
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese abdominal — Q2 sem irradiação",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi. Por agora não vi sinais que peçam o SAMU na hora. Se a dor subir pro peito, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'abd_q2' && (#negacao || @local_dor:so_peito || input.text.contains('não') || input.text.contains('nao'))",
+      "dialog_node": "node_abd_q2_nao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      },
+      "previous_sibling": "node_abd_q2"
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese abdominal — autonômico sim → SAMU jump",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'abd_assoc' && (#afirmacao || @sintoma:sudorese || input.text.contains('suor') || input.text.contains('falta de ar'))",
+      "dialog_node": "node_abd_assoc_samu",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      },
+      "previous_sibling": "node_abd_q2_nao"
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese abdominal — autonômico não",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi. Por agora não vi sinais que peçam o SAMU na hora. Se a dor subir pro peito, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'abd_assoc'",
+      "dialog_node": "node_abd_assoc",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      },
+      "previous_sibling": "node_abd_assoc_samu"
+    },
+    {
+      "type": "standard",
+      "title": "Anamnese peito — Q1 resposta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$triagem_etapa == 'peito_q1'",
+      "dialog_node": "node_peito_q1",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "local_dor": "peito",
+        "risco": "C"
+      },
+      "previous_sibling": "node_abd_assoc"
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q1 filho — alarme → jump",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@sintoma:sudorese || @sintoma:dispneia || @barreira_socorro || input.text.contains('suando') || input.text.contains('suor frio') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('falta de ar') || input.text.contains('peito pesado')",
+      "dialog_node": "node_peito_q1_alarme",
+      "parent": "node_peito_q1",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q1 filho — qualidade e segue 1 pergunta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @qualidade_dor || input.text.contains('aperto') || input.text.contains('queimação') || input.text.contains('queimacao') || input.text.contains('pontada') || input.text.contains('peito')",
+      "dialog_node": "node_peito_q1_ok",
+      "parent": "node_peito_q1",
+      "previous_sibling": "node_peito_q1_alarme",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "local_dor": "peito",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q1/Q2 neto — só no peito",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || @local_dor:so_peito || input.text.contains('só no peito') || input.text.contains('so no peito') || input.text.contains('fica no peito') || input.text.contains('fica só no peito') || input.text.contains('fica so no peito') || input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não vai') || input.text.contains('nao vai')",
+      "dialog_node": "node_peito_q1_neto_so_peito",
+      "parent": "node_peito_q1_ok",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C",
+        "irradiacao": "nenhuma",
+        "negou_irradiacao": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q1/Q2 neto — sim irradia",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tá com suor frio ou falta de ar agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @sintoma:irradiacao || @local_dor:braco || @local_dor:costas || input.text.contains('braço') || input.text.contains('braco') || input.text.contains('irradia') || input.text.contains('pras costas')",
+      "dialog_node": "node_peito_q1_neto_sim",
+      "parent": "node_peito_q1_ok",
+      "previous_sibling": "node_peito_q1_neto_so_peito",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_assoc",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito Q1/Q2 neto — reperguntar (não cai no anything_else)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_peito_q1_neto_reask",
+      "parent": "node_peito_q1_ok",
+      "previous_sibling": "node_peito_q1_neto_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Entrada — queimação na barriga",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa queimação é mais na boca do estômago, em cima, ou embaixo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#queixa_abdominal && !$emergencia_ativa && !$triagem_etapa && (@qualidade_dor:queimacao || @sintoma:nausea || input.text.contains('queimação') || input.text.contains('enjoo'))",
+      "dialog_node": "node_abd_queimacao_start",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_assoc",
+        "qualidade": "queimacao",
+        "risco": "C"
+      },
+      "previous_sibling": "node_peito_q1"
+    },
+    {
+      "type": "standard",
+      "title": "Entrada — dor na barriga",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor é mais na boca do estômago, em cima, ou mais para baixo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#queixa_abdominal && !$emergencia_ativa && !$triagem_etapa",
+      "dialog_node": "node_abd_start",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_q1",
+        "risco": "C"
+      },
+      "previous_sibling": "node_abd_queimacao_start"
+    },
+    {
+      "type": "standard",
+      "title": "Barriga start — em cima / sim",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Esse desconforto sobe para o peito ou para as costas?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @local_dor:epigastrio || input.text.contains('cima') || input.text.contains('estômago') || input.text.contains('estomago')",
+      "dialog_node": "node_abd_start_cima",
+      "parent": "node_abd_start",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_q2",
+        "local_dor": "epigastrio",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Barriga start — embaixo / não",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi. Por agora não vi sinais que peçam o SAMU na hora. Se a dor subir pro peito, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || @local_dor:baixo_ventre || input.text.contains('baixo') || input.text.contains('embaixo')",
+      "dialog_node": "node_abd_start_baixo",
+      "parent": "node_abd_start",
+      "previous_sibling": "node_abd_start_cima",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "local_dor": "baixo_ventre",
+        "risco": "B"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Barriga start — reperguntar",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor é mais na boca do estômago, em cima, ou mais para baixo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_abd_start_reask",
+      "parent": "node_abd_start",
+      "previous_sibling": "node_abd_start_baixo",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "abd_q1",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Entrada — aperto no peito já descrito",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(#triagem_dor_peito || #relatar_sintoma) && !$emergencia_ativa && !$triagem_etapa && (@qualidade_dor || input.text.contains('aperto') || input.text.contains('queimação') || input.text.contains('pontada') || input.text.contains('pesado') || input.text.contains('meio do peito') || input.text.contains('repuxo') || input.text.contains('fisgada')) && !(input.text.contains('roç') || input.text.contains('rocando') || input.text.contains('carpir') || input.text.contains('varrer') || input.text.contains('mau jeito') || input.text.contains('puxando peso'))",
+      "dialog_node": "node_peito_com_qualidade",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "local_dor": "peito",
+        "qualidade": "aperto",
+        "risco": "C"
+      },
+      "previous_sibling": "node_abd_start"
+    },
+    {
+      "type": "standard",
+      "title": "Peito qualidade — alarme no turno → jump",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@sintoma:sudorese || @sintoma:dispneia || @barreira_socorro || input.text.contains('suando') || input.text.contains('suor frio') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('falta de ar') || input.text.contains('peito pesado')",
+      "dialog_node": "node_peito_qual_alarme",
+      "parent": "node_peito_com_qualidade",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito qualidade — só no peito / não",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || @local_dor:so_peito || input.text.contains('só no peito') || input.text.contains('so no peito') || input.text.contains('fica no peito') || input.text.contains('fica só no peito') || input.text.contains('fica so no peito') || input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não vai') || input.text.contains('nao vai')",
+      "dialog_node": "node_peito_qual_so_peito",
+      "parent": "node_peito_com_qualidade",
+      "previous_sibling": "node_peito_qual_alarme",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C",
+        "irradiacao": "nenhuma",
+        "negou_irradiacao": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK filho — sim → B",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendido. Dor que piora na palpação, no movimento ou na respiração funda deixa menos provável um evento cardíaco agudo agora — sem ser diagnóstico. Se persistir, procure a UBS. Não precisa de ambulância neste momento."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @caracteristica_msk || input.text.contains('piora') || input.text.contains('sim') || input.text.contains('aperto') || input.text.contains('respiro')",
+      "dialog_node": "node_peito_qual_msk_sim",
+      "parent": "node_peito_qual_so_peito",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK filho — não",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Por agora não vi sinal que peça o SAMU na hora. Se a dor continuar, vale avaliação na UBS. Se ir pro braço, vier suor frio ou falta de ar, liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || input.text.contains('não') || input.text.contains('nao')",
+      "dialog_node": "node_peito_qual_msk_nao",
+      "parent": "node_peito_qual_so_peito",
+      "previous_sibling": "node_peito_qual_msk_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "done",
+        "risco": "B"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "MSK filho — catch (não cai no fallback)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_peito_qual_msk_reask",
+      "parent": "node_peito_qual_so_peito",
+      "previous_sibling": "node_peito_qual_msk_nao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito qualidade — sim irradia",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tá com suor frio ou falta de ar agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @sintoma:irradiacao || @local_dor:braco || @local_dor:costas || input.text.contains('braço') || input.text.contains('braco') || input.text.contains('irradia') || input.text.contains('pras costas')",
+      "dialog_node": "node_peito_qual_sim",
+      "parent": "node_peito_com_qualidade",
+      "previous_sibling": "node_peito_qual_so_peito",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_assoc",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Autonômico filho — sim → jump SAMU",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @sintoma:sudorese || @sintoma:dispneia || input.text.contains('suando') || input.text.contains('falta de ar') || input.text.contains('sim')",
+      "dialog_node": "node_peito_qual_assoc_sim",
+      "parent": "node_peito_qual_sim",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Autonômico filho — não → MSK",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || input.text.contains('não') || input.text.contains('nao')",
+      "dialog_node": "node_peito_qual_assoc_nao",
+      "parent": "node_peito_qual_sim",
+      "previous_sibling": "node_peito_qual_assoc_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito qualidade — reperguntar (não cai no anything_else)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_peito_qual_reask",
+      "parent": "node_peito_com_qualidade",
+      "previous_sibling": "node_peito_qual_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Entrada — dor no peito",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor é aperto, queimação ou pontada?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(((#triagem_dor_peito || #relatar_sintoma) && !$emergencia_ativa && !$triagem_etapa) || (#sintoma_peito && !$emergencia_ativa)) || (#sintoma_cardiaco && !$emergencia_ativa) || (#relatar_dor_peito && !$emergencia_ativa)",
+      "dialog_node": "node_peito_start",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q1",
+        "local_dor": "peito",
+        "risco": "C"
+      },
+      "previous_sibling": "node_peito_com_qualidade"
+    },
+    {
+      "type": "standard",
+      "title": "Peito start — alarme → jump",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Isso exige avaliação médica imediata. Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. Mantenha repouso absoluto."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "@sintoma:sudorese || @sintoma:dispneia || @barreira_socorro || input.text.contains('suando') || input.text.contains('suor frio') || input.text.contains('não levanto') || input.text.contains('nao levanto') || input.text.contains('não consigo nem levantar') || input.text.contains('nao consigo nem levantar') || input.text.contains('falta de ar') || input.text.contains('peito pesado')",
+      "dialog_node": "node_peito_start_alarme",
+      "parent": "node_peito_start",
+      "next_step": {
+        "behavior": "jump_to",
+        "dialog_node": "node_emergencia_hold",
+        "selector": "user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "triagem_etapa": "done",
+        "risco": "A"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito start — qualidade e uma pergunta de irradiação",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @qualidade_dor || input.text.contains('aperto') || input.text.contains('queimação') || input.text.contains('queimacao') || input.text.contains('pontada') || input.text.contains('peito')",
+      "dialog_node": "node_peito_start_ok",
+      "parent": "node_peito_start",
+      "previous_sibling": "node_peito_start_alarme",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "local_dor": "peito",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito start neto — só no peito",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#negacao || @local_dor:so_peito || input.text.contains('só no peito') || input.text.contains('so no peito') || input.text.contains('fica no peito') || input.text.contains('fica só no peito') || input.text.contains('fica so no peito') || input.text.contains('não irradia') || input.text.contains('nao irradia') || input.text.contains('não vai') || input.text.contains('nao vai')",
+      "dialog_node": "node_peito_start_so_peito",
+      "parent": "node_peito_start_ok",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_msk",
+        "risco": "C",
+        "irradiacao": "nenhuma",
+        "negou_irradiacao": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito start neto — sim irradia",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Tá com suor frio ou falta de ar agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#afirmacao || @sintoma:irradiacao || @local_dor:braco || @local_dor:costas || input.text.contains('braço') || input.text.contains('braco') || input.text.contains('irradia') || input.text.contains('pras costas')",
+      "dialog_node": "node_peito_start_sim",
+      "parent": "node_peito_start_ok",
+      "previous_sibling": "node_peito_start_so_peito",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_assoc",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito start neto — reperguntar",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor vai para o braço e costas, ou fica só no peito?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_peito_start_reask",
+      "parent": "node_peito_start_ok",
+      "previous_sibling": "node_peito_start_sim",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q2",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Peito start — reperguntar qualidade",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Essa dor é aperto, queimação ou pontada?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "true",
+      "dialog_node": "node_peito_start_reask_q",
+      "parent": "node_peito_start",
+      "previous_sibling": "node_peito_start_ok",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "triagem_etapa": "peito_q1",
+        "risco": "C"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Pressão arterial",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Meça após 5 minutos sentado, braço na altura do coração, e anote PAS/PAD. Alerta deste protótipo: PAS ≥ 180, PAD ≥ 120 ou FC > 120 em repouso."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#pressao_arterial && !$emergencia_ativa",
+      "dialog_node": "node_pressao_arterial",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_peito_start"
+    },
+    {
+      "type": "standard",
+      "title": "Lembrete de medicamento",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Posso te ajudar a organizar o lembrete da medicação de uso contínuo. Horário fixo e alarme no celular ajudam. Nunca duplique a dose se esquecer a anterior — confirma com teu prescritor."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#lembrete_medicamento && !$emergencia_ativa && !#pedido_medicacao",
+      "dialog_node": "node_lembrete_medicamento",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_pressao_arterial"
+    },
+    {
+      "type": "standard",
+      "title": "Agendamento de consulta",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Pra agendar, o caminho é a central da instituição — neste protótipo não tem agenda de verdade. Leva lista de remédios, medidas de PA e exames prévios. Se a queixa for dor no peito com suor frio ou falta de ar, não agenda: liga 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#agendamento_consulta && !$emergencia_ativa",
+      "dialog_node": "node_agendamento_consulta",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_lembrete_medicamento"
+    },
+    {
+      "type": "standard",
+      "title": "ECO — ansiedade (rastreio antes de psicoeducação)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Estou aqui com você. Palpitação e aperto situacional podem ser a resposta autonômica de luta-ou-fuga — compartilhada pelo corpo, sem ser diagnóstico. Antes de qualquer hipótese de estresse, precisamos afastar emergência. Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(#sintoma_ansiedade && !$emergencia_ativa && !@sinal_alerta) || (#estresse_ansiedade && !$emergencia_ativa && !@sinal_alerta && !@sinais_alerta) || (#estresse_ansiedade && @gatilho_emocional && !$emergencia_ativa && !@sinal_alerta)",
+      "dialog_node": "node_sintoma_ansiedade",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_agendamento_consulta",
+      "context": {
+        "eco_path": true,
+        "eco_etapa": "screen_redflags",
+        "risco": "C",
+        "triagem_etapa": "eco_screen"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "ECO — taquicardia (rastreio primeiro)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Estou aqui com você. Palpitação pode ser resposta de alerta do sistema nervoso — sem ser diagnóstico. Antes, precisamos afastar emergência cardíaca. A palpitação veio com dor no peito irradiando, suor frio ou desmaio?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#sintoma_taquicardia && !$emergencia_ativa && !@sinal_alerta && !@sinais_alerta",
+      "dialog_node": "node_sintoma_taquicardia",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_sintoma_ansiedade",
+      "context": {
+        "eco_path": true,
+        "eco_etapa": "screen_redflags",
+        "risco": "C",
+        "triagem_etapa": "eco_screen"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "ECO — 4-7-8 (bloqueado se red flag)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Por agora não vi sinal que peça o SAMU na hora. Faça a respiração 4-7-8: inspire 4, segure 7, expire 8. Rede de apoio: CVV 188, ABRATA e o CAPS do município. Se aparecer irradiação, suor frio ou desmaio, ligue 192."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#solicitar_respiracao && !$emergencia_ativa && !@sinal_alerta && !@sinais_alerta && $risco != 'A'",
+      "dialog_node": "node_solicitar_respiracao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_sintoma_taquicardia",
+      "context": {
+        "eco_path": true,
+        "eco_etapa": "done"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Saudação",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Oi, tudo bem? Eu sou a CardioIA — triagem inicial, sem diagnosticar e sem receitar. Pode me contar o que está sentindo.\n\nEste assistente não substitui atendimento médico. Em emergências, ligue 192 (SAMU)."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#saudacao && !$emergencia_ativa && !$triagem_etapa && !#relatar_sintoma && !#triagem_dor_peito && !#emergencia_cardio && !#queixa_abdominal && !(input.text.contains('dor') || input.text.contains('peito') || input.text.contains('repuxo') || input.text.contains('fisgada') || input.text.contains('mau jeito') || input.text.contains('aperto') || input.text.contains('suor') || input.text.contains('roç') || input.text.contains('carpir') || input.text.contains('varrer') || input.text.contains('costela') || input.text.contains('esforço') || input.text.contains('problema') || input.text.contains('mal ') || input.text.contains('ajuda')) && !#sintoma_peito && !#sintoma_ansiedade && !#sintoma_taquicardia && !#duvida_infarto && !#alerta_emergencia && !#solicitar_respiracao && !#ideacao_crise && !#sintoma_cardiaco && !#red_flags && !#estresse_ansiedade && !#ideacao_risco && !#relatar_dor_peito && !#pedir_ajuda_humana",
+      "dialog_node": "node_saudacao",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "disclaimer_enviado": true
+      },
+      "previous_sibling": "node_pedir_ajuda_humana"
+    },
+    {
+      "type": "standard",
+      "title": "Pedido de atendimento humano",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Claro — este canal é triagem inicial, não substitui pessoa. Se for emergência cardíaca (aperto, irradiação, suor frio, desmaio), ligue 192 agora. Se for crise emocional com ideação, ligue 188 (CVV). Fora disso, UBS, CAPS ou o plantão da instituição. Na dúvida entre estresse e coração, o presencial vem primeiro — nunca «é só ansiedade»."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#pedir_ajuda_humana && !$emergencia_ativa",
+      "dialog_node": "node_pedir_ajuda_humana",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_solicitar_respiracao",
+      "context": {
+        "pedido_humano": true
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Anything else (fallback)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Capaz que vamos deixar passar — me conta de outro jeito o que está sentindo. Posso orientar triagem de dor no peito, acolhimento de estresse e respiração 4-7-8. Se for emergência cardíaca, liga 192 (SAMU). Em crise emocional com ideação, 188 (CVV)."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_queixa_cefaleia",
+      "digress_in": "not_available"
+    },
+    {
+      "type": "standard",
+      "title": "Cefaleia isolada — triagem calma",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi a dor de cabeça — por agora, isolada, não peço o SAMU. Me diga: ela começou de repente e é a pior da sua vida? Tem rigidez de nuca, fraqueza de um lado, fala enrolada ou alteração visual? Se algum desses sinais estiver presente, ligue 192. Caso contrário, repouse, hidrate e, se persistir ou piorar, procure a UBS."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "(#queixa_cefaleia || input.text.contains('dor de cabeça') || input.text.contains('dor de cabeca') || input.text.contains('cefaleia') || input.text.contains('enxaqueca') || input.text.contains('cabeça dói') || input.text.contains('cabeca doi')) && !input.text.contains('peito') && !input.text.contains('suor frio') && !input.text.contains('rigidez de nuca') && !input.text.contains('fala enrolada')",
+      "dialog_node": "node_queixa_cefaleia",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "previous_sibling": "node_saudacao",
+      "context": {
+        "risco": "C",
+        "emergencia_ativa": false,
+        "triagem_etapa": "done"
+      }
+    }
+  ],
+  "counterexamples": [
+    {
+      "text": "qual o placar do jogo"
+    },
+    {
+      "text": "me conte uma piada"
+    },
+    {
+      "text": "receita de bolo de chocolate"
+    },
+    {
+      "text": "dor de cabeça"
+    },
+    {
+      "text": "tenho forte dor de cabeça quando vou dormir"
+    },
+    {
+      "text": "estou com cefaleia"
+    },
+    {
+      "text": "minha cabeça dói"
+    }
+  ],
+  "learning_opt_out": false,
+  "system_settings": {
+    "off_topic": {
+      "enabled": false
+    },
+    "disambiguation": {
+      "prompt": "Você quis dizer:",
+      "enabled": false
+    },
+    "human_agent_assist": {
+      "enabled": false
+    }
+  }
+}

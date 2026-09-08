@@ -1,0 +1,92 @@
+{
+  "database": "cardioia",
+  "engine": "json-file | mongodb",
+  "description": "Coleção NoSQL de trilha de auditoria do worker RPA. Payloads textuais e metadados de execução; dados 100% sintéticos.",
+  "collections": {
+    "rpa_audit_logs": {
+      "indexes": [
+        { "keys": { "run_id": 1 } },
+        { "keys": { "timestamp": -1 } },
+        { "keys": { "paciente_identificador": 1, "timestamp": -1 } },
+        { "keys": { "event_type": 1 } }
+      ],
+      "json_schema": {
+        "bsonType": "object",
+        "required": ["run_id", "timestamp", "event_type", "status"],
+        "properties": {
+          "run_id": { "bsonType": "string" },
+          "timestamp": { "bsonType": "string", "description": "ISO-8601 UTC" },
+          "event_type": {
+            "enum": [
+              "WORKER_START",
+              "WORKER_STOP",
+              "FETCH_UNPROCESSED",
+              "ANOMALY_DETECTED",
+              "ALERT_WRITTEN",
+              "READING_MARKED",
+              "ERROR"
+            ]
+          },
+          "status": { "enum": ["ok", "warn", "error"] },
+          "paciente_identificador": { "bsonType": ["string", "null"] },
+          "leitura_id": { "bsonType": ["int", "long", "null"] },
+          "alertas": { "bsonType": "array" },
+          "payload_textual": { "bsonType": "string" },
+          "metadata": { "bsonType": "object" }
+        }
+      }
+    }
+  },
+  "example_documents": [
+    {
+      "run_id": "rpa-2026-08-26T18-00-00Z",
+      "timestamp": "2026-08-26T18:00:01Z",
+      "event_type": "WORKER_START",
+      "status": "ok",
+      "paciente_identificador": null,
+      "leitura_id": null,
+      "alertas": [],
+      "payload_textual": "Worker RPA CardioIA iniciado em modo --once (demonstração acadêmica).",
+      "metadata": {
+        "host": "local-demo",
+        "sql_engine": "sqlite",
+        "nosql_engine": "json-file",
+        "disclaimer": "Este assistente não substitui atendimento médico. Em emergências, ligue 192 (SAMU)."
+      }
+    },
+    {
+      "run_id": "rpa-2026-08-26T18-00-00Z",
+      "timestamp": "2026-08-26T18:00:02Z",
+      "event_type": "ANOMALY_DETECTED",
+      "status": "warn",
+      "paciente_identificador": "PAC-SYN-102",
+      "leitura_id": 2,
+      "alertas": [
+        {
+          "tipo": "CRISE_HIPERTENSIVA_SISTOLICA",
+          "severidade": "EMERGENCIA",
+          "limiar": "PAS >= 180 mmHg",
+          "valor": 188
+        }
+      ],
+      "payload_textual": "Leitura sintética PAC-SYN-102: PAS 188 mmHg ultrapassou limiar de crise. Auditoria NoSQL sem PHI real.",
+      "metadata": {
+        "pressao_sistolica": 188,
+        "pressao_diastolica": 96,
+        "frequencia_cardiaca": 90,
+        "spo2": 97
+      }
+    },
+    {
+      "run_id": "rpa-2026-08-26T18-00-00Z",
+      "timestamp": "2026-08-26T18:00:03Z",
+      "event_type": "ALERT_WRITTEN",
+      "status": "ok",
+      "paciente_identificador": "PAC-SYN-102",
+      "leitura_id": 2,
+      "alertas": ["CRISE_HIPERTENSIVA_SISTOLICA"],
+      "payload_textual": "Alerta estruturado persistido em alertas_emitidos (SQL) e espelhado neste log.",
+      "metadata": { "tabela": "alertas_emitidos", "origem": "rpa_monitor.py" }
+    }
+  ]
+}

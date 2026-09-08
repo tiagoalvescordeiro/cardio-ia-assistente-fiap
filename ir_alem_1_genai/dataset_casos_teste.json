@@ -1,0 +1,52 @@
+[
+  {
+    "id": "CASO-BAIXO-01",
+    "risco_esperado": "BAIXO",
+    "narrativa": "Paciente sintético PAC-SYN-001, 45 anos, sexo masculino. Retorno de rotina após check-up empresarial. Relato: cansaço leve após treino de musculação, sem dor no peito, sem falta de ar e sem síncope. Sinais vitais: PA 118/76 mmHg, FC 68 bpm, SpO2 99%. Medicações em uso: omeprazol 20 mg 1x/dia. Nega tabagismo atual. Dados fictícios para demonstração acadêmica."
+  },
+  {
+    "id": "CASO-BAIXO-02",
+    "risco_esperado": "BAIXO",
+    "narrativa": "Identificador PAC-SYN-002, 62 anos. Queixa principal: consulta de acompanhamento, refere-se bem, apenas deseja conferir a pressão. PA 128/78 mmHg, frequência cardíaca 72 bpm, saturação SpO2 98%. Medicamentos: losartana 50 mg 1x/dia e atenolol 25 mg 1x/dia. Sem palpitação, sem edema e sem ortopneia. Registro sintético CardioIA."
+  },
+  {
+    "id": "CASO-MODERADO-01",
+    "risco_esperado": "MODERADO",
+    "narrativa": "PAC-SYN-003, 55 anos. Queixa principal: palpitações esporádicas à noite, sem dor torácica e sem desmaio. Medida de consultório PA 142/88 mmHg, FC 96 bpm, SpO2 97%. Uso de enalapril 10 mg 1x/dia. Nega irradiação, sudorese fria ou dispneia. Caso sintético de estratificação intermediária."
+  },
+  {
+    "id": "CASO-MODERADO-02",
+    "risco_esperado": "MODERADO",
+    "narrativa": "Paciente PAC-SYN-004, 50 anos. Relato de dor no peito tipo pontada após refeição pesada, sem irradiação para braço, sem suor frio e sem falta de ar. PA 130/80 mmHg, FC 78 bpm, SpO2 98%. Medicações: sinvastatina 20 mg 1x/dia. Diferencial de desconforto atípico — dados fictícios."
+  },
+  {
+    "id": "CASO-ALTO-01",
+    "risco_esperado": "ALTO",
+    "narrativa": "PAC-SYN-005, 68 anos. Queixa principal: dor no peito em aperto que irradia para o braço esquerdo há cerca de 40 minutos, sem sudorese e sem dispneia franca. Sinais vitais: pressão arterial 168/102 mmHg, FC 92 bpm, SpO2 95%. Em uso de AAS 100 mg 1x/dia, atenolol 50 mg 1x/dia e atorvastatina 40 mg 1x/dia. Prontuário sintético de alto risco."
+  },
+  {
+    "id": "CASO-ALTO-02",
+    "risco_esperado": "ALTO",
+    "narrativa": "Identificador PAC-SYN-006, 71 anos. Queixa: dispneia aos mínimos esforços e cansaço progressivo há três dias, sem dor irradiada e sem sudorese. PA 150/90 mmHg, FC 108 bpm, SpO2 91%. Medicações: furosemida 40 mg 1x/dia, carvedilol 6.25 mg 2x/dia, espironolactona 25 mg 1x/dia. Hipótese didática de descompensação — dados não reais."
+  },
+  {
+    "id": "CASO-EMERGENCIA-01",
+    "risco_esperado": "EMERGENCIA",
+    "narrativa": "PAC-SYN-007, 59 anos. Queixa principal: dor no peito em opressão irradiando para a mandíbula, sudorese fria profusa e falta de ar intensa iniciadas há 25 minutos, em repouso. PA 148/92 mmHg, FC 110 bpm, SpO2 93%. Medicações: AAS 100 mg 1x/dia e losartana 100 mg 1x/dia. Tríade de red flags (irradiação + diaforese + dispneia). Caso 100% sintético."
+  },
+  {
+    "id": "CASO-EMERGENCIA-02",
+    "risco_esperado": "EMERGENCIA",
+    "narrativa": "Paciente sintético PAC-SYN-008, 74 anos. Procura a unidade com cefaleia forte e visão turva. PA 192/124 mmHg, FC 88 bpm, SpO2 96%. Em uso de amlodipino 10 mg 1x/dia, hidroclorotiazida 25 mg 1x/dia e enalapril 20 mg 2x/dia. Valores de crise hipertensiva (PAS ≥ 180 ou PAD ≥ 120) do protocolo CardioIA. Sem identificação real."
+  },
+  {
+    "id": "CASO-EMERGENCIA-03",
+    "risco_esperado": "EMERGENCIA",
+    "narrativa": "PAC-SYN-009, 63 anos. Relato: dor no peito em aperto em repouso com taquicardia. PA 160/95 mmHg, frequência cardíaca 132 bpm, SpO2 94%. Medicações: clopidogrel 75 mg 1x/dia e metoprolol 50 mg 1x/dia. FC > 120 bpm em repouso associada a sintoma isquêmico — limiar herdado da Fase 3 (BPM > 120). Dados fictícios."
+  },
+  {
+    "id": "CASO-EMERGENCIA-04",
+    "risco_esperado": "EMERGENCIA",
+    "narrativa": "Identificador PAC-SYN-010, 80 anos. Queixa principal: dispneia súbita e cianose labial. PA 110/70 mmHg, FC 118 bpm, SpO2 86%. Medicações: rivaroxabana 20 mg 1x/dia e furosemida 40 mg 1x/dia. Hipoxemia crítica (SpO2 < 90%). Registro sintético para o pipeline de extração."
+  }
+]
