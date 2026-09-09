@@ -60,8 +60,8 @@ IDEACAO_INTENTS = {INTENT_IDEACAO, INTENT_IDEACAO_RISCO}
 # --- Respostas canônicas (skill Watson + fallback devem coincidir) ---
 
 REPLY_SAUDACAO = (
-    "Oi, tudo bem? Eu sou a CardioIA — triagem inicial, sem diagnosticar e sem receitar. "
-    "Pode me contar o que está sentindo. "
+    "Olá, tudo bem? Eu sou a CardioIA — triagem e acolhimento inicial, "
+    "sem diagnosticar e sem receitar. Pode me contar o que está sentindo. "
     f"{DISCLAIMER}"
 )
 
@@ -77,18 +77,16 @@ REPLY_MSK_Q = (
     "Essa dor piora quando você aperta o lugar, mexe o tronco ou respira fundo?"
 )
 
-REPLY_MSK_ESFORCO_Q = "Essa dor piora quando tu vira o tronco ou respira fundo?"
+REPLY_MSK_ESFORCO_Q = "Essa dor piora quando você vira o tronco ou respira fundo?"
 
 REPLY_MECANICA = (
-    "Pois então, compreendi certinho. "
-    "Como esse repuxo começou logo depois do esforço roçando o quintal e dói mais "
-    "quando você vira o corpo, isso tem toda a característica de dor muscular, "
-    "e não de um evento no coração. "
-    "Fica tranquilo, visse? Mantém repouso e, se não melhorar nos próximos dias, "
-    "procura o postinho do seu bairro."
+    "Compreendi. Como esse repuxo começou logo depois do esforço e dói mais "
+    "quando você vira o corpo, isso tem característica de dor muscular — "
+    "sem ser um diagnóstico. "
+    "Mantenha repouso e, se não melhorar nos próximos dias, procure a UBS."
 )
 
-REPLY_AUTONOMIC_Q = "Tá com suor frio ou falta de ar agora?"
+REPLY_AUTONOMIC_Q = "Você está com suor frio ou falta de ar agora?"
 
 REPLY_CENARIO_B = (
     "Entendido. Dor que piora na palpação, no movimento ou na respiração funda "
@@ -104,63 +102,65 @@ REPLY_ABD_QUEIMACAO_NAUSEA = (
 
 REPLY_SAMU_EPIGASTRIO = (
     "Isso exige avaliação médica imediata. "
-    "Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. "
+    "Ligue agora para o SAMU (192) ou peça para alguém levá-lo à emergência. "
     "Mantenha repouso absoluto."
 )
 
 REPLY_EMERGENCIA_IMOVEL = (
-    "Olha só, fica parado e não tenta fazer esforço, visse? "
+    "Fique parado e não tente fazer esforço. "
     "Isso exige avaliação médica imediata. "
-    "Usa o comando de voz do celular agora pra chamar o **192 (SAMU)** ou grita por socorro pra quem estiver perto. "
+    "Use o comando de voz do celular agora para ligar o **192 (SAMU)** "
+    "ou peça socorro a quem estiver perto. "
     "Mantenha repouso absoluto."
 )
 
 REPLY_EMERGENCIA = (
     "Isso exige avaliação médica imediata. "
-    "Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. "
+    "Ligue agora para o SAMU (192) ou peça para alguém levá-lo à emergência. "
     "Mantenha repouso absoluto."
 )
 
 REPLY_EMERGENCIA_HOLD = (
     "Mantenha repouso absoluto. Se ainda não ligou, ligue agora para o SAMU (192). "
-    "Não faz esforço e não dirige."
+    "Não faça esforço e não dirija."
 )
 
 REPLY_ISOLAMENTO = (
-    "Olha só, fica calmo que eu tô aqui contigo, visse? Não tenta levantar de vez se estiver tonto. "
-    "Tenta o comando de voz: diga em voz alta \"Ok Google, ligar para 192\" ou \"Eí Siri, ligar para o SAMU\". "
-    "Se o aparelho estiver longe, chama um vizinho e não faz esforço."
+    "Estou aqui com você. Não tente levantar de vez se estiver tonto. "
+    "Use o comando de voz: diga em voz alta \"Ok Google, ligar para 192\" "
+    "ou \"Ei Siri, ligar para o SAMU\". "
+    "Se o aparelho estiver longe, chame alguém próximo e não faça esforço."
 )
 
 REPLY_SEM_ALARME_PEITO = (
-    "Por agora não vi sinal que peça o SAMU na hora. "
+    "Por agora não identifiquei sinal que peça o SAMU na hora. "
     "Isso não descarta avaliação presencial se a dúvida persistir. "
     "Se quiser, a respiração 4-7-8 pode ajudar na tensão: inspire 4, segure 7, expire 8. "
-    "Se ir pro braço, vier suor frio ou falta de ar, liga 192."
+    "Se for para o braço, vier suor frio ou falta de ar, ligue 192."
 )
 
 REPLY_SEM_ALARME_ABD = (
-    "Entendi. Por agora não vi sinais que peçam o SAMU na hora. "
-    "Se a dor subir pro peito, vier suor frio ou falta de ar, liga 192."
+    "Entendi. Por agora não identifiquei sinais que peçam o SAMU na hora. "
+    "Se a dor subir para o peito, vier suor frio ou falta de ar, ligue 192."
 )
 
 REPLY_MEDICACAO = (
     "Não posso indicar medicação por aqui. "
     "Para sua segurança, não tome nada por conta própria agora; "
-    "procure o postinho ou a emergência para avaliação."
+    "procure a UBS ou a emergência para avaliação."
 )
 
 REPLY_MEDICACAO_EMERGENCIA = f"{REPLY_MEDICACAO} {REPLY_EMERGENCIA}"
 
 REPLY_DESPEDIDA = (
-    "Tudo certo então. Fica em repouso e, se a dor voltar ou piorar, procura a UBS, combinado? Te cuida!"
+    "Tudo certo. Fique em repouso e, se a dor voltar ou piorar, procure a UBS. Cuide-se."
 )
 
 REPLY_FALLBACK = (
-    "Capaz que vamos deixar passar — me conta de outro jeito o que está sentindo. "
-    "Posso orientar triagem de dor no peito ou na barriga, acolhimento de estresse, "
-    "pressão, lembrete de remédio e consulta. "
-    "Se for emergência cardíaca, liga 192 (SAMU). Em crise emocional com ideação, 188 (CVV)."
+    "Não tenho certeza se compreendi exatamente o seu sintoma. "
+    "Você poderia me explicar com outras palavras o que está sentindo no momento? "
+    "Estou aqui para orientar sobre dores no peito, ansiedade ou lembrar de medicações. "
+    "Se for uma emergência, não hesite em ligar 192."
 )
 
 # --- ECO: acolhimento vicário + psicoeducação (nunca substitui red-flag) ---
@@ -174,16 +174,17 @@ REPLY_DUVIDA_INFARTO = (
 )
 
 REPLY_ECO_SCREEN = (
-    "Estou aqui com você. Palpitação e aperto situacional podem ser a mesma resposta "
-    "do corpo — o sistema nervoso autônomo em luta-ou-fuga — e isso é compartilhado, "
+    "Estou aqui com você. Entendo o desconforto. "
+    "Palpitação e aperto situacional podem ser a mesma resposta do corpo — "
+    "o sistema nervoso autônomo em luta-ou-fuga — e isso é compartilhado, "
     "não um diagnóstico. "
     "Antes de qualquer hipótese de estresse, precisamos afastar sinais de emergência. "
     "Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?"
 )
 
 REPLY_ECO_478 = (
-    "Por agora não vi sinal que peça o SAMU na hora — isso não descarta avaliação "
-    "presencial se a dúvida persistir. "
+    "Por agora não identifiquei sinal que peça o SAMU na hora — isso não descarta "
+    "avaliação presencial se a dúvida persistir. "
     "O aperto ou a palpitação de sobrecarga pode ser a descarga autonômica de alerta; "
     "a respiração 4-7-8 (inspire 4, segure 7, expire 8) é prática física, não tratamento. "
     "Rede de apoio: CVV 188 (https://cvv.org.br), ABRATA (https://www.abrata.org.br) "
@@ -199,21 +200,22 @@ REPLY_IDEACAO = (
 )
 
 REPLY_CEFALEIA = (
-    "Entendi a dor de cabeça — por agora, isolada, não peço o SAMU. "
-    "Me diga: ela começou de repente e é a pior da sua vida? "
-    "Tem rigidez de nuca, fraqueza de um lado, fala enrolada ou alteração visual? "
-    "Se algum desses sinais estiver presente, ligue 192. "
-    "Caso contrário, repouse, hidrate e, se persistir ou piorar, procure a UBS."
+    "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. "
+    "Para sua segurança, preciso avaliar alguns pontos: "
+    "essa dor começou de repente e é a pior que você já sentiu? "
+    "Há alguma rigidez na nuca, alteração visual ou fraqueza? "
+    "Se houver qualquer um desses sinais, ligue 192 (SAMU) agora. "
+    "Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
 )
 
 REPLY_CEFALEIA_NEURO = (
-    "Dor de cabeça com sinais de alerta neurológico pede avaliação imediata. "
-    "Ligue agora para o SAMU (192) ou peça para alguém te levar à emergência. "
+    "Sinto muito — dor de cabeça com sinais de alerta neurológico pede avaliação imediata. "
+    "Ligue agora para o SAMU (192) ou peça para alguém levá-lo à emergência. "
     "Mantenha repouso absoluto."
 )
 
 REPLY_AJUDA_HUMANA = (
-    "Claro — este canal é triagem inicial, não substitui pessoa. "
+    "Claro — este canal é triagem inicial, não substitui atendimento humano. "
     "Se for emergência cardíaca (aperto, irradiação, suor frio, desmaio), ligue 192 agora. "
     "Se for crise emocional com ideação, ligue 188 (CVV). "
     "Fora disso, UBS, CAPS ou o plantão da instituição. "
@@ -819,13 +821,13 @@ def _is_mechanical_immediate(normalized: str) -> bool:
 
 def _looks_like_greeting_reply(reply: str) -> bool:
     n = _norm(reply)
-    if n.startswith("oi, tudo bem"):
+    if n.startswith("oi, tudo bem") or n.startswith("ola, tudo bem"):
         return True
     if "eu sou a cardioia" in n:
         return True
     if "boas-vindas" in n or "bem-vindo" in n:
         return True
-    if "pode me contar o que esta sentindo" in n and "triagem inicial" in n:
+    if "pode me contar o que esta sentindo" in n and "triagem" in n:
         return True
     return False
 
@@ -2360,8 +2362,59 @@ class WatsonService:
                 watson_result.source = "fallback"
                 return watson_result
 
-        fallbackish = "capaz que" in wn or "qualquer outra coisa" in wn
-        if fallbackish and "capaz que" not in gn:
+        # Skill LIVE (Lite) pode ficar com cópia antiga; preferir voz local atualizada.
+        stale_voice = any(
+            marker in wn
+            for marker in (
+                "visse",
+                "capaz que",
+                "nao peco o samu",
+                "fica tranquilo",
+                "postinho",
+                "pois entao",
+                "olha so",
+                "te cuida",
+                "tu vira",
+            )
+        )
+        if stale_voice and gold_reply.strip() and not any(
+            marker in gn for marker in ("visse", "capaz que", "postinho", "pois entao")
+        ):
+            watson_result.reply = gold_reply
+            watson_result.source = "fallback"
+            return watson_result
+
+        # Saudação / ECO: LIVE ainda pode devolver copy anterior sem gíria.
+        if (
+            "eu sou a cardioia" in wn
+            and "acolhimento" in gn
+            and "acolhimento" not in wn
+            and gold_reply.strip()
+        ):
+            watson_result.reply = gold_reply
+            watson_result.source = "fallback"
+            return watson_result
+        if (
+            (gold.eco_path or gold.eco_etapa == "screen_redflags")
+            and "entendo o desconforto" in gn
+            and "entendo o desconforto" not in wn
+            and gold_reply.strip()
+        ):
+            watson_result.reply = gold_reply
+            watson_result.source = "fallback"
+            return watson_result
+
+        fallbackish = (
+            "capaz que" in wn
+            or "qualquer outra coisa" in wn
+            or "nao tenho certeza se compreendi" in wn
+        )
+        gold_fallback = (
+            "capaz que" in gn or "nao tenho certeza se compreendi" in gn
+        )
+        # Preferir gold quando Watson cai em fallback genérico sem resposta específica,
+        # ou quando o skill LIVE ainda devolve a voz antiga com gíria.
+        if fallbackish and (not gold_fallback or ("capaz que" in wn and "capaz que" not in gn)):
             watson_result.reply = gold_reply
             watson_result.source = "fallback"
             return watson_result
@@ -2432,7 +2485,8 @@ class WatsonService:
             return result
 
         if _cannot_move(n) and (chest or _has_any(n, ("suor", "suando")) or _mentions_abdominal(n)):
-            if "fica parado" not in _norm(result.reply):
+            rn_imovel = _norm(result.reply)
+            if "fica parado" not in rn_imovel and "fique parado" not in rn_imovel:
                 result.reply = REPLY_EMERGENCIA_IMOVEL
             result.intents = [{"intent": INTENT_EMERGENCIA, "confidence": 0.99}]
             if memory is not None:
@@ -2475,7 +2529,7 @@ class WatsonService:
             rn = _norm(result.reply)
             if "?" in result.reply and "192" not in rn and "samu" not in rn:
                 result.reply = REPLY_EMERGENCIA_HOLD
-            if "capaz que" in rn:
+            if "capaz que" in rn or "nao tenho certeza se compreendi" in rn:
                 result.reply = REPLY_EMERGENCIA_HOLD
 
         if _is_isolated_headache(n):

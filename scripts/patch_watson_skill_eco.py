@@ -277,7 +277,7 @@ def patch(skill: dict) -> dict:
         "node_duvida_infarto_nao",
         "Dúvida infarto — red flags negados → 4-7-8 com ressalva",
         "$eco_etapa == 'screen_redflags' && #negacao && !@sinal_alerta",
-        "Por agora não vi sinal que peça o SAMU na hora — isso não descarta avaliação presencial se a dúvida persistir. Se quiser, faça a respiração 4-7-8: inspire em 4, segure em 7, expire em 8. Se aparecer irradiação, suor frio ou desmaio, ligue 192 imediatamente.",
+        "Por agora não identifiquei sinal que peça o SAMU na hora — isso não descarta avaliação presencial se a dúvida persistir. Se quiser, faça a respiração 4-7-8: inspire em 4, segure em 7, expire em 8. Se aparecer irradiação, suor frio ou desmaio, ligue 192 imediatamente.",
         None,  # type: ignore[arg-type]
         context={"eco_etapa": "done", "risco": "B", "triagem_etapa": "done"},
     )
@@ -289,7 +289,7 @@ def patch(skill: dict) -> dict:
         "node_sintoma_ansiedade",
         "ECO — ansiedade (rastreio antes de psicoeducação)",
         "#sintoma_ansiedade && !$emergencia_ativa && !@sinal_alerta",
-        "Estou aqui com você. O corpo responde ao estresse com taquicardia, aperto e tensão — é a resposta neurobiológica de alerta, não um diagnóstico. Antes de qualquer hipótese de ansiedade, precisamos afastar sinais de emergência. Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?",
+        "Estou aqui com você. Entendo o desconforto. Palpitação e aperto situacional podem ser a mesma resposta do corpo — o sistema nervoso autônomo em luta-ou-fuga — e isso é compartilhado, não um diagnóstico. Antes de qualquer hipótese de estresse, precisamos afastar sinais de emergência. Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?",
         "node_agendamento_consulta",
         context={"eco_path": True, "eco_etapa": "screen_redflags", "risco": "C", "triagem_etapa": "eco_screen"},
     )
@@ -297,7 +297,7 @@ def patch(skill: dict) -> dict:
         "node_sintoma_taquicardia",
         "ECO — taquicardia (rastreio primeiro)",
         "#sintoma_taquicardia && !$emergencia_ativa && !@sinal_alerta",
-        "Estou aqui com você. Palpitação pode ser resposta de alerta do sistema nervoso — sem ser diagnóstico. Antes, precisamos afastar emergência cardíaca. A palpitação veio com dor no peito irradiando, suor frio ou desmaio?",
+        "Estou aqui com você. Entendo o desconforto. Palpitação pode ser resposta de alerta do sistema nervoso — sem ser diagnóstico. Antes, precisamos afastar emergência cardíaca. A palpitação veio com dor no peito irradiando, suor frio ou desmaio?",
         "node_sintoma_ansiedade",
         context={"eco_path": True, "eco_etapa": "screen_redflags", "risco": "C", "triagem_etapa": "eco_screen"},
     )
@@ -305,7 +305,7 @@ def patch(skill: dict) -> dict:
         "node_solicitar_respiracao",
         "ECO — 4-7-8 (bloqueado se red flag)",
         "#solicitar_respiracao && !$emergencia_ativa && !@sinal_alerta && $risco != 'A'",
-        "Por agora não vi sinal que peça o SAMU na hora — isso não descarta avaliação presencial se a dúvida persistir. Se quiser, faça a respiração 4-7-8: inspire em 4, segure em 7, expire em 8. Se aparecer irradiação, suor frio ou desmaio, ligue 192 imediatamente.",
+        "Por agora não identifiquei sinal que peça o SAMU na hora — isso não descarta avaliação presencial se a dúvida persistir. Se quiser, faça a respiração 4-7-8: inspire em 4, segure em 7, expire em 8. Se aparecer irradiação, suor frio ou desmaio, ligue 192 imediatamente.",
         "node_sintoma_taquicardia",
         context={"eco_path": True, "eco_etapa": "done"},
     )
@@ -326,9 +326,10 @@ def patch(skill: dict) -> dict:
 
     fallback = _find(nodes, "Anything else")
     fallback["output"]["generic"][0]["values"][0]["text"] = (
-        "Capaz que vamos deixar passar — me conta de outro jeito o que está sentindo. "
-        "Posso orientar triagem de dor no peito, acolhimento de estresse e respiração 4-7-8. "
-        "Se for emergência cardíaca, liga 192 (SAMU). Em crise emocional com ideação, 188 (CVV)."
+        "Não tenho certeza se compreendi exatamente o seu sintoma. "
+        "Você poderia me explicar com outras palavras o que está sentindo no momento? "
+        "Estou aqui para orientar sobre dores no peito, ansiedade ou lembrar de medicações. "
+        "Se for uma emergência, não hesite em ligar 192."
     )
 
     insert_at = next(i for i, n in enumerate(nodes) if n["dialog_node"] == "node_isolamento_sem_telefone")

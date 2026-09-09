@@ -74,7 +74,7 @@ def main() -> None:
 
     sid5 = w.create_session()
     mech = w.send_message("Tô com um repuxo no peito depois que eu tava roçando o mato.", sid5)
-    expect("muscular" in mech.reply.lower() or "postinho" in mech.reply.lower(), "mecânica B preservada")
+    expect("muscular" in mech.reply.lower() or "ubs" in mech.reply.lower(), "mecânica B preservada")
     expect("192" not in mech.reply, "mecânica sem alarme não é SAMU")
 
     sid6 = w.create_session()
@@ -97,7 +97,7 @@ def main() -> None:
     w.send_message("Dor no peito irradiando para o braço com suor frio", sid8)
     depois = w.send_message("dor de cabeça", sid8)
     dn = depois.reply.lower()
-    expect("ubs" in dn or "não peço o samu" in dn, "apos SCA, cefaleia isolada sai do hold")
+    expect("ubs" in dn or "rigidez" in dn, "apos SCA, cefaleia isolada sai do hold")
 
     print("Smoke ECO: todos os asserts passaram.")
 

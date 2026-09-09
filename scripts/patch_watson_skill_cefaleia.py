@@ -9,11 +9,12 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILL = ROOT / "watson" / "cardio_assistant_skill.json"
 
 REPLY = (
-    "Entendi a dor de cabeça — por agora, isolada, não peço o SAMU. "
-    "Me diga: ela começou de repente e é a pior da sua vida? "
-    "Tem rigidez de nuca, fraqueza de um lado, fala enrolada ou alteração visual? "
-    "Se algum desses sinais estiver presente, ligue 192. "
-    "Caso contrário, repouse, hidrate e, se persistir ou piorar, procure a UBS."
+    "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. "
+    "Para sua segurança, preciso avaliar alguns pontos: "
+    "essa dor começou de repente e é a pior que você já sentiu? "
+    "Há alguma rigidez na nuca, alteração visual ou fraqueza? "
+    "Se houver qualquer um desses sinais, ligue 192 (SAMU) agora. "
+    "Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
 )
 
 CONDITIONS = (
