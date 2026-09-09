@@ -1,14 +1,14 @@
-# Relatório técnico — Assistente conversacional CardioIA + ECO (Fase 5)
+# Especificação — Módulo conversacional CardioIA + ECO
 
 **Projeto:** CardioIA Assistente  
 **Herança:** [cardio-ia-fase1](https://github.com/tiagoalvescordeiro/cardio-ia-fase1)  
-**Caráter:** protótipo acadêmico (FIAP). **Não** é dispositivo médico nem sistema de apoio diagnóstico validado.  
-**Disclaimer obrigatório:** *Este assistente não substitui atendimento médico e não é dispositivo médico. Em emergências cardíacas, ligue 192 (SAMU). Em crise emocional com ideação, ligue 188 (CVV).*  
-**Complemento de viabilidade:** [relatorio_viabilidade_eco.md](relatorio_viabilidade_eco.md).
+**Caráter:** protótipo acadêmico / demonstração técnica. **Não** é dispositivo médico nem sistema de apoio diagnóstico validado.  
+**Disclaimer:** *Este assistente não substitui atendimento médico e não é dispositivo médico. Em emergências cardíacas, ligue 192 (SAMU). Em crise emocional com ideação, ligue 188 (CVV).*  
+**Complemento:** [relatorio_viabilidade_eco.md](relatorio_viabilidade_eco.md).
 
 ## 1. Objetivo
 
-Entregar um canal conversacional em português (pt-BR) que:
+Canal conversacional em português (pt-BR) que:
 
 1. reconheça intenções clínicas frequentes em cardiologia de triagem (saudação, dor torácica, equivalente isquêmico epigástrico, pressão arterial, lembrete de medicação, agendamento, emergência);
 2. identifique *red flags* (irradiação, sudorese fria, dispneia, equivalentes isquêmicos) e oriente o SAMU 192;
@@ -16,7 +16,7 @@ Entregar um canal conversacional em português (pt-BR) que:
 4. intercepte ideação/automutilação no Flask (CVV 188) **sem** chamar Watson;
 5. opere com **IBM Watson Assistant v2** quando houver credenciais e, na ausência delas, com um **motor de regras local** isomorfo ao skill.
 
-O fallback local é requisito de demonstração em HealthTech acadêmica: o fluxo pedagógico não pode depender de chave de nuvem para ser evidenciado.
+O fallback local garante demonstração offline: o fluxo não depende de chave de nuvem para ser evidenciado.
 
 ## 2. Arquitetura
 
@@ -29,9 +29,9 @@ Navegador (frontend/)  --JSON-->  Flask (backend/app.py)
                                             +-- LocalRuleEngine (skill espelhado + ramo ECO)
 ```
 
-Aliases FIAP: `POST /api/message` = `/api/chat`; `POST/DELETE /api/session` criam e encerram a sessão Watson v2.
+Aliases de contrato: `POST /api/message` = `/api/chat`; `POST/DELETE /api/session` criam e encerram a sessão Watson v2.
 
-O Flask também serve `frontend/` na raiz HTTP, permitindo `python app.py` como único comando de demo.
+O Flask também serve `frontend/` na raiz HTTP (`python backend/app.py` como comando único de demo). Bind padrão: `FLASK_HOST=0.0.0.0`, `FLASK_PORT=5000`.
 
 Contrato de `POST /api/chat`:
 
@@ -50,7 +50,7 @@ Contrato de `POST /api/chat`:
 
 Exportação no formato clássico de *workspace/skill* (intents, entities, `dialog_nodes`, *counterexamples*).
 
-**Intents obrigatórios**
+**Intents principais**
 
 | Intent | Papel clínico no diálogo |
 | --- | --- |
@@ -78,63 +78,57 @@ Exportação no formato clássico de *workspace/skill* (intents, entities, `dial
 
 **Entidades:** `@sintoma`, `@local_dor` (epigástrio, baixo ventre, peito, **so_peito**, costas, braço, mandíbula), `@qualidade_dor` (aperto, queimação, cólica, pontada, **repuxo**), `@caracteristica_msk` (palpável, pleurítica, muscular, **esforço localizado**), `@intensidade`, `@duracao`, `@sintoma_associado`, `@gatilho_emocional`, `@medicamento`, `@pressao_arterial`, `@barreira_socorro`, `@contexto`, **`@sinal_alerta` / `@sinais_alerta`** (irradiação, suor_frio, desmaio), **`@sintoma_somatico` / `@sintomas_somaticos`** (aperto, no_garganta, tensao, palpitacao).
 
-Aliases de intent da rubrica: `#relatar_dor_peito` (dor torácica) e `#pedir_ajuda_humana` (encaminha 192/188/UBS, nunca «só ansiedade»).
+Aliases adicionais: `#relatar_dor_peito` (dor torácica) e `#pedir_ajuda_humana` (encaminha 192/188/UBS, nunca «só ansiedade»).
 
-**Fork obrigatório ECO.** Depois do rastreio: (1) *red flag* cardíaco → *jump* `node_emergencia_hold` (192), sem retorno ao 4-7-8; (2) psicossomático sem alarme → psicoeducação + 4-7-8; (3) `#duvida_infarto` rastreia antes de qualquer hipótese de ansiedade; (4) `#ideacao_crise` → 188. A saudação permanece isolada a cumprimentos curtos.
+**Fork ECO.** Depois do rastreio: (1) *red flag* cardíaco → *jump* `node_emergencia_hold` (192), sem retorno ao 4-7-8; (2) psicossomático sem alarme → psicoeducação + 4-7-8; (3) `#duvida_infarto` rastreia antes de qualquer hipótese de ansiedade; (4) `#ideacao_crise` → 188. A saudação permanece isolada a cumprimentos curtos.
 
-**Árvore de diálogo (anamnese adaptativa).** Nunca se envia lista numerada de 4 perguntas. No máximo **uma** pergunta objetiva por turno (cenário C). Variáveis `$triagem_etapa`, `$local_dor`, `$qualidade`, `$irradiacao`, `$sintomas_associados`, `$negou_irradiacao`, `$negou_suor`, `$negou_dispneia`, `$dor_palpavel`, `$dor_pleuritica`, `$emergencia_ativa` e `$risco` (A/B/C) permitem que respostas curtas continuem a mesma ficha. Nós-filho de Sim/Não/`@local_dor:so_peito` evitam o fallback. Alarme usa `jump_to` para `node_emergencia_hold`.
+**Árvore de diálogo (anamnese adaptativa).** No máximo **uma** pergunta objetiva por turno. Variáveis `$triagem_etapa`, `$local_dor`, `$qualidade`, `$irradiacao`, `$sintomas_associados`, `$negou_irradiacao`, `$negou_suor`, `$negou_dispneia`, `$dor_palpavel`, `$dor_pleuritica`, `$emergencia_ativa` e `$risco` (A/B/C) permitem que respostas curtas continuem a mesma ficha. Alarme usa `jump_to` para `node_emergencia_hold`.
 
-**Negações.** “Não”, “nem”, “sem”, “nunca”, “nenhuma”, “não tenho”, “não sinto”, “não irradia”, “sem irradiação” marcam o achado como **ausente**. O diálogo avalia essas flags **antes** do nó de emergência. O motor local replica o parser no estado da sessão.
+**Negações.** “Não”, “nem”, “sem”, “nunca”, “nenhuma”, “não tenho”, “não sinto”, “não irradia”, “sem irradiação” marcam o achado como **ausente**. O motor local replica o parser no estado da sessão.
 
-**Matriz de decisão.** A — alarme confirmado (aperto/peso torácico ou epigástrico com irradiação **e** suor frio/dispneia/náusea, ou imobilidade/isolamento): SAMU 192 agora. B — padrão mecânico/MSK (repuxo, fisgada, mau jeito após esforço localizado como roçar/carpir/varrer/puxar peso; ou palpável/pleurítico) sem irradiação e sem sintomas autonômicos: tranquiliza com voz do Vale, oriente **postinho**, **sem** 192. C — incompleto: uma pergunta só (“Essa dor piora quando tu vira o tronco ou respira fundo?”). Misto (roçou mato **mas** suor frio + aperto/peso) → **A vence**.
+**Matriz de decisão.** A — alarme confirmado: SAMU 192. B — padrão mecânico/MSK sem irradiação e sem sintomas autonômicos: tranquiliza com voz do Vale, oriente **postinho**, **sem** 192. C — incompleto: uma pergunta só. Misto (esforço localizado **mas** suor frio + aperto/peso) → **A vence**.
 
-**Banimento do loop de saudação.** Qualquer input com dor, desconforto, acidente ou esforço físico é Início de Triagem. `#saudacao` só dispara em cumprimentos curtos isolados. O nó `node_dor_mecanica` fica **acima** da entrada genérica de peito e da saudação.
+Ordem de prioridade: isolamento sem telefone → imobilidade com peito/suor → **dor mecânica por esforço (B)** → padrão MSK palpável sem alarme (B) → equivalente isquêmico com suor e irradiação (SAMU) → emergência clássica → continuação da anamnese → entrada abdominal → entrada de peito → demais intents → saudação curta. `anything_else` cobre o *fallback*.
 
-Ordem de prioridade: isolamento sem telefone → imobilidade com peito/suor → **dor mecânica por esforço (B)** → padrão MSK palpável sem alarme (B) → equivalente isquêmico com suor e irradiação (SAMU) → emergência clássica (com guarda de negação) → continuação da anamnese → entrada abdominal → entrada de peito → demais intents → saudação curta. `anything_else` cobre o *fallback*. O aviso ético entra uma vez (welcome/saudação), não em todos os nós.
+Importação sugerida: IBM Cloud → Watson Assistant → *Upload skill*. Após o upload, anotar `ASSISTANT_ID` e o `ENVIRONMENT_ID`.
 
-Importação sugerida: IBM Cloud → Watson Assistant → *Upload skill* / *Download/import dialog*. Após o upload, anotar `ASSISTANT_ID` e, em *Actions* v2, o `ENVIRONMENT_ID`.
-
-## 4. Motor local (paridade pedagógica)
+## 4. Motor local (paridade)
 
 `LocalRuleEngine` normaliza o texto (NFKD, minúsculas) e replica a mesma máquina de estados do skill. Regras clínicas extras:
 
-- queixa de barriga/estômago/epigástrio **não** dispara o bloco de dor torácica — investiga localização (boca do estômago vs baixo ventre) e qualidade;
-- suor frio + irradiação para peito/braço/mandíbula, dispneia súbita, tontura grave ou impossibilidade de se mover disparam SAMU 192 — **somente se o usuário não negou** esses achados;
-- padrão palpável/pleurítico **ou narrativa mecânica** (repuxo/fisgada/mau jeito após roçar, carpir, varrer, puxar peso) sem irradiação e sem sintomas autonômicos cai no cenário B (postinho, sem 192);
-- `#saudacao` no fallback só casa cumprimento curto por regex; o token `oi` **não** é buscado como substring (evitava classificar “depois” como saudação);
-- respostas monossilábicas (`1`, `sim`, `aperto`) herdam `$triagem_etapa` da sessão;
-- leitura `PAS/PAD` extraída por regex alimenta o comentário de crise (PAS ≥ 180 ou PAD ≥ 120), alinhada ao worker RPA e à Fase 1/3 (FC > 120 bpm).
+- queixa de barriga/estômago/epigástrio **não** dispara o bloco de dor torácica — investiga localização e qualidade;
+- suor frio + irradiação, dispneia súbita, tontura grave ou impossibilidade de se mover disparam SAMU 192 — **somente se o usuário não negou** esses achados;
+- padrão palpável/pleurítico **ou narrativa mecânica** sem irradiação e sem sintomas autonômicos cai no cenário B;
+- `#saudacao` no fallback só casa cumprimento curto por regex;
+- respostas monossilábicas herdam `$triagem_etapa` da sessão;
+- leitura `PAS/PAD` por regex alimenta o comentário de crise (PAS ≥ 180 ou PAD ≥ 120), alinhada ao worker RPA e à Fase 1/3 (FC > 120 bpm).
 
-Sessões locais são UUID em memória; sessões Watson usam `create_session` / `delete_session` / `message` do SDK `ibm-watson` (AssistantV2). Qualquer exceção de rede ou IAM **degrada** para o motor local sem quebrar a UI.
+Sessões locais são UUID em memória; sessões Watson usam `create_session` / `delete_session` / `message` do SDK `ibm-watson` (AssistantV2). Exceção de rede ou IAM **degrada** para o motor local sem quebrar a UI.
 
 ## 5. Interface
 
-Widget calmo (dark mode padrão): bolhas distintas, indicador **«digitando…»**, envio por Enter ou botão, banner «sessão segura e anônima», *disclaimer* legal em todas as telas, discagem `tel:192` / `tel:188`, *chips* (aperto, palpitação, ansiedade, 4-7-8, emergência), círculo 4-7-8 com timer e modal bloqueante de crise. Idioma integralmente pt-BR.
+Widget calmo (dark mode padrão): bolhas distintas, indicador **«digitando…»**, envio por Enter ou botão, banner «sessão segura e anônima», *disclaimer* legal, discagem `tel:192` / `tel:188`, *chips*, círculo 4-7-8 com timer e modal bloqueante de crise. Idioma integralmente pt-BR.
 
 ## 6. Persona (Santa Catarina) e paciente isolado
 
-A CardioIA *é* a interlocutora do Vale do Itajaí / Blumenau: assertiva, pragmática e resolutiva — hospitalidade com franqueza, sem rodeio. Marcadores discretos (“Pois então”, “Olha só”, “Bem certinho”, “Fica tranquilo, visse?”, “Capaz que vamos deixar passar”). Tu/você fluido. Seriedade clínica primeiro. No máximo 3–4 frases e **uma** pergunta por turno (afirmativa ou A-ou-B). Sem intro genérica do tipo “vou te fazer algumas perguntas”.
+A CardioIA *é* a interlocutora do Vale do Itajaí / Blumenau: assertiva, pragmática e resolutiva. Marcadores discretos (“Pois então”, “Olha só”, “Bem certinho”, “Fica tranquilo, visse?”). Tu/você fluido. No máximo 3–4 frases e **uma** pergunta por turno.
 
-Não há diagnóstico nem prescrição. O aviso ético entra **uma vez** na sessão (saudação/conclusão/CTA), não como bloco repetido. Socorro: **192 (SAMU)**. Dor epigástrica / “dor na barriga alta” / queimação / náusea é equivalente isquêmico (SBC/AHA).
+Não há diagnóstico nem prescrição. O aviso ético entra **uma vez** na sessão. Socorro: **192 (SAMU)**. Dor epigástrica / “dor na barriga alta” / queimação / náusea é equivalente isquêmico (SBC/AHA).
 
-**Jump-to de emergência.** Alarme (aperto/peso torácico + irradiação + sudorese/dispneia, ou imobilidade) interrompe a anamnese: o diálogo faz `jump_to` em `node_emergencia_hold`, grava `$emergencia_ativa` e **não retorna** a perguntas secundárias (`digress_out: allow_all_never_return` + filho `true` que mantém o 192). CTA firme: *“Isso exige avaliação médica imediata. Ligue agora para o SAMU (192)…”*. O motor local replica o salto: uma vez A, permanece A.
+**Jump-to de emergência.** Alarme interrompe a anamnese: `jump_to` em `node_emergencia_hold`, grava `$emergencia_ativa` e **não retorna** a perguntas secundárias. O motor local replica o salto: uma vez A, permanece A.
 
-**Sim / Não / “só no peito”.** Intents `#afirmacao` e `#negacao` e entidade `@local_dor:so_peito` alimentam **nós-filho** dos nós de triagem, além de nós-raiz de segurança com `$triagem_etapa`. “Não”, “Sim” e “Só no peito” **não** caem em `anything_else`. Negações continuam a marcar o achado como ausente.
+**`#pedido_medicacao`.** Recusa categórica. Em contexto de alarme, recusa **e** mantém o CTA do SAMU.
 
-**`#pedido_medicacao`.** Recusa categórica (dipirona, AAS, analgésico). Em contexto de alarme, recusa **e** mantém o CTA do SAMU — não se incentiva AAS por conta própria.
-
-**`#despedida`.** Fechamento regional: *“Tudo certo então. Fica em repouso e, se a dor voltar ou piorar, procura a UBS, combinado? Te cuida!”*
-
-**Paciente sozinho que não alcança o telefone.** Permanece em `#emergencia_cardio` (`node_isolamento_sem_telefone` / filhos do hold, `@barreira_socorro`). Comando de voz (“Ok Google, ligar para 192” / “Eí Siri, ligar para o SAMU”); chamar vizinho; sem esforço. Não reabre a triagem de peito.
+**Paciente sozinho que não alcança o telefone.** Permanece em `#emergencia_cardio` (`node_isolamento_sem_telefone`). Comando de voz; chamar vizinho; sem esforço. Não reabre a triagem de peito.
 
 ## 7. Limitações e ética
 
-- Não há NLU estatístico no fallback: homonímias e negações muito compostas ainda podem falhar; negações clínicas frequentes (irradiação, suor frio, dispneia, dor no braço) são tratadas de forma explícita.
+- Não há NLU estatístico no fallback: homonímias e negações compostas ainda podem falhar.
 - O skill não substitui protocolo de Manchester/ESI nem diretriz da SBC/AHA.
 - Nenhum dado real de paciente deve ser colado no chat de demonstração.
 
 ## 8. Referências de herança
 
 - Dataset Heart Failure (Fase 1): `RestingBP`, `MaxHR` — aqui desdobrados em PAS, PAD e FC.
-- Ir Além 1 da Fase 3: alerta de taquicardia se **BPM > 120** e bradicardia se **BPM < 50**.
-- Textos e mapa de sintomas da Fase 2 (`sintomas.txt`, `mapa_conhecimento.csv`) informam o vocabulário de dor irradiada e sudorese fria.
+- Limiares de telemetria (Fase 3): alerta de taquicardia se **BPM > 120** e bradicardia se **BPM < 50**.
+- Textos e mapa de sintomas da Fase 2 informam o vocabulário de dor irradiada e sudorese fria.

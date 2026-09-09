@@ -1,4 +1,4 @@
-# Relatório técnico — Ir Além 2: RPA e persistência híbrida
+# Especificação — RPA e persistência híbrida
 
 **Módulo:** `ir_alem_2_rpa/`  
 **Disclaimer:** *Este assistente não substitui atendimento médico. Em emergências, ligue 192 (SAMU).*  
@@ -6,7 +6,7 @@
 
 ## 1. Motivação
 
-A Fase 3 do CardioIA já demonstrou telemetria (MQTT) e um microciclo REST + “RPA de e-mail” sobre BPM e temperatura. A Fase 5 separa com clareza dois tipos de dado:
+A telemetria anterior do CardioIA (MQTT / microciclo REST) já operava BPM e temperatura. Este módulo separa com clareza dois tipos de dado:
 
 - o que é **medida repetível** (sinais vitais, alerta tipado) permanece **relacional** (SQL);
 - o que é **rastro de execução** (payload textual, metadados do worker) vai para **NoSQL**.
@@ -20,13 +20,13 @@ Arquivo: `schema_relational.sql` (SQLite; tipos aceitos pelo PostgreSQL com ajus
 | Tabela | Conteúdo |
 | --- | --- |
 | `pacientes` | Identificador sintético, idade, sexo |
-| `leituras_sinais_vitais` | **PA sistólica**, **PA diastólica**, **FC**, **SpO2**, temperatura opcional (DHT22 Fase 3), flag `processado` |
+| `leituras_sinais_vitais` | **PA sistólica**, **PA diastólica**, **FC**, **SpO2**, temperatura opcional, flag `processado` |
 | `alertas_emitidos` | Tipo, severidade, mensagem, limiar aplicado, FK para leitura |
 | `adesao_medicamentosa` | Doses esperadas vs. registradas em 7 dias (protótipo de adesão) |
 
 Índices: leituras não processadas, série por paciente, alertas por paciente.
 
-A desagregação PAS/PAD corrige a limitação do Heart Failure Prediction (Fase 1), que oferece um único `RestingBP`. A FC continua o sucessor direto do BPM da Fase 3.
+A desagregação PAS/PAD corrige a limitação do Heart Failure Prediction (Fase 1), que oferece um único `RestingBP`. A FC continua o sucessor direto do BPM da telemetria.
 
 ## 3. Modelo NoSQL
 
@@ -46,7 +46,7 @@ Ciclo:
 3. `INSERT` em `alertas_emitidos` se houver achado
 4. Marca a leitura `processado = 1`
 5. Append no store NoSQL
-6. Adesão medicamentosa < 80% em 7 dias → alerta `BAIXA_ADESAO` (timestamp no SQL e no NoSQL)
+6. Adesão medicamentosa < 80% em 7 dias → alerta `BAIXA_ADESAO`
 
 **Limiares**
 
@@ -54,11 +54,11 @@ Ciclo:
 | --- | --- | --- |
 | PAS | ≥ 180 mmHg | EMERGENCIA |
 | PAD | ≥ 120 mmHg | EMERGENCIA |
-| FC | > 120 bpm | CRITICO (Fase 3) |
-| FC | < 50 bpm | CRITICO (Fase 3) |
+| FC | > 120 bpm | CRITICO |
+| FC | < 50 bpm | CRITICO |
 | SpO2 | < 90% | EMERGENCIA |
 | SpO2 | < 94% | ATENCAO |
-| Temperatura | ≥ 38,0 °C | ATENCAO (Fase 3) |
+| Temperatura | ≥ 38,0 °C | ATENCAO |
 | Adesão 7d | < 80% das doses | ATENCAO |
 
 **CLI**
@@ -70,7 +70,7 @@ python rpa_monitor.py --init-only
 python rpa_monitor.py --reinit --once # recria carga sintético
 ```
 
-SQLite em `DATABASE_URL` / `RPA_SQLITE_PATH` (padrão `data/cardioia.db`). PostgreSQL pode ser apontado no `.env` futuro via `DATABASE_URL`; o worker desta entrega usa SQLite para garantir demo sem container.
+SQLite em `DATABASE_URL` / `RPA_SQLITE_PATH` (padrão `data/cardioia.db`).
 
 ## 5. Carga de demonstração
 
@@ -80,7 +80,7 @@ Seis pacientes e seis leituras: um perfil estável, crise sistólica, crise dias
 
 - Não há PHI. Nomes do tipo «Paciente Sintetico Alfa».
 - O log NoSQL replica o disclaimer em `metadata`.
-- Reprocessar o banco usa `--reinit` (drop explícito das três tabelas).
+- Reprocessar o banco usa `--reinit` (drop explícito das tabelas).
 
 ## 7. Relação com o assistente conversacional
 

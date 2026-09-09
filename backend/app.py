@@ -1,5 +1,5 @@
 """
-API Flask do CardioIA Assistente (Fase 5 — CardioIA + ECO).
+API Flask do CardioIA Assistente.
 
 Endpoints
 ---------
@@ -13,6 +13,7 @@ DELETE /api/session/<id>
 
 Interceptor: ideação/automutilação → CVV 188 + SAMU 192 **sem** chamar Watson.
 O frontend estático em ``../frontend`` é servido na raiz.
+Bind: FLASK_HOST (padrão 0.0.0.0) + FLASK_PORT (padrão 5000).
 """
 
 from __future__ import annotations
@@ -114,13 +115,13 @@ def chat():
 
 @app.post("/api/message")
 def message_alias():
-    """Alias acadêmico de POST /api/chat (contrato FIAP Cap. 1)."""
+    """Alias de POST /api/chat (contrato REST legado)."""
     return chat()
 
 
 @app.post("/api/extract")
 def extract():
-    """Extração estruturada de prontuário sintético (Ir Além 1)."""
+    """Extração estruturada de prontuário sintético (módulo GenAI)."""
     payload = request.get_json(silent=True) or {}
     text = str(payload.get("text") or payload.get("narrativa") or "").strip()
     if not text:

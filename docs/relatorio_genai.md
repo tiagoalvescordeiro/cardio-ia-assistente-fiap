@@ -1,4 +1,4 @@
-# Relatório técnico — Ir Além 1: extração clínica generativa
+# Especificação — Extração clínica GenAI
 
 **Módulo:** `ir_alem_1_genai/`  
 **Disclaimer:** *Este assistente não substitui atendimento médico. Em emergências, ligue 192 (SAMU).*  
@@ -6,11 +6,11 @@
 
 ## 1. Problema
 
-Prontuários e relatos de paciente chegam em texto livre. O ecossistema CardioIA (Fases 1–3) já opera sinais estruturados (PA, FC e, na telemetria, BPM/temperatura). A Fase 5 completa o elo faltante: **narrativa → JSON estrito**, para alimentar triagem, RPA e auditoria.
+Prontuários e relatos de paciente chegam em texto livre. O ecossistema CardioIA já opera sinais estruturados (PA, FC e, na telemetria, BPM/temperatura). Este módulo completa o elo: **narrativa → JSON estrito**, para alimentar triagem, RPA e auditoria.
 
 ## 2. Contrato de saída
 
-Validação **Pydantic v2** (`RegistroClinico`), com aliases da rubrica:
+Validação **Pydantic v2** (`RegistroClinico`), com aliases de compatibilidade:
 
 ```json
 {
@@ -32,7 +32,7 @@ Validação **Pydantic v2** (`RegistroClinico`), com aliases da rubrica:
 }
 ```
 
-O campo opcional `spo2` é aceito no modelo interno para alinhar a Fase 5 ao RPA e à herança de oximetria; o JSON mínimo pedido no enunciado permanece válido.
+O campo opcional `spo2` é aceito no modelo interno para alinhar oximetria ao RPA; o JSON mínimo do contrato permanece válido.
 
 ## 3. Pipeline
 
@@ -69,13 +69,13 @@ Essa camada garante demo **offline** e *smoke test* determinístico.
 | **MODERADO** | Dor atípica isolada; palpitação; PA 140–159 / 90–99 |
 | **BAIXO** | Vitais estáveis e queixa não aguda |
 
-Limiar de FC **> 120** e **< 50** replica o Ir Além 1 da Fase 3 (`scripts/fase3_ir_alem1_rest_email.py`). PAS/PAD de crise seguem a faixa pedagógica usada no worker RPA (compatível com discussão de emergência hipertensiva em materiais da SBC/AHA, **sem** pretender aplicar a diretriz completa).
+Limiar de FC **> 120** e **< 50** replica a telemetria da Fase 3. PAS/PAD de crise seguem a faixa usada no worker RPA (compatível com discussão de emergência hipertensiva em materiais da SBC/AHA, **sem** pretender aplicar a diretriz completa).
 
 ## 5. Dataset de teste
 
-`dataset_casos_teste.json` contém 10 narrativas (2 BAIXO, 2 MODERADO, 2 ALTO, 4 EMERGENCIA), com identificadores `PAC-SYN-001` … `PAC-SYN-010`, idades, PA, FC, SpO2 e posologias. Nenhuma linha deriva de prontuário real.
+`dataset_casos_teste.json` contém 10 narrativas (2 BAIXO, 2 MODERADO, 2 ALTO, 4 EMERGENCIA), com identificadores `PAC-SYN-001` … `PAC-SYN-010`. Nenhuma linha deriva de prontuário real.
 
-O notebook `notebook_extracao.ipynb` executa o lote e uma extração pontual do caso `CASO-EMERGENCIA-01`.
+O notebook `notebook_extracao.ipynb` executa o lote e uma extração pontual.
 
 ## 6. Integração
 

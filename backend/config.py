@@ -3,7 +3,8 @@ Configuração central do CardioIA Assistente.
 
 Carrega variáveis de ambiente a partir de `.env` na raiz do projeto.
 Credenciais IBM e LLM são opcionais: a ausência delas ativa modos
-de fallback locais (regra + heurística), adequados à demonstração acadêmica.
+de fallback locais (regra + heurística), adequados à demonstração.
+O host padrão ``0.0.0.0`` permite acesso via LAN ou túnel (cloudflared/ngrok).
 """
 
 from __future__ import annotations
@@ -25,8 +26,8 @@ DISCLAIMER = (
 # Limiares clínicos alinhados à Fase 1/3 (HR) e à triagem de crise hipertensiva (PA).
 SBP_CRISIS_MMHG = 180
 DBP_CRISIS_MMHG = 120
-HR_TACHYCARDIA_BPM = 120  # herdado de cardio-ia-fase1 / Ir Além 1 (BPM > 120)
-HR_BRADYCARDIA_BPM = 50  # herdado de cardio-ia-fase1 / Ir Além 1 (BPM < 50)
+HR_TACHYCARDIA_BPM = 120  # herdado de cardio-ia-fase1 / telemetria (BPM > 120)
+HR_BRADYCARDIA_BPM = 50  # herdado de cardio-ia-fase1 / telemetria (BPM < 50)
 SPO2_CRITICAL_PCT = 90
 SPO2_LOW_PCT = 94
 
@@ -52,7 +53,7 @@ class Settings:
         self.frontend_dir: Path = PROJECT_ROOT / "frontend"
         self.data_dir: Path = PROJECT_ROOT / "data"
 
-        self.flask_host: str = os.getenv("FLASK_HOST", "127.0.0.1")
+        self.flask_host: str = os.getenv("FLASK_HOST", "0.0.0.0")
         self.flask_port: int = _as_int(os.getenv("FLASK_PORT"), 5000)
         self.flask_debug: bool = _as_bool(os.getenv("FLASK_DEBUG"), False)
         cors_raw = os.getenv("CORS_ORIGINS", "*")

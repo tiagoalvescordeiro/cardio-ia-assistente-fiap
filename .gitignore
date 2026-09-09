@@ -46,3 +46,7 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Binários locais de túnel (não versionar)
+tools/
+*.exe

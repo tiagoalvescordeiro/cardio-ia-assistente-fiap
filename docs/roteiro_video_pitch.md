@@ -1,11 +1,11 @@
-# Roteiro de vídeo-pitch — CardioIA + ECO (≤ 3 minutos)
+# Roteiro de demonstração em vídeo — CardioIA + ECO (≤ 3 minutos)
 
 **Tom:** institucional, calmo, sem promessa de diagnóstico.  
 **Disclaimer (0:00–0:08 e 2:50–3:00):**  
 *Este assistente não substitui atendimento médico e não é dispositivo médico. Emergência cardíaca: 192. Crise emocional com ideação: 188.*  
 **Dados na tela:** apenas narrativas sintéticas. Nenhum nome civil.
 
-Tela cheia em `http://127.0.0.1:5000`. Dark mode ligado. Banner «sessão segura e anônima» visível.
+Tela cheia em `http://127.0.0.1:5000` (ou URL pública do túnel). Dark mode ligado. Banner «sessão segura e anônima» visível.
 
 ---
 
@@ -33,7 +33,7 @@ Tela cheia em `http://127.0.0.1:5000`. Dark mode ligado. Banner «sessão segura
 **Ação 1:** chip **Ansiedade**.  
 **Esperado:** acolhimento + pergunta de irradiação / suor frio / desmaio.  
 **Ação 2:** digitar **«Não, sem irradiação e sem suor frio»**.  
-**Esperado:** psicoeducação de luta-ou-fuga + oferta 4-7-8; o painel do círculo, o **pulso anônimo** («Na sua região metropolitana, 18 pessoas…») e o heatmap agregado aparecem — sem pedir localização.  
+**Esperado:** psicoeducação de luta-ou-fuga + oferta 4-7-8; o painel do círculo, o **pulso anônimo** e o heatmap agregado aparecem — sem pedir localização.  
 **Ação 3:** clicar **Iniciar 4-7-8** (2–3 segundos de inspire).  
 **Narração:**  
 «Sem red flag depois do rastreio, vêm a psicoeducação, o 4-7-8 e o pulso k-anônimo sintético. Não há diagnóstico de pânico e não há GPS.»
@@ -57,7 +57,7 @@ Tela cheia em `http://127.0.0.1:5000`. Dark mode ligado. Banner «sessão segura
 
 **Visual:** corte rápido no `GET /api/health` (pílula «API ok · Watson cloud/fallback») ou no JSON do skill.  
 **Narração:**  
-«Flask, skill Watson versionado, filtro de segurança e fallback local se a Lite falhar.»
+«Flask, skill Watson versionado, filtro de segurança e fallback local se a nuvem falhar.»
 
 ## 2:50–3:00 — Fechamento
 
