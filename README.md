@@ -227,7 +227,7 @@ python scripts\md_to_pdf_genai.py
 
 ---
 
-## Equipe
+## Grupo 54 — CardioIA Fase 5
 
 | Nome | RM |
 | --- | --- |
@@ -235,8 +235,6 @@ python scripts\md_to_pdf_genai.py
 | Matheus Parra | 561907 |
 | Otávio Custódio de Oliveira | 565606 |
 | Leandro Arthur Marinho Ferreira | 565240 |
-
-A autoria nos commits do GitHub reflete o usuário que realiza os *pushes*; a composição da equipe para o projeto é a registrada acima.
 
 ---
 
