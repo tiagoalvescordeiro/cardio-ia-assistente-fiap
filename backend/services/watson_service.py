@@ -157,39 +157,29 @@ REPLY_DESPEDIDA = (
 )
 
 REPLY_FALLBACK = (
-    "Não tenho certeza se compreendi exatamente o seu sintoma. "
-    "Você poderia me explicar com outras palavras o que está sentindo no momento? "
-    "Estou aqui para orientar sobre dores no peito, ansiedade ou lembrar de medicações. "
-    "Se for uma emergência, não hesite em ligar 192."
+    "Não peguei direito — pode me contar de outro jeito o que está sentindo agora? "
+    "Estou aqui com você. Se for emergência, ligue 192."
 )
 
 # --- ECO: acolhimento vicário + psicoeducação (nunca substitui red-flag) ---
 
 REPLY_DUVIDA_INFARTO = (
     "Essa dúvida é importante — e eu não vou tratar como «só ansiedade». "
-    "Me diga com clareza: a dor irradia para o braço, pescoço ou mandíbula? "
-    "Tem suor frio ou desmaio agora? "
-    "Se qualquer um desses sinais estiver presente, ou se você não tiver certeza, "
-    "ligue 192 (SAMU) agora. Na dúvida, o atendimento presencial sempre vem primeiro."
+    "A dor irradia para o braço, pescoço ou mandíbula? Tem suor frio ou desmaio agora? "
+    "Se sim, ou se não tiver certeza, ligue 192 (SAMU)."
 )
 
 REPLY_ECO_SCREEN = (
-    "Estou aqui com você. Entendo o desconforto. "
-    "Palpitação e aperto situacional podem ser a mesma resposta do corpo — "
-    "o sistema nervoso autônomo em luta-ou-fuga — e isso é compartilhado, "
-    "não um diagnóstico. "
-    "Antes de qualquer hipótese de estresse, precisamos afastar sinais de emergência. "
-    "Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?"
+    "Estou aqui com você. Entendo o desconforto — o corpo em alerta pode reagir assim, "
+    "sem isso ser um diagnóstico. "
+    "Antes de qualquer hipótese de estresse: tem dor no peito indo para o braço, suor frio ou desmaio agora?"
 )
 
 REPLY_ECO_478 = (
-    "Por agora não identifiquei sinal que peça o SAMU na hora — isso não descarta "
-    "avaliação presencial se a dúvida persistir. "
-    "O aperto ou a palpitação de sobrecarga pode ser a descarga autonômica de alerta; "
-    "a respiração 4-7-8 (inspire 4, segure 7, expire 8) é prática física, não tratamento. "
-    "Rede de apoio: CVV 188 (https://cvv.org.br), ABRATA (https://www.abrata.org.br) "
-    "e o CAPS do seu município. "
-    "Se aparecer irradiação, suor frio ou desmaio, ligue 192 imediatamente."
+    "Por agora não vi sinal que peça o SAMU na hora — se a dúvida continuar, "
+    "avaliação presencial ainda vale. "
+    "A respiração 4-7-8 (inspire 4, segure 7, expire 8) é prática física. "
+    "Rede: CVV 188, ABRATA e o CAPS do município. Se surgir irradiação, suor frio ou desmaio, 192."
 )
 
 REPLY_IDEACAO = (
@@ -199,19 +189,32 @@ REPLY_IDEACAO = (
     "Rede de apoio: ABRATA (https://www.abrata.org.br) e o CAPS do seu município."
 )
 
+# Cefaleia: turn-based (nunca checklist + 192 + UBS na mesma bolha).
 REPLY_CEFALEIA = (
-    "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. "
-    "Para sua segurança, preciso avaliar alguns pontos: "
-    "essa dor começou de repente e é a pior que você já sentiu? "
-    "Há alguma rigidez na nuca, alteração visual ou fraqueza? "
-    "Se houver qualquer um desses sinais, ligue 192 (SAMU) agora. "
-    "Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
+    "Sinto muito por essa dor. "
+    "Ela veio de repente, como a pior da sua vida, ou foi aumentando?"
+)
+
+REPLY_CEFALEIA_CLEAR = (
+    "Entendi — sem esses sinais de alerta por agora. "
+    "Descanse, hidrate-se e, se a dor persistir ou piorar, procure a UBS."
 )
 
 REPLY_CEFALEIA_NEURO = (
-    "Sinto muito — dor de cabeça com sinais de alerta neurológico pede avaliação imediata. "
-    "Ligue agora para o SAMU (192) ou peça para alguém levá-lo à emergência. "
-    "Mantenha repouso absoluto."
+    "Obrigado por me falar disso — com esse sinal de alerta, o caminho seguro é "
+    "ligar agora para o SAMU (192). Peça para alguém ficar com você e fique em repouso "
+    "enquanto aguarda."
+)
+
+REPLY_CEFALEIA_EMOTION = (
+    "Parece que a dor vem junto com lembranças difíceis — isso importa. "
+    "A fraqueza que você sente é mais um cansaço pesado no corpo todo, "
+    "ou algo súbito de um lado, com fala ou visão diferentes?"
+)
+
+REPLY_CEFALEIA_EMOTION_SCREEN = (
+    "Parece que a dor vem junto com algo difícil — isso importa. "
+    "Ela veio de repente, como a pior da sua vida, ou foi aumentando aos poucos?"
 )
 
 REPLY_AJUDA_HUMANA = (
@@ -575,6 +578,73 @@ _NEURO_EMERGENCY_MARKERS = (
     "dor em trovoada",
 )
 
+# Respostas curtas na tela de cefaleia (sem precisar repetir "dor de cabeça").
+_CEFALEIA_FLAG_ANSWERS = (
+    "fraqueza",
+    "fraco",
+    "fraca",
+    "rigidez",
+    "nuca",
+    "pior dor",
+    "a pior",
+    "subita",
+    "subito",
+    "de repente",
+    "visao",
+    "enxerg",
+    "fala enrolada",
+    "boca torta",
+    "paralisia",
+    "um lado",
+    "convulsao",
+    "trovoada",
+)
+
+_CEFALEIA_CLEAR_NEURO = (
+    "fraqueza de um lado",
+    "lado do corpo",
+    "boca torta",
+    "fala enrolada",
+    "dificuldade para falar",
+    "visao dupla",
+    "perda de visao",
+    "rigidez de nuca",
+    "nuca dura",
+    "paralisia",
+    "convulsao",
+)
+
+_EMOTIONAL_HEADACHE_MARKERS = (
+    "triste",
+    "tristeza",
+    "lembranc",
+    "lembro",
+    "episodio triste",
+    "episódio triste",
+    "chorar",
+    "chorei",
+    "ansios",
+    "nervos",
+    "estresse",
+    "luto",
+    "perda",
+    "trauma",
+    "difícil",
+    "dificil",
+)
+
+_WEAKNESS_SOFT_MARKERS = (
+    "cansaco",
+    "cansaço",
+    "cansado",
+    "cansada",
+    "exaust",
+    "peso no corpo",
+    "corpo pesado",
+    "moleza",
+    "prostrac",
+)
+
 _ISCHEMIC_ALARM_MARKERS = (
     "suor frio",
     "suando",
@@ -786,18 +856,67 @@ def _is_headache_complaint(normalized: str) -> bool:
     return _has_any(normalized, _HEADACHE_MARKERS)
 
 
+def _has_clear_neuro_deficit(normalized: str) -> bool:
+    return _has_any(normalized, _CEFALEIA_CLEAR_NEURO)
+
+
+def _mentions_weakness(normalized: str) -> bool:
+    return _has_any(normalized, ("fraqueza", "fraco", "fraca", "frouxo", "paralisia"))
+
+
+def _is_soft_tiredness(normalized: str) -> bool:
+    return _has_any(normalized, _WEAKNESS_SOFT_MARKERS) and not _has_clear_neuro_deficit(normalized)
+
+
+def _has_emotional_headache_context(normalized: str) -> bool:
+    return _is_headache_complaint(normalized) and _has_any(normalized, _EMOTIONAL_HEADACHE_MARKERS)
+
+
+def _cefaleia_answer_is_red_flag(normalized: str) -> bool:
+    """Resposta na tela de cefaleia: 'fraqueza', 'rigidez', 'súbita', etc."""
+    if _is_no(normalized) and not _mentions_weakness(normalized):
+        return False
+    if _has_clear_neuro_deficit(normalized):
+        return True
+    if _is_soft_tiredness(normalized):
+        return False
+    compact = normalized.strip()
+    if compact in {"fraqueza", "fraco", "fraca", "rigidez", "subita", "subito", "sim"}:
+        return True
+    return _has_any(normalized, _CEFALEIA_FLAG_ANSWERS)
+
+
 def _has_neuro_emergency_cluster(normalized: str) -> bool:
     if not _is_headache_complaint(normalized) and "cefaleia" not in normalized and "cabeca" not in normalized:
         return False
-    if _has_any(normalized, _NEURO_EMERGENCY_MARKERS):
+    if _has_clear_neuro_deficit(normalized) or _has_any(normalized, _NEURO_EMERGENCY_MARKERS):
+        return True
+    # Fraqueza + cefaleia SEM contexto emocional → alerta (emoção + fraqueza: esclarecer).
+    if _mentions_weakness(normalized) and not _has_any(normalized, _EMOTIONAL_HEADACHE_MARKERS):
         return True
     sudden = _has_any(normalized, ("de repente", "subita", "subito", "agora ha pouco", "comecou agora"))
-    worst = _has_any(normalized, ("pior dor", "insuportavel", "nunca senti", "10/10"))
+    worst = _has_any(normalized, ("pior dor", "insuportavel", "nunca senti", "10/10", "pior da vida"))
     return bool(sudden and worst and _is_headache_complaint(normalized))
 
 
 def _is_isolated_headache(normalized: str) -> bool:
     return _is_headache_complaint(normalized) and not _has_neuro_emergency_cluster(normalized)
+
+
+def _looks_like_cefaleia_reply(reply: str) -> bool:
+    n = _norm(reply)
+    return any(
+        k in n
+        for k in (
+            "pior da sua vida",
+            "foi aumentando",
+            "lembrancas dificeis",
+            "cansaco pesado",
+            "sinais de alerta por agora",
+            "sinto muito por essa dor",
+            "caminho seguro e ligar",
+        )
+    )
 
 
 def _is_triage_narrative(normalized: str) -> bool:
@@ -1378,6 +1497,15 @@ class LocalRuleEngine:
         "conflito": ("briga", "discussao", "conflito", "reuniao tensa"),
         "luto": ("luto", "perda", "falecimento"),
         "insonia_contexto": ("nao dormi", "noite em claro"),
+        "memoria_triste": (
+            "triste",
+            "tristeza",
+            "lembro",
+            "lembranca",
+            "lembrança",
+            "episodio triste",
+            "episódio triste",
+        ),
     }
 
     ENTITY_MEDICAMENTO = (
@@ -1456,6 +1584,12 @@ class LocalRuleEngine:
                 return INTENT_AFIRMACAO if _is_yes(n) else INTENT_NEGACAO, 0.96, entities
             if _is_infarto_doubt(n):
                 return INTENT_DUVIDA_INFARTO, 0.95, entities
+
+        if memory and memory.eco_etapa in {"cefaleia_screen", "cefaleia_clarify"}:
+            if _cefaleia_answer_is_red_flag(n) or _is_yes(n) or _is_soft_tiredness(n) or _is_no(n):
+                return INTENT_CEFALEIA, 0.97, entities
+            if _is_isolated_headache(n) or _has_neuro_emergency_cluster(n):
+                return INTENT_CEFALEIA, 0.96, entities
 
         # Narrativa cotidiana (roçar, carpir, repuxo) = início de triagem, nunca saudação.
         if _is_mechanical_immediate(n):
@@ -1773,12 +1907,13 @@ class LocalRuleEngine:
 
         # Jump-equivalent: once A, stay A — exceto nova queixa de cefaleia isolada.
         if mem.emergencia_ativa or mem.risco == "A":
-            if _is_isolated_headache(n):
+            if _is_isolated_headache(n) or (
+                _is_headache_complaint(n) and not _has_clear_neuro_deficit(n) and _has_emotional_headache_context(n)
+            ):
                 mem.emergencia_ativa = False
                 mem.risco = "C"
                 mem.triagem_etapa = "done"
-                mem.eco_etapa = ""
-                return REPLY_CEFALEIA
+                return self._start_cefaleia(n, mem)
             mem.emergencia_ativa = True
             mem.triagem_etapa = "done"
             mem.risco = "A"
@@ -1801,22 +1936,23 @@ class LocalRuleEngine:
             mem.risco = "A"
             return REPLY_IDEACAO
 
+        if mem.eco_etapa in {"cefaleia_screen", "cefaleia_clarify"}:
+            return self._continue_cefaleia(n, mem)
+
         if mem.eco_etapa == "screen_redflags":
             return self._continue_eco(n, mem)
 
         if intent == INTENT_DUVIDA_INFARTO or _is_infarto_doubt(n):
             return self._start_duvida_infarto(n, mem)
 
-        if intent == INTENT_CEFALEIA or _is_isolated_headache(n):
-            mem.risco = "C"
-            mem.triagem_etapa = "done"
-            mem.emergencia_ativa = False
-            return REPLY_CEFALEIA
+        if intent == INTENT_CEFALEIA or _is_isolated_headache(n) or _has_emotional_headache_context(n):
+            return self._start_cefaleia(n, mem)
 
         if _has_neuro_emergency_cluster(n):
             mem.emergencia_ativa = True
             mem.risco = "A"
             mem.triagem_etapa = "done"
+            mem.eco_etapa = "done"
             return REPLY_CEFALEIA_NEURO
 
         if intent in ECO_INTENTS or (
@@ -1911,6 +2047,82 @@ class LocalRuleEngine:
         if ("desmaio" in n or "desmaiei" in n) and "desmaio" not in denied:
             return True
         return False
+
+    def _start_cefaleia(self, n: str, memory: SessionMemory) -> str:
+        """Turn 1: empatia curta + 1–2 perguntas. Sem checklist + 192 + UBS na mesma bolha."""
+        memory.emergencia_ativa = False
+        memory.risco = "C"
+        memory.triagem_etapa = "done"
+        memory.eco_path = False
+
+        if _has_clear_neuro_deficit(n) or (
+            _has_neuro_emergency_cluster(n) and not _has_emotional_headache_context(n)
+        ):
+            memory.emergencia_ativa = True
+            memory.risco = "A"
+            memory.eco_etapa = "done"
+            return REPLY_CEFALEIA_NEURO
+
+        if _has_emotional_headache_context(n):
+            if _mentions_weakness(n) and not _is_soft_tiredness(n):
+                memory.eco_etapa = "cefaleia_clarify"
+                memory.sintomas_associados = _merge_csv(memory.sintomas_associados, "fraqueza")
+                return REPLY_CEFALEIA_EMOTION
+            memory.eco_etapa = "cefaleia_screen"
+            return REPLY_CEFALEIA_EMOTION_SCREEN
+
+        memory.eco_etapa = "cefaleia_screen"
+        return REPLY_CEFALEIA
+
+    def _continue_cefaleia(self, n: str, memory: SessionMemory) -> str:
+        """Turn 2+: absorve achados; não reinicia o template."""
+        if _is_soft_tiredness(n) and not _has_clear_neuro_deficit(n):
+            memory.eco_etapa = "done"
+            memory.risco = "B"
+            memory.emergencia_ativa = False
+            return (
+                "Entendi — parece mais um cansaço ligado ao que você está vivendo do que "
+                "um déficit neurológico súbito. Descanse, hidrate-se e, se a dor ou a "
+                "fraqueza piorarem ou surgirem fala/visão alteradas, ligue 192. "
+                "Se o peso emocional continuar, o CVV 188 também pode acolher."
+            )
+
+        if (
+            _cefaleia_answer_is_red_flag(n)
+            or _has_clear_neuro_deficit(n)
+            or _is_yes(n)
+            or _has_any(n, ("nao sei", "talvez", "pode ser"))
+        ):
+            memory.emergencia_ativa = True
+            memory.risco = "A"
+            memory.eco_etapa = "done"
+            memory.triagem_etapa = "done"
+            return REPLY_CEFALEIA_NEURO
+
+        if _is_no(n) or _has_any(
+            n,
+            (
+                "foi aumentando",
+                "aumentando",
+                "aos poucos",
+                "gradual",
+                "ja tenho ha",
+                "ja faz",
+                "sem fraqueza",
+                "sem rigidez",
+                "nada disso",
+            ),
+        ):
+            memory.eco_etapa = "done"
+            memory.risco = "C"
+            memory.emergencia_ativa = False
+            return REPLY_CEFALEIA_CLEAR
+
+        # Ambíguo na tela de alerta → preferir segurança.
+        memory.emergencia_ativa = True
+        memory.risco = "A"
+        memory.eco_etapa = "done"
+        return REPLY_CEFALEIA_NEURO
 
     def _start_duvida_infarto(self, n: str, memory: SessionMemory) -> str:
         """#duvida_infarto: nunca tranquiliza como ansiedade; rastreia red flags."""
@@ -2355,8 +2567,32 @@ class WatsonService:
 
         # ECO: o skill Lite ainda pode mapear ansiedade para cenário B/MSK.
         if gold.eco_path or gold.eco_etapa == "screen_redflags":
-            gold_eco = any(k in gn for k in ("4-7-8", "suor frio", "luta-ou-fuga", "autonomo", "so ansiedade", "cvv", "abrata"))
-            watson_eco = any(k in wn for k in ("4-7-8", "suor frio", "luta-ou-fuga", "autonomo", "so ansiedade", "cvv", "abrata"))
+            gold_eco = any(
+                k in gn
+                for k in (
+                    "4-7-8",
+                    "suor frio",
+                    "luta-ou-fuga",
+                    "corpo em alerta",
+                    "autonomo",
+                    "so ansiedade",
+                    "cvv",
+                    "abrata",
+                )
+            )
+            watson_eco = any(
+                k in wn
+                for k in (
+                    "4-7-8",
+                    "suor frio",
+                    "luta-ou-fuga",
+                    "corpo em alerta",
+                    "autonomo",
+                    "so ansiedade",
+                    "cvv",
+                    "abrata",
+                )
+            )
             if gold_eco and not watson_eco:
                 watson_result.reply = gold_reply
                 watson_result.source = "fallback"
@@ -2375,14 +2611,36 @@ class WatsonService:
                 "olha so",
                 "te cuida",
                 "tu vira",
+                "sei o quanto e debilitante",
+                "preciso avaliar alguns pontos",
+                "nao tenho certeza se compreendi exatamente",
             )
         )
         if stale_voice and gold_reply.strip() and not any(
-            marker in gn for marker in ("visse", "capaz que", "postinho", "pois entao")
+            marker in gn
+            for marker in (
+                "visse",
+                "capaz que",
+                "postinho",
+                "pois entao",
+                "sei o quanto e debilitante",
+                "preciso avaliar alguns pontos",
+            )
         ):
             watson_result.reply = gold_reply
             watson_result.source = "fallback"
             return watson_result
+
+        # Cefaleia turn-based: ouro local vence checklist monolítico do skill LIVE.
+        if gold.eco_etapa in {"cefaleia_screen", "cefaleia_clarify"} or _looks_like_cefaleia_reply(gold_reply):
+            if gold_reply.strip() and (
+                not _looks_like_cefaleia_reply(wr)
+                or "preciso avaliar alguns pontos" in wn
+                or "sei o quanto e debilitante" in wn
+            ):
+                watson_result.reply = gold_reply
+                watson_result.source = "fallback"
+                return watson_result
 
         # Saudação / ECO: LIVE ainda pode devolver copy anterior sem gíria.
         if (
@@ -2396,8 +2654,9 @@ class WatsonService:
             return watson_result
         if (
             (gold.eco_path or gold.eco_etapa == "screen_redflags")
-            and "entendo o desconforto" in gn
+            and ("entendo o desconforto" in gn or "corpo em alerta" in gn)
             and "entendo o desconforto" not in wn
+            and "corpo em alerta" not in wn
             and gold_reply.strip()
         ):
             watson_result.reply = gold_reply
@@ -2408,9 +2667,12 @@ class WatsonService:
             "capaz que" in wn
             or "qualquer outra coisa" in wn
             or "nao tenho certeza se compreendi" in wn
+            or "nao peguei direito" in wn
         )
         gold_fallback = (
-            "capaz que" in gn or "nao tenho certeza se compreendi" in gn
+            "capaz que" in gn
+            or "nao tenho certeza se compreendi" in gn
+            or "nao peguei direito" in gn
         )
         # Preferir gold quando Watson cai em fallback genérico sem resposta específica,
         # ou quando o skill LIVE ainda devolve a voz antiga com gíria.
@@ -2532,13 +2794,32 @@ class WatsonService:
             if "capaz que" in rn or "nao tenho certeza se compreendi" in rn:
                 result.reply = REPLY_EMERGENCIA_HOLD
 
-        if _is_isolated_headache(n):
-            result.reply = REPLY_CEFALEIA
+        if _is_isolated_headache(n) or _has_emotional_headache_context(n):
+            # Não reinicia checklist se já estamos na tela / esclarecimento.
+            if memory is not None and memory.eco_etapa in {"cefaleia_screen", "cefaleia_clarify"}:
+                result.intents = [{"intent": INTENT_CEFALEIA, "confidence": 0.96}]
+                memory.emergencia_ativa = False
+                if memory.risco != "A":
+                    memory.risco = memory.risco or "C"
+                return result
+            if memory is not None and memory.eco_etapa == "done" and memory.risco == "A" and _has_samu(result.reply):
+                return result
+            if _looks_like_cefaleia_reply(result.reply):
+                result.intents = [{"intent": INTENT_CEFALEIA, "confidence": 0.96}]
+                if memory is not None:
+                    memory.emergencia_ativa = False
+                    if memory.risco != "A":
+                        memory.risco = memory.risco or "C"
+                    if not memory.eco_etapa:
+                        memory.eco_etapa = "cefaleia_screen"
+                return result
+            gold = SessionMemory()
+            if memory is not None:
+                _copy_memory(memory, gold)
+            result.reply = self._engine._start_cefaleia(_norm(text), gold)
             result.intents = [{"intent": INTENT_CEFALEIA, "confidence": 0.96}]
             if memory is not None:
-                memory.emergencia_ativa = False
-                memory.risco = "C"
-                memory.triagem_etapa = "done"
+                _copy_memory(gold, memory)
             return result
 
         if (

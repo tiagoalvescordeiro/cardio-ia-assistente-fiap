@@ -86,10 +86,8 @@ REPLACEMENTS: dict[str, str] = {
         "4-7-8. Se for emergência cardíaca, liga 192 (SAMU). Em crise emocional com "
         "ideação, 188 (CVV)."
     ): (
-        "Não tenho certeza se compreendi exatamente o seu sintoma. Você poderia me "
-        "explicar com outras palavras o que está sentindo no momento? Estou aqui para "
-        "orientar sobre dores no peito, ansiedade ou lembrar de medicações. Se for uma "
-        "emergência, não hesite em ligar 192."
+        "Não peguei direito — pode me contar de outro jeito o que está sentindo agora? "
+        "Estou aqui com você. Se for emergência, ligue 192."
     ),
     (
         "Entendi a dor de cabeça — por agora, isolada, não peço o SAMU. Me diga: ela "
@@ -98,11 +96,27 @@ REPLACEMENTS: dict[str, str] = {
         "presente, ligue 192. Caso contrário, repouse, hidrate e, se persistir ou "
         "piorar, procure a UBS."
     ): (
+        "Sinto muito por essa dor. "
+        "Ela veio de repente, como a pior da sua vida, ou foi aumentando?"
+    ),
+    (
         "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. "
         "Para sua segurança, preciso avaliar alguns pontos: essa dor começou de "
         "repente e é a pior que você já sentiu? Há alguma rigidez na nuca, alteração "
         "visual ou fraqueza? Se houver qualquer um desses sinais, ligue 192 (SAMU) "
         "agora. Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
+    ): (
+        "Sinto muito por essa dor. "
+        "Ela veio de repente, como a pior da sua vida, ou foi aumentando?"
+    ),
+    (
+        "Não tenho certeza se compreendi exatamente o seu sintoma. Você poderia me "
+        "explicar com outras palavras o que está sentindo no momento? Estou aqui para "
+        "orientar sobre dores no peito, ansiedade ou lembrar de medicações. Se for uma "
+        "emergência, não hesite em ligar 192."
+    ): (
+        "Não peguei direito — pode me contar de outro jeito o que está sentindo agora? "
+        "Estou aqui com você. Se for emergência, ligue 192."
     ),
     (
         "Oi, tudo bem? Eu sou a CardioIA — triagem inicial, sem diagnosticar e sem "

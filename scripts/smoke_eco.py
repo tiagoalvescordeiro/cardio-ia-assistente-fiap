@@ -47,7 +47,7 @@ def main() -> None:
     noflag = w.send_message("Não, sem irradiação e sem suor frio", sid2)
     expect("4-7-8" in noflag.reply, "rastreio negativo -> 4-7-8")
     expect("ABRATA" in noflag.reply and "CAPS" in noflag.reply, "4-7-8 cita ABRATA e CAPS")
-    expect("luta-ou-fuga" in eco.reply.lower() or "autonom" in eco.reply.lower(), "psicoeducacao autonoma")
+    expect("luta-ou-fuga" in eco.reply.lower() or "autonom" in eco.reply.lower() or "alerta" in eco.reply.lower(), "psicoeducacao autonoma")
     eco_ui = noflag.to_dict()["ui"]
     expect(bool(eco_ui.get("show_breathing")), "4-7-8 acende o circulo")
     expect(not eco_ui.get("crisis_modal"), "4-7-8 nao abre modal de crise")
@@ -89,15 +89,31 @@ def main() -> None:
     sid7 = w.create_session()
     cabeca = w.send_message("tenho forte dor de cabeça quando vou dormir", sid7)
     rn = cabeca.reply.lower()
-    expect("ubs" in rn, "cefaleia acolhe e orienta UBS")
+    expect("pior da sua vida" in rn or "aumentando" in rn, "cefaleia turn1 pergunta curta")
+    expect("preciso avaliar alguns pontos" not in rn, "cefaleia nao dumpa checklist")
     expect("aperto" not in rn, "cefaleia nao vira peito Q1")
     expect(rn.count("ligue agora para o samu") == 0 and "repouso absoluto" not in rn, "cefaleia isolada nao default SAMU")
+
+    sid7b = w.create_session()
+    w.send_message("estou com dor de cabeça forte", sid7b)
+    frag = w.send_message("fraqueza", sid7b)
+    expect("192" in frag.reply, "fraqueza apos tela -> 192")
+    expect("há alguma rigidez" not in frag.reply.lower() and "preciso avaliar" not in frag.reply.lower(), "nao re-pergunta checklist")
+
+    sid7c = w.create_session()
+    emo = w.send_message(
+        "sempre que lembro de um episódio triste me dá uma forte dor de cabeça e fraqueza no corpo",
+        sid7c,
+    )
+    er = emo.reply.lower()
+    expect("lembrança" in er or "lembrancas" in er or "difíceis" in er or "dificeis" in er, "emocao reconhecida")
+    expect("há fraqueza" not in er and "ha fraqueza" not in er, "nao re-pergunta fraqueza ja dita")
 
     sid8 = w.create_session()
     w.send_message("Dor no peito irradiando para o braço com suor frio", sid8)
     depois = w.send_message("dor de cabeça", sid8)
     dn = depois.reply.lower()
-    expect("ubs" in dn or "rigidez" in dn, "apos SCA, cefaleia isolada sai do hold")
+    expect("pior da sua vida" in dn or "aumentando" in dn or "ubs" in dn, "apos SCA, cefaleia isolada sai do hold")
 
     print("Smoke ECO: todos os asserts passaram.")
 

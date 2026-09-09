@@ -9,12 +9,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SKILL = ROOT / "watson" / "cardio_assistant_skill.json"
 
 REPLY = (
-    "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. "
-    "Para sua segurança, preciso avaliar alguns pontos: "
-    "essa dor começou de repente e é a pior que você já sentiu? "
-    "Há alguma rigidez na nuca, alteração visual ou fraqueza? "
-    "Se houver qualquer um desses sinais, ligue 192 (SAMU) agora. "
-    "Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
+    "Sinto muito por essa dor. "
+    "Ela veio de repente, como a pior da sua vida, ou foi aumentando?"
 )
 
 CONDITIONS = (
@@ -73,6 +69,7 @@ def main() -> None:
             "risco": "C",
             "emergencia_ativa": False,
             "triagem_etapa": "done",
+            "eco_etapa": "cefaleia_screen",
         },
     }
 

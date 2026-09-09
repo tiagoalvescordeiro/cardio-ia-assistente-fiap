@@ -2204,7 +2204,7 @@
           {
             "values": [
               {
-                "text": "Essa dúvida é importante — e eu não vou tratar como «só ansiedade». Me diga com clareza: a dor irradia para o braço, pescoço ou mandíbula? Tem suor frio ou desmaio agora? Se qualquer um desses sinais estiver presente, ou se você não tiver certeza, ligue 192 (SAMU) agora."
+                "text": "Essa dúvida é importante — e eu não vou tratar como «só ansiedade». A dor irradia para o braço, pescoço ou mandíbula? Tem suor frio ou desmaio agora? Se sim, ou se não tiver certeza, ligue 192 (SAMU)."
               }
             ],
             "response_type": "text",
@@ -3786,7 +3786,7 @@
           {
             "values": [
               {
-                "text": "Estou aqui com você. Entendo o desconforto. Palpitação e aperto situacional podem ser a mesma resposta do corpo — o sistema nervoso autônomo em luta-ou-fuga — e isso é compartilhado, não um diagnóstico. Antes de qualquer hipótese de estresse, precisamos afastar sinais de emergência. Você está com dor no peito que vai para o braço, suor frio ou desmaio agora?"
+                "text": "Estou aqui com você. Entendo o desconforto — o corpo em alerta pode reagir assim, sem isso ser um diagnóstico. Antes de qualquer hipótese de estresse: tem dor no peito indo para o braço, suor frio ou desmaio agora?"
               }
             ],
             "response_type": "text",
@@ -3815,7 +3815,7 @@
           {
             "values": [
               {
-                "text": "Estou aqui com você. Entendo o desconforto. Palpitação pode ser resposta de alerta do sistema nervoso — sem ser diagnóstico. Antes, precisamos afastar emergência cardíaca. A palpitação veio com dor no peito irradiando, suor frio ou desmaio?"
+                "text": "Estou aqui com você. Entendo o desconforto — palpitação pode ser alerta do corpo, sem ser diagnóstico. A palpitação veio com dor no peito irradiando, suor frio ou desmaio?"
               }
             ],
             "response_type": "text",
@@ -3923,7 +3923,7 @@
           {
             "values": [
               {
-                "text": "Não tenho certeza se compreendi exatamente o seu sintoma. Você poderia me explicar com outras palavras o que está sentindo no momento? Estou aqui para orientar sobre dores no peito, ansiedade ou lembrar de medicações. Se for uma emergência, não hesite em ligar 192."
+                "text": "Não peguei direito — pode me contar de outro jeito o que está sentindo agora? Estou aqui com você. Se for emergência, ligue 192."
               }
             ],
             "response_type": "text",
@@ -3941,13 +3941,13 @@
     },
     {
       "type": "standard",
-      "title": "Cefaleia isolada — triagem calma",
+      "title": "Cefaleia — tela (1 pergunta)",
       "output": {
         "generic": [
           {
             "values": [
               {
-                "text": "Sinto muito que esteja com essa dor tão intensa, sei o quanto é debilitante. Para sua segurança, preciso avaliar alguns pontos: essa dor começou de repente e é a pior que você já sentiu? Há alguma rigidez na nuca, alteração visual ou fraqueza? Se houver qualquer um desses sinais, ligue 192 (SAMU) agora. Caso contrário, descanse, hidrate-se e busque uma UBS se não melhorar."
+                "text": "Sinto muito por essa dor. Ela veio de repente, como a pior da sua vida, ou foi aumentando?"
               }
             ],
             "response_type": "text",
@@ -3962,6 +3962,66 @@
       },
       "previous_sibling": "node_saudacao",
       "context": {
+        "risco": "C",
+        "emergencia_ativa": false,
+        "triagem_etapa": "done",
+        "eco_etapa": "cefaleia_screen"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Cefaleia — red flag → 192",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Obrigado por me falar disso — com esse sinal de alerta, o caminho seguro é ligar agora para o SAMU (192). Peça para alguém ficar com você e fique em repouso enquanto aguarda."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$eco_etapa == 'cefaleia_screen' && (#afirmacao || input.text.contains('fraqueza') || input.text.contains('rigidez') || input.text.contains('súbita') || input.text.contains('subita') || input.text.contains('pior dor') || input.text.contains('de repente') || input.text.contains('visão') || input.text.contains('visao') || input.text.contains('talvez') || input.text.contains('não sei'))",
+      "dialog_node": "node_cefaleia_alerta",
+      "parent": "node_queixa_cefaleia",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "emergencia_ativa": true,
+        "risco": "A",
+        "triagem_etapa": "done",
+        "eco_etapa": "done"
+      }
+    },
+    {
+      "type": "standard",
+      "title": "Cefaleia — sem red flag → UBS",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Entendi — sem esses sinais de alerta por agora. Descanse, hidrate-se e, se a dor persistir ou piorar, procure a UBS."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "$eco_etapa == 'cefaleia_screen' && (#negacao || input.text.contains('aumentando') || input.text.contains('aos poucos') || input.text.contains('gradual'))",
+      "dialog_node": "node_cefaleia_negacao",
+      "parent": "node_queixa_cefaleia",
+      "previous_sibling": "node_cefaleia_alerta",
+      "next_step": {
+        "behavior": "get_user_input"
+      },
+      "context": {
+        "eco_etapa": "done",
         "risco": "C",
         "emergencia_ativa": false,
         "triagem_etapa": "done"
