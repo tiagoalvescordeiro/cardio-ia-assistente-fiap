@@ -385,9 +385,12 @@ _INFARTO_DOUBT_MARKERS = (
     "e um infarto",
     "duvida de infarto",
     "medo de infarto",
+    "medo de ser o coracao",
     "sera que e o coracao",
-    "e o coracao",
     "pode ser o coracao",
+    "isso e o coracao",
+    "e um problema no coracao",
+    # NÃO incluir "e o coracao" solto — casa com "ansiedade e o coração acelerado".
 )
 
 _BREATHING_REQUEST_MARKERS = (
@@ -681,6 +684,7 @@ _FINDING_TERMS: dict[str, tuple[str, ...]] = {
     "dispneia": ("falta de ar", "dispneia", "ofegante"),
     "nausea": ("enjoo", "nausea", "vomito"),
     "tontura": ("tontura", "desmaio", "sincope"),
+    "peito": ("dor no peito", "dor de peito", "aperto no peito", "peito apertado"),
 }
 
 _EXPLICIT_NEGATION_PHRASES: dict[str, tuple[str, ...]] = {
@@ -717,6 +721,26 @@ _EXPLICIT_NEGATION_PHRASES: dict[str, tuple[str, ...]] = {
         "nao estou com falta de ar",
         "nao to com falta de ar",
         "nenhuma falta de ar",
+    ),
+    "tontura": (
+        "sem desmaio",
+        "sem síncope",
+        "sem sincope",
+        "sem tontura",
+        "nao desmaiei",
+        "nao tive desmaio",
+        "nao tenho desmaio",
+        "sem desmaiar",
+        "nenhum desmaio",
+    ),
+    "peito": (
+        "sem dor no peito",
+        "sem dor de peito",
+        "nao tenho dor no peito",
+        "nao sinto dor no peito",
+        "nao estou com dor no peito",
+        "mas sem dor no peito",
+        "sem aperto no peito",
     ),
 }
 
@@ -797,6 +821,23 @@ def _is_ideacao(normalized: str) -> bool:
 
 
 def _is_infarto_doubt(normalized: str) -> bool:
+    """Dúvida explícita de IAM — não confundir com taquicardia («e o coração acelerado»)."""
+    if _has_any(normalized, ("coracao acelerado", "coracao disparado", "coracao batendo", "palpitacao", "taquicard")):
+        # Taquicardia/ansiedade sem léxico de dúvida/IAM ≠ #duvida_infarto.
+        if not _has_any(
+            normalized,
+            (
+                "infarto",
+                "sera que",
+                "pode ser",
+                "medo de",
+                "duvida",
+                "acho que e",
+                "estou infartando",
+                "to infartando",
+            ),
+        ):
+            return False
     return _has_any(normalized, _INFARTO_DOUBT_MARKERS)
 
 
@@ -952,6 +993,30 @@ def _looks_like_greeting_reply(reply: str) -> bool:
 
 
 def _mentions_chest(normalized: str) -> bool:
+    """Peito positivo; «sem dor no peito» não conta como queixa torácica."""
+    if "peito" in _denied_findings(normalized):
+        # Ainda positivo se houver peito fora da negação (ex.: «dor no peito sem irradiação»).
+        if _has_any(
+            normalized,
+            (
+                "dor no peito",
+                "aperto no peito",
+                "peso no peito",
+                "pressao no peito",
+                "peito apertado",
+                "meio do peito",
+            ),
+        ) and not _has_any(
+            normalized,
+            (
+                "sem dor no peito",
+                "nao tenho dor no peito",
+                "nao sinto dor no peito",
+                "sem aperto no peito",
+            ),
+        ):
+            return True
+        return False
     return _has_any(normalized, _CHEST_MARKERS)
 
 
@@ -1057,7 +1122,21 @@ def _is_yes(normalized: str) -> bool:
 def _is_no(normalized: str) -> bool:
     if normalized in {"nao", "n", "nao.", "negativo", "nada", "nada disso"}:
         return True
-    if normalized.startswith("nao,") and len(normalized) < 28:
+    # «Não, sem irradiação, sem suor frio e sem desmaio» — não limitar por length curto.
+    if normalized.startswith("nao,"):
+        return True
+    if normalized.startswith("nao ") and _has_any(
+        normalized,
+        ("sem irradi", "sem suor", "sem desmaio", "sem falta", "nada disso", "nenhum", "nenhuma"),
+    ):
+        return True
+    # Tela ECO: lista de «sem X» (≥2) sem precisar começar com «não».
+    sem_hits = sum(
+        1
+        for p in ("sem irradi", "sem suor", "sem desmaio", "sem falta", "sem tontura")
+        if p in normalized
+    )
+    if sem_hits >= 2 and not _has_any(normalized, ("dor no peito irradi", "peito apert", "estou com dor")):
         return True
     return False
 
@@ -1577,10 +1656,15 @@ class LocalRuleEngine:
             if positive_alarm:
                 return INTENT_EMERGENCIA, 0.94, entities
         if _has_any(n, _HARD_EMERGENCY_MARKERS) and not abd:
-            return INTENT_EMERGENCIA, 0.93, entities
+            hard_hits = [_norm(m) for m in _HARD_EMERGENCY_MARKERS if _norm(m) in n]
+            only_denied_syncope = hard_hits and all(h in {"desmaio", "desmaiei"} for h in hard_hits) and (
+                "tontura" in denied or "desmaio" in denied
+            )
+            if not only_denied_syncope:
+                return INTENT_EMERGENCIA, 0.93, entities
 
         if memory and memory.eco_etapa == "screen_redflags":
-            if _is_yes(n) or _is_no(n) or _has_any(n, ("nao sei", "talvez", "sem irradi", "sem suor")):
+            if _is_yes(n) or _is_no(n) or _has_any(n, ("nao sei", "talvez", "sem irradi", "sem suor", "sem desmaio")):
                 return INTENT_AFIRMACAO if _is_yes(n) else INTENT_NEGACAO, 0.96, entities
             if _is_infarto_doubt(n):
                 return INTENT_DUVIDA_INFARTO, 0.95, entities
@@ -1590,6 +1674,14 @@ class LocalRuleEngine:
                 return INTENT_CEFALEIA, 0.97, entities
             if _is_isolated_headache(n) or _has_neuro_emergency_cluster(n):
                 return INTENT_CEFALEIA, 0.96, entities
+
+        # Ansiedade/taquicardia sem peito positivo antes de narrativa genérica / dúvida IAM.
+        if _is_breathing_request(n):
+            return INTENT_RESPIRACAO, 0.96, entities
+        if _is_tachy_language(n) and not _mentions_chest(n):
+            return INTENT_TAQUICARDIA, 0.93, entities
+        if _is_anxiety_only_language(n) and not _mentions_chest(n) and not _has_ischemic_alarm_text(n):
+            return INTENT_ESTRESSE, 0.93, entities
 
         # Narrativa cotidiana (roçar, carpir, repuxo) = início de triagem, nunca saudação.
         if _is_mechanical_immediate(n):
@@ -1603,12 +1695,6 @@ class LocalRuleEngine:
 
         if _is_infarto_doubt(n):
             return INTENT_DUVIDA_INFARTO, 0.97, entities
-        if _is_breathing_request(n):
-            return INTENT_RESPIRACAO, 0.96, entities
-        if _is_tachy_language(n) and not _mentions_chest(n):
-            return INTENT_TAQUICARDIA, 0.93, entities
-        if _is_anxiety_only_language(n) and not _mentions_chest(n) and not _has_ischemic_alarm_text(n):
-            return INTENT_ESTRESSE, 0.93, entities
         if _is_human_help(n):
             return INTENT_AJUDA_HUMANA, 0.97, entities
 
@@ -1942,6 +2028,14 @@ class LocalRuleEngine:
         if mem.eco_etapa == "screen_redflags":
             return self._continue_eco(n, mem)
 
+        # Ansiedade/taquicardia sem peito positivo: ECO antes de #duvida_infarto.
+        if intent in ECO_INTENTS or (
+            (_is_anxiety_only_language(n) or _is_tachy_language(n) or _is_breathing_request(n))
+            and not _mentions_chest(n)
+            and not _has_effort_narrative(n)
+        ):
+            return self._start_eco(n, mem, intent)
+
         if intent == INTENT_DUVIDA_INFARTO or _is_infarto_doubt(n):
             return self._start_duvida_infarto(n, mem)
 
@@ -1954,13 +2048,6 @@ class LocalRuleEngine:
             mem.triagem_etapa = "done"
             mem.eco_etapa = "done"
             return REPLY_CEFALEIA_NEURO
-
-        if intent in ECO_INTENTS or (
-            (_is_anxiety_only_language(n) or _is_tachy_language(n) or _is_breathing_request(n))
-            and not _mentions_chest(n)
-            and not _has_effort_narrative(n)
-        ):
-            return self._start_eco(n, mem, intent)
 
         if intent == INTENT_EMERGENCIA:
             # Jump 192 inclusive depois do ECO (etapa done) ou anamnese em curso.
@@ -2044,7 +2131,8 @@ class LocalRuleEngine:
         denied = _denied_findings(n)
         if self._positive_irradiacao(n, memory) or self._positive_sudorese(n, memory):
             return True
-        if ("desmaio" in n or "desmaiei" in n) and "desmaio" not in denied:
+        # Achado «desmaio» mapeia para finding «tontura» em _denied_findings.
+        if ("desmaio" in n or "desmaiei" in n) and "tontura" not in denied and "desmaio" not in denied:
             return True
         return False
 
@@ -2157,17 +2245,31 @@ class LocalRuleEngine:
         return REPLY_ECO_SCREEN
 
     def _continue_eco(self, n: str, memory: SessionMemory) -> str:
+        denied = _denied_findings(n)
+        # Negação explícita de red flags (ex.: «Não, sem irradiação, sem suor frio e sem desmaio»).
+        screen_cleared = (
+            _is_no(n)
+            or (memory.negou_irradiacao and memory.negou_suor)
+            or (
+                "irradiacao" in denied
+                and "suor" in denied
+                and ("tontura" in denied or "desmaio" in denied or "sem desmaio" in n)
+            )
+        )
+        if screen_cleared and not _is_yes(n):
+            memory.negou_irradiacao = memory.negou_irradiacao or "irradiacao" in denied
+            memory.negou_suor = memory.negou_suor or "suor" in denied
+            memory.eco_etapa = "done"
+            memory.triagem_etapa = "done"
+            memory.risco = "B"
+            memory.emergencia_ativa = False
+            return REPLY_ECO_478
         if self._eco_has_red_flag(n, memory) or self._needs_samu(n, memory) or _is_yes(n):
             # Sim / incerteza com alarme → presencial. «Não sei» também sobe.
             if _is_yes(n) or self._eco_has_red_flag(n, memory) or self._needs_samu(n, memory):
                 return self._samu_reply(n, memory)
         if _has_any(n, ("nao sei", "talvez", "pode ser", "nao tenho certeza", "incerto")):
             return self._samu_reply(n, memory)
-        if _is_no(n) or (memory.negou_irradiacao and memory.negou_suor):
-            memory.eco_etapa = "done"
-            memory.triagem_etapa = "done"
-            memory.risco = "B"
-            return REPLY_ECO_478
         # Resposta ambígua após rastreio de infarto → presencial.
         return self._samu_reply(n, memory)
 
@@ -2565,8 +2667,8 @@ class WatsonService:
                 watson_result.source = "fallback"
                 return watson_result
 
-        # ECO: o skill Lite ainda pode mapear ansiedade para cenário B/MSK.
-        if gold.eco_path or gold.eco_etapa == "screen_redflags":
+        # ECO: o skill Lite ainda pode mapear ansiedade para cenário B/MSK ou SAMU indevido.
+        if gold.eco_path or gold.eco_etapa in {"screen_redflags", "done"} or "4-7-8" in gn:
             gold_eco = any(
                 k in gn
                 for k in (
@@ -2578,6 +2680,7 @@ class WatsonService:
                     "so ansiedade",
                     "cvv",
                     "abrata",
+                    "antes de qualquer hipotese",
                 )
             )
             watson_eco = any(
@@ -2591,9 +2694,11 @@ class WatsonService:
                     "so ansiedade",
                     "cvv",
                     "abrata",
+                    "antes de qualquer hipotese",
                 )
             )
-            if gold_eco and not watson_eco:
+            # Ouro ECO (tela ou 4-7-8) vence SAMU/Live errado após negação de red flags.
+            if gold_eco and (not watson_eco or (_has_samu(wr) and not gold.emergencia_ativa and gold.risco != "A")):
                 watson_result.reply = gold_reply
                 watson_result.source = "fallback"
                 return watson_result

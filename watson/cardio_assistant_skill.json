@@ -730,6 +730,15 @@
         },
         {
           "text": "Palpitações à noite"
+        },
+        {
+          "text": "Estou com ansiedade e o coração acelerado, mas sem dor no peito"
+        },
+        {
+          "text": "Coração acelerado com ansiedade sem dor no peito"
+        },
+        {
+          "text": "Ansiedade e taquicardia sem dor torácica"
         }
       ]
     },
@@ -757,6 +766,12 @@
         },
         {
           "text": "Insônia e músculo travado"
+        },
+        {
+          "text": "Estou com ansiedade e o coração acelerado, mas sem dor no peito"
+        },
+        {
+          "text": "Ansiedade com coração acelerado sem dor no peito"
         }
       ]
     },
@@ -2241,7 +2256,7 @@
           }
         ]
       },
-      "conditions": "$eco_etapa == 'screen_redflags' && (#afirmacao || @sinal_alerta || @sinais_alerta || input.text.contains('talvez') || input.text.contains('não sei'))",
+      "conditions": "$eco_etapa == 'screen_redflags' && (#afirmacao || input.text.contains('talvez') || input.text.contains('não sei') || input.text.contains('nao sei') || @sinal_alerta || @sinais_alerta) && !(input.text.contains('sem irradia') || input.text.contains('sem suor') || input.text.contains('sem desmaio') || input.text.contains('não, sem') || input.text.contains('nao, sem'))",
       "dialog_node": "node_duvida_infarto_sim",
       "next_step": {
         "behavior": "jump_to",
@@ -2255,7 +2270,7 @@
         "eco_etapa": "done"
       },
       "digress_out": "allow_all_never_return",
-      "parent": "node_duvida_infarto"
+      "previous_sibling": "node_duvida_infarto"
     },
     {
       "type": "standard",
@@ -2273,7 +2288,7 @@
           }
         ]
       },
-      "conditions": "$eco_etapa == 'screen_redflags' && #negacao && !@sinal_alerta && !@sinais_alerta",
+      "conditions": "$eco_etapa == 'screen_redflags' && (#negacao || input.text.contains('sem irradia') || input.text.contains('sem suor') || input.text.contains('sem desmaio') || input.text.contains('não, sem') || input.text.contains('nao, sem')) && !(#afirmacao)",
       "dialog_node": "node_duvida_infarto_nao",
       "next_step": {
         "behavior": "get_user_input"
@@ -2283,7 +2298,6 @@
         "risco": "B",
         "triagem_etapa": "done"
       },
-      "parent": "node_duvida_infarto",
       "previous_sibling": "node_duvida_infarto_sim"
     },
     {
@@ -2545,7 +2559,7 @@
         "irradiacao": "nenhuma",
         "negou_irradiacao": true
       },
-      "previous_sibling": "node_duvida_infarto"
+      "previous_sibling": "node_duvida_infarto_nao"
     },
     {
       "type": "standard",
@@ -4049,6 +4063,12 @@
     },
     {
       "text": "minha cabeça dói"
+    },
+    {
+      "text": "Estou com ansiedade e o coração acelerado, mas sem dor no peito"
+    },
+    {
+      "text": "Não, sem irradiação, sem suor frio e sem desmaio"
     }
   ],
   "learning_opt_out": false,

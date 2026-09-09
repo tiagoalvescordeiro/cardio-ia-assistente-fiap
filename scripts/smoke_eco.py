@@ -60,6 +60,22 @@ def main() -> None:
     expect("192" in jump.reply, "depois do ECO, red flag na mesma sessao -> 192")
     expect("4-7-8" not in jump.reply, "jump 192 nao volta ao 4-7-8")
 
+    # Script ECO: ansiedade + taquicardia SEM dor no peito → tela ECO (não dúvida de infarto);
+    # negação «sem irradiação / suor / desmaio» → 4-7-8 (não SAMU).
+    sid_eco_script = w.create_session()
+    t1 = w.send_message(
+        "Estou com ansiedade e o coração acelerado, mas sem dor no peito",
+        sid_eco_script,
+    )
+    r1 = t1.reply.lower()
+    expect("só ansiedade" not in r1 and "so ansiedade" not in r1, "script ECO nao usa tom duvida_infarto")
+    expect("corpo em alerta" in r1 or "estou aqui com você" in r1 or "estou aqui com voce" in r1, "script ECO abre rastreio")
+    expect("ligue agora para o samu" not in r1, "script ECO turn1 nao e SAMU imediato")
+    t2 = w.send_message("Não, sem irradiação, sem suor frio e sem desmaio", sid_eco_script)
+    expect("4-7-8" in t2.reply, "script ECO negacao -> 4-7-8")
+    expect("ligue agora para o samu" not in t2.reply.lower(), "script ECO negacao nao e SAMU")
+    expect("ABRATA" in t2.reply and "CAPS" in t2.reply, "script ECO 4-7-8 cita rede")
+
     sid3 = w.create_session()
     red = w.send_message("Dor no peito irradiando para o braço com suor frio", sid3)
     expect("192" in red.reply, "red flag -> 192")
