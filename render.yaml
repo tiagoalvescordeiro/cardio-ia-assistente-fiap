@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: cardioia-assistente
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: gunicorn --chdir backend -b 0.0.0.0:$PORT app:app
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: FLASK_DEBUG
+        value: "false"
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: WATSON_VERSION
+        value: "2024-08-25"
+      - key: WATSON_API_KEY
+        sync: false
+      - key: WATSON_URL
+        sync: false
+      - key: WATSON_ASSISTANT_ID
+        sync: false
+      - key: WATSON_ENVIRONMENT_ID
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
