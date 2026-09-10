@@ -11,6 +11,12 @@
   const sendBtn = document.getElementById("send-btn");
   const healthPill = document.getElementById("health-pill");
   const themeToggle = document.getElementById("theme-toggle");
+  const resetSessionBtn = document.getElementById("reset-session");
+  const extractCard = document.getElementById("extract-card");
+  const extractBody = document.getElementById("extract-body");
+  const extractError = document.getElementById("extract-error");
+  const extractClose = document.getElementById("extract-close");
+  const extractChip = document.getElementById("extract-chip");
   const breathingPanel = document.getElementById("breathing-panel");
   const ecoSocial = document.getElementById("eco-social");
   const ecoPulse = document.getElementById("eco-pulse");
@@ -28,9 +34,15 @@
 
   let sessionId = null;
   let sending = false;
+  let lastUserText = "";
   let breathTimer = null;
   let breathPhaseIdx = 0;
   let breathLeft = 0;
+
+  const WELCOME =
+    "Oi. Eu sou a CardioIA — acolhimento inicial, sem diagnosticar e sem receitar. Conte o que está sentindo.\n\nNa dúvida entre estresse e coração, o atendimento presencial sempre vem primeiro. Emergência: 192. Crise emocional com ideação: 188.";
+
+  const EMPTY_COMPOSER = "Escreva uma mensagem para enviar.";
 
   const PHASES = [
     { name: "Inspire", seconds: 4, cls: "inhale" },
@@ -76,6 +88,83 @@
 
   function hideEcoSocial() {
     ecoSocial.classList.add("hidden");
+  }
+
+  function hideExtractCard() {
+    extractCard.classList.add("hidden");
+    extractError.classList.add("hidden");
+    extractError.textContent = "";
+    extractBody.innerHTML = "";
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function showExtractError(message) {
+    extractCard.classList.remove("hidden");
+    extractError.classList.remove("hidden");
+    extractError.textContent = message;
+    extractBody.innerHTML = "";
+    extractCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function showExtractResult(data) {
+    extractError.classList.add("hidden");
+    extractError.textContent = "";
+    const vitals = data.sinais_vitais || {};
+    const spo2 = vitals.spo2 == null ? "—" : `${vitals.spo2}%`;
+    const pa =
+      vitals.pressao_sistolica != null && vitals.pressao_diastolica != null
+        ? `${vitals.pressao_sistolica}/${vitals.pressao_diastolica} mmHg`
+        : "—";
+    const fc = vitals.frequencia_cardiaca != null ? `${vitals.frequencia_cardiaca} bpm` : "—";
+    const rows = [
+      ["Risco", data.classificacao_risco || data.risco_estratificado || "—"],
+      ["Vitais", `PA ${pa} · FC ${fc} · SpO2 ${spo2}`],
+      ["Conduta", data.conduta_sugerida || "—"],
+      ["Aviso", data.disclaimer || "Este assistente não substitui atendimento médico."],
+    ];
+    extractBody.innerHTML = rows
+      .map(([dt, dd]) => `<div class="extract-row"><dt>${escapeHtml(dt)}</dt><dd>${escapeHtml(dd)}</dd></div>`)
+      .join("");
+    extractCard.classList.remove("hidden");
+    extractCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function looksLikeClinicalNarrative(text) {
+    const raw = text || "";
+    const n = raw.toLowerCase();
+    const hasPa = /\b\d{2,3}\s*[x/]\s*\d{2,3}\b/.test(n) || /\bpa\b/.test(n);
+    const hasFc = /\bbpm\b/.test(n) || /\bfc\b/.test(n) || /frequ[eê]ncia/.test(n);
+    const hasId = /pac[-_][a-z0-9]+/i.test(raw);
+    return Boolean((hasPa && hasFc) || hasId);
+  }
+
+  async function extractNarrative(text) {
+    const source = (text || "").trim();
+    if (!source) {
+      showExtractError("Envie um relato com PA, FC e, se possível, SpO2 para montar o resumo.");
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BASE}/api/extract`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: source }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        showExtractError(data.error || "Não consegui extrair o relato. Inclua idade, PA e FC.");
+        return;
+      }
+      showExtractResult(data);
+    } catch (err) {
+      showExtractError("Falha de rede ao extrair o relato. Confirme se o serviço está no ar.");
+    }
   }
 
   function renderHeatmap(points) {
@@ -194,8 +283,9 @@
   async function checkHealth() {
     try {
       const res = await fetch(`${API_BASE}/api/health`);
-      const data = await res.json();
-      healthPill.textContent = `API ok · Watson ${data.watson_mode}`;
+      if (!res.ok) throw new Error("health down");
+      await res.json();
+      healthPill.textContent = "Serviço disponível";
       healthPill.classList.remove("is-down");
     } catch (err) {
       healthPill.textContent = "API indisponível";
@@ -215,8 +305,34 @@
     return sessionId;
   }
 
+  async function startNewSession() {
+    const previous = sessionId;
+    sessionId = null;
+    lastUserText = "";
+    sending = false;
+    sendBtn.disabled = false;
+    transcript.innerHTML = "";
+    hideExtractCard();
+    hideEcoSocial();
+    stopBreathing(true);
+    crisisModal.classList.add("hidden");
+    if (previous) {
+      try {
+        await fetch(`${API_BASE}/api/session/${encodeURIComponent(previous)}`, { method: "DELETE" });
+      } catch (err) {
+        /* sessão local some no próximo POST */
+      }
+    }
+    await ensureSession();
+    appendBubble("assistant", WELCOME);
+    input.value = "";
+    input.setCustomValidity("");
+    input.focus();
+  }
+
   async function sendMessage(text) {
     if (!text || sending) return;
+    lastUserText = text;
     sending = true;
     sendBtn.disabled = true;
     appendBubble("user", text);
@@ -243,6 +359,9 @@
         showBreathing(true);
         if (data.ui && data.ui.eco_social) showEcoSocial(data.ui.eco_social);
       }
+      if (looksLikeClinicalNarrative(text)) {
+        extractNarrative(text);
+      }
     } catch (err) {
       setTyping(false);
       appendBubble(
@@ -259,8 +378,21 @@
   form.addEventListener("submit", (event) => {
     event.preventDefault();
     const text = input.value.trim();
+    if (!text) {
+      input.setCustomValidity(EMPTY_COMPOSER);
+      input.reportValidity();
+      return;
+    }
+    input.setCustomValidity("");
     input.value = "";
     sendMessage(text);
+  });
+
+  input.addEventListener("invalid", () => {
+    input.setCustomValidity(EMPTY_COMPOSER);
+  });
+  input.addEventListener("input", () => {
+    input.setCustomValidity("");
   });
 
   input.addEventListener("keydown", (event) => {
@@ -274,9 +406,15 @@
     btn.addEventListener("click", () => sendMessage(btn.getAttribute("data-chip")));
   });
 
-  appendBubble(
-    "assistant",
-    "Oi. Eu sou a CardioIA — acolhimento inicial, sem diagnosticar e sem receitar. Conte o que está sentindo.\n\nNa dúvida entre estresse e coração, o atendimento presencial sempre vem primeiro. Emergência: 192. Crise emocional com ideação: 188."
-  );
+  extractChip.addEventListener("click", () => {
+    const draft = input.value.trim();
+    extractNarrative(draft || lastUserText);
+  });
+  extractClose.addEventListener("click", hideExtractCard);
+  resetSessionBtn.addEventListener("click", () => {
+    startNewSession();
+  });
+
+  appendBubble("assistant", WELCOME);
   checkHealth();
 })();

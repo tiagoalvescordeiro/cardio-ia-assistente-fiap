@@ -51,6 +51,7 @@ INTENT_IDEACAO_RISCO = "ideacao_risco"
 INTENT_RELATAR_DOR_PEITO = "relatar_dor_peito"
 INTENT_AJUDA_HUMANA = "pedir_ajuda_humana"
 INTENT_CEFALEIA = "queixa_cefaleia"
+INTENT_AVALIADOR = "perfil_avaliador"
 
 CHEST_INTENTS = {INTENT_TRIAGEM, INTENT_RELATAR, INTENT_SINTOMA_PEITO, INTENT_SINTOMA_CARDIACO, INTENT_RELATAR_DOR_PEITO}
 ECO_INTENTS = {INTENT_ANSIEDADE, INTENT_ESTRESSE, INTENT_TAQUICARDIA, INTENT_RESPIRACAO}
@@ -225,6 +226,15 @@ REPLY_AJUDA_HUMANA = (
     "Na dúvida entre estresse e coração, o presencial vem primeiro — nunca «é só ansiedade»."
 )
 
+REPLY_AVALIADOR = (
+    "Olá, doutor(a). Este canal é o protótipo CardioIA + ECO para avaliação — "
+    "acolhimento e triagem de red flags, sem diagnosticar. "
+    "Pode seguir pelos atalhos: aperto no peito, ansiedade, respiração 4-7-8, "
+    "ou negar irradiação/suor frio quando a tela perguntar. "
+    "Vitais (PA, FC, SpO2) no relato abrem o resumo estruturado. "
+    "Emergência real continua em 192; ideação, 188."
+)
+
 _CHEST_MARKERS = (
     "peito",
     "torax",
@@ -306,6 +316,24 @@ _CANNOT_MOVE_MARKERS = (
     "nao consigo me deslocar",
     "nao levanto",
     "nao consigo nem me levantar",
+)
+
+_AVALIADOR_MARKERS = (
+    "sou medico",
+    "sou medica",
+    "sou o medico",
+    "sou a medica",
+    "estou avaliando",
+    "avaliando o prototipo",
+    "avaliando o sistema",
+    "sou avaliador",
+    "sou avaliadora",
+    "medico avaliando",
+    "medica avaliando",
+    "sou profissional de saude",
+    "sou cardiologista",
+    "caminho do medico",
+    "caminho do avaliador",
 )
 
 _HUMAN_HELP_MARKERS = (
@@ -1056,6 +1084,33 @@ def _has_samu(reply: str) -> bool:
     return "192" in n or "samu" in n
 
 
+def _has_immediate_samu(reply: str) -> bool:
+    """True só quando a fala pede SAMU agora — não quando o disclaimer cita 192."""
+    if _looks_like_greeting_reply(reply):
+        return False
+    n = _norm(reply)
+    if "192" not in n and "samu" not in n:
+        return False
+    return _has_any(
+        n,
+        (
+            "ligue agora para o samu",
+            "ligar agora para o samu",
+            "ligue agora o samu",
+            "isso exige avaliacao medica imediata",
+            "se ainda nao ligou",
+            "ok google",
+            "ei siri",
+            "caminho seguro e ligar agora",
+            "ligar o 192",
+            "ligar para 192",
+            "ligar para o samu",
+            "mantenha repouso absoluto",
+            "nao dirija",
+        ),
+    )
+
+
 def _reply_treats_denied_as_present(reply: str, memory: SessionMemory) -> bool:
     """True se a fala trata como presente um sintoma que o usuário negou."""
     rn = _norm(reply)
@@ -1163,6 +1218,10 @@ def _is_med_request(normalized: str) -> bool:
 
 def _is_human_help(normalized: str) -> bool:
     return _has_any(normalized, _HUMAN_HELP_MARKERS)
+
+
+def _is_evaluator(normalized: str) -> bool:
+    return _has_any(normalized, _AVALIADOR_MARKERS)
 
 
 def _is_farewell(normalized: str) -> bool:
@@ -1695,6 +1754,8 @@ class LocalRuleEngine:
 
         if _is_infarto_doubt(n):
             return INTENT_DUVIDA_INFARTO, 0.97, entities
+        if _is_evaluator(n):
+            return INTENT_AVALIADOR, 0.97, entities
         if _is_human_help(n):
             return INTENT_AJUDA_HUMANA, 0.97, entities
 
@@ -2009,6 +2070,9 @@ class LocalRuleEngine:
                 return REPLY_EMERGENCIA_IMOVEL
             return REPLY_EMERGENCIA_HOLD if mem.triagem_etapa == "done" else REPLY_EMERGENCIA
 
+        if intent == INTENT_AVALIADOR or _is_evaluator(n):
+            return REPLY_AVALIADOR
+
         if intent == INTENT_AJUDA_HUMANA or _is_human_help(n):
             if self._eco_has_red_flag(n, mem) or self._needs_samu(n, mem):
                 return self._samu_reply(n, mem)
@@ -2246,6 +2310,9 @@ class LocalRuleEngine:
 
     def _continue_eco(self, n: str, memory: SessionMemory) -> str:
         denied = _denied_findings(n)
+        memory.negou_irradiacao = memory.negou_irradiacao or "irradiacao" in denied
+        memory.negou_suor = memory.negou_suor or "suor" in denied
+        denied_syncope = "tontura" in denied or "desmaio" in denied or "sem desmaio" in n
         # Negação explícita de red flags (ex.: «Não, sem irradiação, sem suor frio e sem desmaio»).
         screen_cleared = (
             _is_no(n)
@@ -2253,7 +2320,7 @@ class LocalRuleEngine:
             or (
                 "irradiacao" in denied
                 and "suor" in denied
-                and ("tontura" in denied or "desmaio" in denied or "sem desmaio" in n)
+                and denied_syncope
             )
         )
         if screen_cleared and not _is_yes(n):
@@ -2270,6 +2337,13 @@ class LocalRuleEngine:
                 return self._samu_reply(n, memory)
         if _has_any(n, ("nao sei", "talvez", "pode ser", "nao tenho certeza", "incerto")):
             return self._samu_reply(n, memory)
+        # Chip único («sem irradiação» / «sem suor frio»): absorve e pergunta o que falta.
+        if (memory.negou_irradiacao or memory.negou_suor or denied_syncope) and not _is_yes(n):
+            if memory.negou_irradiacao and not memory.negou_suor:
+                return "Anotado, sem irradiação. Tem suor frio ou desmaio agora?"
+            if memory.negou_suor and not memory.negou_irradiacao:
+                return "Anotado, sem suor frio. A dor vai para o braço, ou tem desmaio agora?"
+            return "Anotado. Tem dor no peito indo para o braço, suor frio ou desmaio agora?"
         # Resposta ambígua após rastreio de infarto → presencial.
         return self._samu_reply(n, memory)
 
@@ -2931,7 +3005,7 @@ class WatsonService:
             force_emergency
             or top_intent == INTENT_EMERGENCIA
             or _looks_like_isolation_reply(result.reply)
-            or _has_samu(result.reply)
+            or _has_immediate_samu(result.reply)
         ):
             if memory is not None:
                 memory.emergencia_ativa = True

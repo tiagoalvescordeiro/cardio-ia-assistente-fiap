@@ -295,6 +295,42 @@ def evaluate_safety(text: str) -> SafetyDecision | None:
     return None
 
 
+def _looks_like_greeting_copy(reply: str) -> bool:
+    n = _norm(reply or "")
+    if n.startswith("oi, tudo bem") or n.startswith("ola, tudo bem"):
+        return True
+    if "eu sou a cardioia" in n:
+        return True
+    return False
+
+
+def _reply_requests_immediate_samu(reply: str) -> bool:
+    """Discagem 192 só quando a fala pede SAMU agora, não no disclaimer da saudação."""
+    if _looks_like_greeting_copy(reply):
+        return False
+    n = _norm(reply or "")
+    if "192" not in n and "samu" not in n:
+        return False
+    return _has_any(
+        n,
+        (
+            "ligue agora para o samu",
+            "ligar agora para o samu",
+            "ligue agora o samu",
+            "isso exige avaliacao medica imediata",
+            "se ainda nao ligou",
+            "ok google",
+            "ei siri",
+            "caminho seguro e ligar agora",
+            "ligar o 192",
+            "ligar para 192",
+            "ligar para o samu",
+            "mantenha repouso absoluto",
+            "nao dirija",
+        ),
+    )
+
+
 def infer_ui_from_reply(reply: str, intents: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """Deriva hints de UI a partir da resposta (fallback/Watson).
 
@@ -307,7 +343,7 @@ def infer_ui_from_reply(reply: str, intents: list[dict[str, Any]] | None = None)
     ideation_intent = bool(intent_names & {"ideacao_crise", "ideacao_risco"})
     # Cefaleia isolada cita 192 só como contingência — não acende discagem de crise.
     calm_headache = "queixa_cefaleia" in intent_names
-    crisis_192 = ("192" in n or "samu" in n) and not calm_headache
+    crisis_192 = _reply_requests_immediate_samu(reply) and not calm_headache
     modal = None
     if ideation_intent:
         modal = "188_192" if crisis_192 else "188"

@@ -36,11 +36,13 @@ def main() -> None:
 
     g = w.send_message("Oi", sid)
     expect("CardioIA" in g.reply or "Oi" in g.reply, "saudação isolada")
-    expect("192" not in g.reply or "dispositivo" in g.reply.lower() or True, "saudação não é SAMU")
+    expect(not w._memory(sid).emergencia_ativa, "P0: saudação não gruda emergencia_ativa")
+    expect(g.to_dict()["ui"].get("emergency_dial") != "192", "P0: saudação não acende discagem 192")
 
     eco = w.send_message("Estou com ansiedade e tensão muscular", sid)
     expect("suor frio" in eco.reply.lower() or "emergência" in eco.reply.lower(), "ansiedade rastreia red flags")
-    expect("192" not in eco.reply or "antes" in eco.reply.lower(), "ansiedade isolada não dispara 192")
+    expect("ligue agora para o samu" not in eco.reply.lower(), "P0: ansiedade após oi não força SAMU")
+    expect(not w._memory(sid).emergencia_ativa, "P0: ECO após saudação não gruda emergência")
 
     sid2 = w.create_session()
     w.send_message("Estou com ansiedade", sid2)
@@ -130,6 +132,11 @@ def main() -> None:
     depois = w.send_message("dor de cabeça", sid8)
     dn = depois.reply.lower()
     expect("pior da sua vida" in dn or "aumentando" in dn or "ubs" in dn, "apos SCA, cefaleia isolada sai do hold")
+
+    sid_eval = w.create_session()
+    med = w.send_message("sou médico, estou avaliando", sid_eval)
+    expect(all(i.get("intent") != "anything_else" for i in med.intents), "avaliador nao cai em anything_else")
+    expect("protótipo" in med.reply.lower() or "avali" in med.reply.lower(), "avaliador recebe onboarding clínico")
 
     print("Smoke ECO: todos os asserts passaram.")
 
