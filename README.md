@@ -192,6 +192,40 @@ Use a URL `https://…` exibida. Plano gratuito é suficiente para homologação
 
 ---
 
+## Deploy no Render
+
+O Flask já serve `frontend/` na raiz e a API em `/api/*`. Para homologação persistente, publique um **Web Service** no [Render](https://render.com) ligado a este repositório GitHub, branch `main`. Duas vias equivalentes:
+
+1. **Blueprint:** New → Blueprint e aplique o `render.yaml` da raiz.  
+2. **Manual:** New → Web Service, runtime Python, plano Free.
+
+| | Comando |
+| --- | --- |
+| Build | `pip install -r backend/requirements.txt` |
+| Start | `gunicorn --chdir backend -b 0.0.0.0:$PORT app:app` |
+| Health check | `GET /api/health` |
+
+O `Procfile` da raiz usa o mesmo start (útil se o Render detectar o processo automaticamente). `gunicorn` já está em `backend/requirements.txt`.
+
+Variáveis (dashboard do Render; **nunca** commitar `.env`):
+
+| Variável | Valor | Notas |
+| --- | --- | --- |
+| `FLASK_DEBUG` | `false` | Debug desligado em produção |
+| `CORS_ORIGINS` | `*` | Origens CORS da API |
+| `PYTHON_VERSION` | `3.12.8` | Runtime Python no Render |
+| `WATSON_VERSION` | `2024-08-25` | API Watson Assistant v2 |
+| `WATSON_API_KEY`, `WATSON_URL`, `WATSON_ASSISTANT_ID`, `WATSON_ENVIRONMENT_ID` | secrets (`sync: false`) | Opcionais. Sem chave/ID o health fica `"watson_mode": "fallback"` |
+| `OPENAI_API_KEY` | secret (`sync: false`) | Opcional. Sem chave a extração usa heurística |
+
+No Blueprint, os secrets são pedidos no dashboard na criação — não há valores reais no repositório.
+
+**Plano Free:** o serviço dorme após inatividade. A primeira requisição após o sono pode levar dezenas de segundos (cold start); o health check `/api/health` confirma quando o processo voltou.
+
+Após o deploy, valide a UI como no [checklist local](#execução-backend--frontend) / [túnel](#acesso-externo-para-homologação-túnel): abra `https://….onrender.com`, confirme `GET /api/health` (`status: ok`) e envie uma mensagem no widget (ex.: «Olá, bom dia.»). Sem dados reais de pacientes.
+
+---
+
 ## Documentação
 
 | Arquivo | Conteúdo |
