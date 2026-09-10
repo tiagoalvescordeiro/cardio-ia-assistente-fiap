@@ -1,5 +1,15 @@
 # CardioIA Assistente
+## 🚀 Deploy em Produção (Fase 5 - FIAP)
 
+* **URL Ativa da Aplicação (Banca):** [https://cardioia-assistente.onrender.com](https://cardioia-assistente.onrender.com)
+* **Status do Ambiente:** Produção ativa 24/7 (Render PaaS + IBM Watson Assistant Cloud)
+* **Versão Homologada:** `v1.1-render`
+* **Health Check da API:** [https://cardioia-assistente.onrender.com/api/health](https://cardioia-assistente.onrender.com/api/health)
+
+### Resumo Executivo da Entrega (Grupo 54)
+O CardioIA Assistente está em produção acadêmica com stack Flask + front estático (pt-BR), orquestração conversacional via IBM Watson Assistant (cloud) com fallback de regras, extração clínica heurística/GenAI (`/api/extract`) e health check em `/api/health`. O deploy definitivo no Render (`gunicorn`, `Procfile` e `render.yaml`) provê URL estável para a banca examinadora com gestão segura de segredos em nuvem (sem exposição de `.env`).
+
+A versão `v1.1-render` traz o fluxo completo homologado (8/8 PASS): acolhimento com dissociação de ansiedade sem falso alerta SAMU, suporte ao perfil médico/avaliador, protocolo de respiração guiada (4-7-8), extração de sinais vitais (PA, FC e SpO2) e rejeição de valores não-fisiológicos.
 Assistente conversacional cardiológico com acolhimento psicossomático (IBM Watson Assistant ou motor local), extração estruturada de prontuário sintético (GenAI) e monitoramento RPA com persistência híbrida (SQL + NoSQL).
 
 Herança de limiares clínicos: [tiagoalvescordeiro/cardio-ia-fase1](https://github.com/tiagoalvescordeiro/cardio-ia-fase1) (PA sistólica/diastólica, FC/BPM, SpO2).
