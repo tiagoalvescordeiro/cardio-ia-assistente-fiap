@@ -23,16 +23,24 @@
           </div>
         </div>
         <div class="topbar-actions">
-          <p class="status-pill" id="health-pill" role="status">Verificando API…</p>
-          <button type="button" id="theme-toggle" class="ghost-btn" aria-pressed="true">
-            Modo claro
-          </button>
+          <p class="status-pill" id="health-pill" role="status">Verificando serviço…</p>
+          <div class="topbar-buttons">
+            <button type="button" id="reset-session" class="ghost-btn" aria-label="Recomeçar triagem">
+              Nova sessão
+            </button>
+            <button type="button" id="theme-toggle" class="ghost-btn" aria-pressed="true">
+              Modo claro
+            </button>
+          </div>
         </div>
       </header>
 
       <aside class="session-banner" role="status">
         Sessão segura e anônima — o texto não é prontuário e não identifica você.
       </aside>
+      <p class="onboarding">
+        Conte o que está sentindo ou use os atalhos. Incluir PA, FC e SpO2 no relato ajuda a resumir o quadro.
+      </p>
 
       <aside class="disclaimer" role="note">
         <strong>Aviso legal e clínico.</strong>
@@ -69,6 +77,15 @@
           </p>
         </section>
 
+        <section id="extract-card" class="extract-card hidden" aria-label="Resumo do relato clínico">
+          <div class="extract-head">
+            <h2>Resumo do relato</h2>
+            <button type="button" id="extract-close" class="ghost-btn">Fechar</button>
+          </div>
+          <p id="extract-error" class="extract-error hidden"></p>
+          <dl id="extract-body" class="extract-body"></dl>
+        </section>
+
         <section id="eco-social" class="eco-social hidden" aria-label="Pulso anônimo e narrativas compostas">
           <p class="eco-k-note">
             Pulso local sintético · k-anonimato ≥ 10 · sem GPS, sem nomes, sem pinos.
@@ -80,11 +97,15 @@
 
         <div class="chips" aria-label="Respostas rápidas">
           <button type="button" data-chip="Oi">Saudação</button>
+          <button type="button" data-chip="Sou médico, estou avaliando o protótipo">Sou médico / avaliando</button>
           <button type="button" data-chip="Estou com aperto no peito">Aperto no peito</button>
           <button type="button" data-chip="Estou com palpitação">Palpitação</button>
           <button type="button" data-chip="Estou com ansiedade e tensão muscular">Ansiedade</button>
+          <button type="button" data-chip="sem irradiação">Sem irradiação</button>
+          <button type="button" data-chip="sem suor frio">Sem suor frio</button>
           <button type="button" data-chip="Quero fazer a respiração 4-7-8">Respiração 4-7-8</button>
           <button type="button" data-chip="Dor no peito irradiando para o braço com suor frio">Emergência</button>
+          <button type="button" id="extract-chip">Extrair relato</button>
         </div>
 
         <form id="composer" class="composer">
@@ -96,6 +117,7 @@
             maxlength="2000"
             required
             placeholder="Conte o que está sentindo, com calma…"
+            title="Escreva uma mensagem para enviar."
           ></textarea>
           <button type="submit" id="send-btn">Enviar</button>
         </form>
@@ -127,6 +149,6 @@
       </div>
     </div>
 
-    <script src="script.js?v=eco2"></script>
+    <script src="script.js?v=eco3"></script>
   </body>
 </html>

@@ -114,6 +114,16 @@ class RegistroClinico(BaseModel):
     def _sbp_ge_dbp(self) -> "RegistroClinico":
         if self.sinais_vitais.pressao_sistolica < self.sinais_vitais.pressao_diastolica:
             raise ValueError("PAS deve ser maior ou igual à PAD.")
+        self.sintomas_atuais = _dedupe_casefold(self.sintomas_atuais)
+        seen_meds: set[str] = set()
+        unique_meds: list[MedicamentoUso] = []
+        for med in self.medicamentos_em_uso:
+            key = (med.nome or "").strip().casefold()
+            if not key or key in seen_meds:
+                continue
+            seen_meds.add(key)
+            unique_meds.append(med)
+        self.medicamentos_em_uso = unique_meds
         if not self.necessidade_encaminhamento:
             self.necessidade_encaminhamento = self.classificacao_risco in {
                 ClassificacaoRisco.ALTO,
@@ -136,9 +146,7 @@ Extraia APENAS JSON válido no schema:
     "spo2": number | null
   }},
   "medicamentos_em_uso": [{{"nome": "string", "posologia": "string"}}],
-  "medicacoes_em_uso": [{{"nome": "string", "posologia": "string"}}],
   "classificacao_risco": "BAIXO | MODERADO | ALTO | EMERGENCIA",
-  "risco_estratificado": "BAIXO | MODERADO | ALTO | EMERGENCIA",
   "necessidade_encaminhamento": true,
   "conduta_sugerida": "string"
 }}
@@ -176,6 +184,18 @@ FEW_SHOT_ASSISTANT = json.dumps(
     },
     ensure_ascii=False,
 )
+
+
+def _dedupe_casefold(items: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for item in items:
+        key = (item or "").strip().casefold()
+        if not key or key in seen:
+            continue
+        seen.add(key)
+        out.append(item.strip())
+    return out
 
 
 def _norm(text: str) -> str:
@@ -351,9 +371,9 @@ def _extract_sintomas_atuais(texto: str, queixa: str) -> list[str]:
     for label, needles in mapping:
         if _positive_mention(n, needles):
             found.append(label)
-    if queixa and queixa not in found:
+    if queixa and queixa.strip().casefold() not in {s.casefold() for s in found}:
         found.insert(0, queixa)
-    return found or ([queixa] if queixa else ["Não especificada"])
+    return _dedupe_casefold(found) or ([queixa] if queixa else ["Não especificada"])
 
 
 def extract_heuristic(texto: str) -> RegistroClinico:
@@ -363,6 +383,7 @@ def extract_heuristic(texto: str) -> RegistroClinico:
     sbp, dbp = _extract_pa(texto)
     hr = _extract_fc(texto)
     spo2 = _extract_spo2(texto)
+    _assert_vitals_physiology(idade, sbp, dbp, hr, spo2)
     meds = _extract_meds(texto)
     queixa = _extract_queixa(texto)
     risco = classify_risk(texto, sbp, dbp, hr, spo2)
@@ -395,10 +416,10 @@ def _extract_id(texto: str) -> str:
 
 
 def _extract_idade(texto: str) -> int:
-    match = re.search(r"(\d{1,3})\s*anos", texto, flags=re.I)
+    match = re.search(r"(-?\d{1,4})\s*anos", texto, flags=re.I)
     if match:
         return int(match.group(1))
-    match = re.search(r"idade[:\s]+(\d{1,3})", texto, flags=re.I)
+    match = re.search(r"idade[:\s]+(-?\d{1,4})", texto, flags=re.I)
     if match:
         return int(match.group(1))
     return 0
@@ -406,34 +427,72 @@ def _extract_idade(texto: str) -> int:
 
 def _extract_pa(texto: str) -> tuple[float, float]:
     patterns = (
-        r"(?:PA|P\.?A\.?|press[aã]o(?:\s+arterial)?)\s*[:=]?\s*(\d{2,3})\s*[xX/]\s*(\d{2,3})",
-        r"\b(\d{2,3})\s*/\s*(\d{2,3})\s*(?:mm\s*hg|mmhg)?",
-        r"sist[oó]lica\s*[:=]?\s*(\d{2,3}).{0,40}diast[oó]lica\s*[:=]?\s*(\d{2,3})",
+        r"(?:PA|P\.?A\.?|press[aã]o(?:\s+arterial)?)\s*[:=]?\s*(-?\d{2,4})\s*[xX/]\s*(-?\d{2,4})",
+        r"\b(-?\d{2,4})\s*/\s*(-?\d{2,4})\s*(?:mm\s*hg|mmhg)?",
+        r"sist[oó]lica\s*[:=]?\s*(-?\d{2,4}).{0,40}diast[oó]lica\s*[:=]?\s*(-?\d{2,4})",
     )
     for pat in patterns:
         match = re.search(pat, texto, flags=re.I | re.S)
         if match:
             return float(match.group(1)), float(match.group(2))
-    raise ValueError("Não foi possível extrair pressão arterial (PAS/PAD) do texto.")
+    raise ValueError(
+        "Não encontrei pressão arterial no relato. Inclua PAS e PAD, por exemplo: PA 120/80 mmHg."
+    )
 
 
 def _extract_fc(texto: str) -> float:
     patterns = (
-        r"(?:FC|F\.?C\.?|frequ[eê]ncia\s+card[ií]aca|freq\.?\s*card[ií]aca|bpm|pulso)\s*[:=]?\s*(\d{2,3})",
-        r"(\d{2,3})\s*(?:bpm|batimentos)",
+        r"(?:FC|F\.?C\.?|frequ[eê]ncia\s+card[ií]aca|freq\.?\s*card[ií]aca|pulso)\s*[:=]?\s*(-?\d{1,4})",
+        r"(-?\d{1,4})\s*(?:bpm|batimentos)",
     )
     for pat in patterns:
         match = re.search(pat, texto, flags=re.I)
         if match:
             return float(match.group(1))
-    raise ValueError("Não foi possível extrair frequência cardíaca do texto.")
+    raise ValueError(
+        "Não encontrei frequência cardíaca no relato. Inclua a FC, por exemplo: FC 72 bpm."
+    )
 
 
 def _extract_spo2(texto: str) -> float | None:
-    match = re.search(r"(?:spo2|satura[cç][aã]o|sat\.?\s*o2)\s*[:=]?\s*(\d{2,3})\s*%?", texto, flags=re.I)
+    match = re.search(
+        r"(?:spo2|satura[cç][aã]o|sat\.?\s*o2)\s*[:=]?\s*(-?\d{1,4}(?:[.,]\d+)?)\s*%?",
+        texto,
+        flags=re.I,
+    )
     if match:
-        return float(match.group(1))
+        return float(match.group(1).replace(",", "."))
     return None
+
+
+def _assert_vitals_physiology(
+    idade: int,
+    sbp: float,
+    dbp: float,
+    hr: float,
+    spo2: float | None,
+) -> None:
+    """Rejeita vitais impossíveis em vez de tratá-los como alerta clínico."""
+    if idade < 0 or idade > 120:
+        raise ValueError(
+            f"A idade informada ({idade} anos) não é fisiologicamente possível. "
+            "Use um valor entre 0 e 120 anos."
+        )
+    if sbp < 50 or sbp > 300 or dbp < 30 or dbp > 200 or sbp < dbp:
+        raise ValueError(
+            f"Os valores de pressão ({int(sbp)}/{int(dbp)} mmHg) não são fisiologicamente possíveis. "
+            "Informe PAS/PAD usuais (ex.: 120/80). Não trato leituras absurdas como crise."
+        )
+    if hr < 20 or hr > 250:
+        raise ValueError(
+            f"A frequência cardíaca ({int(hr)} bpm) não é fisiologicamente possível. "
+            "Informe um valor entre 20 e 250 bpm."
+        )
+    if spo2 is not None and (spo2 < 40 or spo2 > 100):
+        raise ValueError(
+            f"A saturação (SpO2 {spo2:g}%) não é fisiologicamente possível. "
+            "Use um valor entre 40 e 100%."
+        )
 
 
 def _extract_meds(texto: str) -> list[MedicamentoUso]:
@@ -542,6 +601,13 @@ def extract_clinical_record(texto: str, prefer_llm: bool = True) -> RegistroClin
             try:
                 llm_payload.setdefault("conduta_sugerida", conduta_para(heuristic.classificacao_risco))
                 model = RegistroClinico.model_validate(llm_payload)
+                _assert_vitals_physiology(
+                    model.paciente.idade,
+                    model.sinais_vitais.pressao_sistolica,
+                    model.sinais_vitais.pressao_diastolica,
+                    model.sinais_vitais.frequencia_cardiaca,
+                    model.sinais_vitais.spo2,
+                )
                 # Recalcula risco pelos limiares locais (segurança do protótipo).
                 risco = classify_risk(
                     texto,
@@ -569,8 +635,8 @@ def extract_to_dict(texto: str) -> dict[str, Any]:
     payload = model.model_dump()
     payload["classificacao_risco"] = model.classificacao_risco.value
     payload["risco_estratificado"] = model.classificacao_risco.value
-    payload["medicacoes_em_uso"] = payload.get("medicamentos_em_uso") or []
     payload["necessidade_encaminhamento"] = bool(model.necessidade_encaminhamento)
+    payload.pop("medicacoes_em_uso", None)
     payload["disclaimer"] = DISCLAIMER
     payload["fonte_extracao"] = "heuristica_ou_llm"
     return payload
